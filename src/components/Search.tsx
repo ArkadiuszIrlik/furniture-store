@@ -1,20 +1,25 @@
 import { BiSearch } from 'react-icons/bi';
-import { useEffect } from 'react';
 import resolveConfig from 'tailwindcss/resolveConfig';
+import { useMediaQuery } from '../hooks';
 import tailwindConfig from '../../tailwind.config';
 
 function Search() {
+  const fullConfig = resolveConfig(tailwindConfig);
+  const mediumScreen = fullConfig.theme.screens.md;
+  const mediumMatches = useMediaQuery(`(min-width: ${mediumScreen})`);
+
   return (
-    <div className="relative flex justify-start items-center">
+    <div className="relative flex justify-start items-center w-full">
       <input
         type="search"
         name="site-search"
         id="site-search"
-        className="bg-primary-300 rounded-xl py-2 pl-8 pr-4 placeholder:text-primary-800 placeholder:font-open-sans"
-        placeholder="Search for rugs, armoires and more"
+        className="bg-primary-300 rounded-xl py-2 pl-9 pr-4 placeholder:text-primary-800 font-open-sans w-full"
+        placeholder={
+          mediumMatches ? 'Search for rugs, armoires and more' : 'Search'
+        }
       />
-
-      <div className="absolute left-2">
+      <div className="absolute left-3">
         <BiSearch />
       </div>
     </div>
