@@ -6,8 +6,8 @@ import tailwindConfig from '../../tailwind.config';
 
 function Search() {
   const fullConfig = resolveConfig(tailwindConfig);
-  const mediumScreen = fullConfig.theme.screens.md;
-  const mediumMatches = useMediaQuery(`(min-width: ${mediumScreen})`);
+  const smallScreen = fullConfig.theme.screens.sm;
+  const smallMatches = useMediaQuery(`(min-width: ${smallScreen})`);
 
   return (
     <div className="relative flex justify-start items-center w-full">
@@ -17,7 +17,7 @@ function Search() {
         id="site-search"
         className="bg-primary-300 rounded-xl py-2 pl-9 pr-4 placeholder:text-primary-800 font-open-sans w-full"
         placeholder={
-          mediumMatches ? 'Search for rugs, armoires and more' : 'Search'
+          smallMatches ? 'Search for rugs, armoires and more' : 'Search'
         }
       />
       <div className="absolute left-3">
