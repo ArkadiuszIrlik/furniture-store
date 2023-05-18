@@ -1,5 +1,6 @@
 import { BiSearch } from 'react-icons/bi';
 import resolveConfig from 'tailwindcss/resolveConfig';
+import { IconContext } from 'react-icons';
 import { useMediaQuery } from '../hooks';
 import tailwindConfig from '../../tailwind.config';
 
@@ -20,7 +21,9 @@ function Search() {
         }
       />
       <div className="absolute left-3">
-        <BiSearch />
+        <IconContext.Provider value={{ size: '1.2rem' }}>
+          <BiSearch />
+        </IconContext.Provider>
       </div>
     </div>
   );
