@@ -27,6 +27,7 @@ export default {
           700: '#717799',
         },
         text: '#212427',
+        product: '#F4F4F4'
       },
     },
   },

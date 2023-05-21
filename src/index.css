@@ -9,4 +9,18 @@
 }
 
 @tailwind components;
+
+@layer components {
+    .carousel-button-active {
+        color: theme(colors.text)
+    }
+    .carousel-button-inactive {
+        color: theme(colors.text)
+    }
+}
 @tailwind utilities;
+
+.swiper-button-disabled {
+    color: theme(colors.gray.200) !important;
+    cursor: default;
+}
