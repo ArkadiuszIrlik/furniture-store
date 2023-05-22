@@ -48,7 +48,7 @@ function RecommendedCarousel() {
   });
 
   return (
-    <div className="flex items-center swiper">
+    <div className="flex items-center">
       <div className="swiper-button-prev">
         <IconContext.Provider
           value={{

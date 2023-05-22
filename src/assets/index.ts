@@ -1,2 +1,10 @@
 export { default as ElevaLogo } from './icons/eleva-logo.svg';
 export { default as AdaraBed } from './adara-bed-cropped.jpg';
+// export { default as DelayedPayment } from './icons/delay-payment-icon.png';
+// export { default as Delivery } from './icons/delivery-icon.png';
+// export { default as ProductReturns } from './icons/product-return-icon-resized.png';
+// export { default as Swatch } from './icons/swatch-icon-resized.png';
+export { default as DelayedPayment } from './icons/delayed-payment-cropped.png';
+export { default as Delivery } from './icons/delivery-cropped.png';
+export { default as ProductReturns } from './icons/product-return-cropped.png';
+export { default as Swatch } from './icons/swatch-cropped.png';
