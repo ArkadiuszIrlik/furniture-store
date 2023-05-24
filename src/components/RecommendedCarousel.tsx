@@ -1,4 +1,5 @@
 import resolveConfig from 'tailwindcss/resolveConfig';
+import { useEffect } from 'react';
 import { IoChevronForward, IoChevronBack } from 'react-icons/io5';
 import { IconContext } from 'react-icons';
 import { Swiper, Navigation, Pagination } from 'swiper';
@@ -18,38 +19,40 @@ function RecommendedCarousel() {
 
   const productList: any[] = [...Array(12)];
 
-  const swiper = new Swiper('.swiper', {
-    direction: 'horizontal',
-    loop: false,
-    speed: 600,
-    autoHeight: true,
+  useEffect(() => {
+    const swiperRecommended = new Swiper('.swiper-recommended', {
+      direction: 'horizontal',
+      loop: false,
+      speed: 600,
+      autoHeight: true,
 
-    pagination: {
-      el: '.swiper-pagination',
-    },
+      pagination: {
+        el: '.swiper-pagination',
+      },
 
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    slidesPerView: 1,
-    spaceBetween: 10,
-    breakpoints: {
-      [parseInt(smallScreen, 10) * currentFontSizePx]: {
-        slidesPerView: 2,
-        spaceBetween: 20,
+      navigation: {
+        nextEl: '.swiper-recommended-button-next',
+        prevEl: '.swiper-recommended-button-prev',
       },
-      [parseInt(mediumScreen, 10) * currentFontSizePx]: {
-        slidesPerView: 4,
-        spaceBetween: 20,
+      slidesPerView: 1,
+      spaceBetween: 10,
+      breakpoints: {
+        [parseInt(smallScreen, 10) * currentFontSizePx]: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        [parseInt(mediumScreen, 10) * currentFontSizePx]: {
+          slidesPerView: 4,
+          spaceBetween: 20,
+        },
       },
-    },
-    modules: [Navigation, Pagination],
-  });
+      modules: [Navigation, Pagination],
+    });
+  }, []);
 
   return (
     <div className="flex items-center">
-      <div className="swiper-button-prev">
+      <div className="swiper-recommended-button-prev">
         <IconContext.Provider
           value={{
             style: {
@@ -61,7 +64,7 @@ function RecommendedCarousel() {
           <IoChevronBack />
         </IconContext.Provider>
       </div>
-      <div className="swiper w-[90%]">
+      <div className="swiper swiper-recommended w-[90%]">
         <div className="swiper-wrapper">
           {productList.map((product, index) => {
             return (
@@ -72,7 +75,7 @@ function RecommendedCarousel() {
           })}
         </div>
       </div>
-      <div className="swiper-button-next">
+      <div className="swiper-recommended-button-next">
         <IconContext.Provider
           value={{
             style: { strokeWidth: '0.05rem' },
