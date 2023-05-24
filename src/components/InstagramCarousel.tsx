@@ -6,12 +6,19 @@ import {
   instaImage3,
   instaImage4,
   instaImage5,
+  instaImage6,
+  instaImage7,
+  instaImage8,
+  instaImage9,
+  instaImage10,
+  instaImage11,
 } from '../assets';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../../tailwind.config';
 import 'swiper/css';
 import { IoChevronForward, IoChevronBack } from 'react-icons/io5';
 import { IconContext } from 'react-icons';
+import { useEffect } from 'react';
 
 function InstagramCarousel() {
   const fullConfig = resolveConfig(tailwindConfig);
@@ -29,48 +36,57 @@ function InstagramCarousel() {
     instaImage3,
     instaImage4,
     instaImage5,
+    instaImage6,
+    instaImage7,
+    instaImage8,
+    instaImage9,
+    instaImage10,
+    instaImage11,
   ];
 
-  //   const swiperInsta = new Swiper('.swiper', {
-  //     direction: 'horizontal',
-  //     loop: false,
-  //     speed: 600,
-  //     autoHeight: true,
+  useEffect(() => {
+    const swiperInsta = new Swiper('.swiper-insta', {
+      direction: 'horizontal',
+      loop: true,
+      speed: 600,
+      autoHeight: true,
 
-  //     navigation: {
-  //       nextEl: '.swiper-insta-button-next',
-  //       prevEl: '.swiper-insta-button-prev',
-  //     },
-  //     slidesPerView: 1,
-  //     spaceBetween: 10,
-  //     breakpoints: {
-  //       [parseInt(smallScreen, 10) * currentFontSizePx]: {
-  //         slidesPerView: 2,
-  //         spaceBetween: 20,
-  //       },
-  //       [parseInt(mediumScreen, 10) * currentFontSizePx]: {
-  //         slidesPerView: 4,
-  //         spaceBetween: 20,
-  //       },
-  //     },
-  //     modules: [Navigation],
-  //   });
+      navigation: {
+        nextEl: '.swiper-insta-button-next',
+        prevEl: '.swiper-insta-button-prev',
+      },
+      slidesPerView: 1,
+      spaceBetween: 3,
+      breakpoints: {
+        [parseInt(smallScreen, 10) * currentFontSizePx]: {
+          slidesPerView: 4,
+          spaceBetween: 3,
+        },
+        [parseInt(mediumScreen, 10) * currentFontSizePx]: {
+          slidesPerView: 6,
+          spaceBetween: 3,
+        },
+      },
+      modules: [Navigation],
+    });
+  }, []);
 
   return (
-    <div>
-      <div className="swiper">
-        {/* <div className="swiper-insta-button-prev">
-          <IconContext.Provider
-            value={{
-              style: {
-                strokeWidth: '0.05rem',
-              },
-              size: '2.5rem',
-            }}
-          >
-            <IoChevronBack />
-          </IconContext.Provider>
-        </div> */}
+    <div className="flex items-center">
+      <div className="swiper-insta-button-prev">
+        <IconContext.Provider
+          value={{
+            style: {
+              strokeWidth: '0.05rem',
+            },
+            className: 'drop-shadow-[0_0_35px_red]',
+            size: '2.5rem',
+          }}
+        >
+          <IoChevronBack />
+        </IconContext.Provider>
+      </div>
+      <div className="swiper swiper-insta">
         <div className="swiper-wrapper">
           {images.map((image, index) => {
             return (
@@ -85,16 +101,16 @@ function InstagramCarousel() {
             );
           })}
         </div>
-        {/* <div className="swiper-insta-button-next">
-          <IconContext.Provider
-            value={{
-              style: { strokeWidth: '0.05rem' },
-              size: '2.5rem',
-            }}
-          >
-            <IoChevronForward />
-          </IconContext.Provider>
-        </div> */}
+      </div>
+      <div className="swiper-insta-button-next">
+        <IconContext.Provider
+          value={{
+            style: { strokeWidth: '0.05rem' },
+            size: '2.5rem',
+          }}
+        >
+          <IoChevronForward />
+        </IconContext.Provider>
       </div>
     </div>
   );
