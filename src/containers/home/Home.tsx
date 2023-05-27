@@ -1,3 +1,4 @@
+import resolveConfig from 'tailwindcss/resolveConfig';
 import {
   Delivery,
   Swatch,
@@ -8,8 +9,14 @@ import {
   beddingImage,
 } from '../../assets';
 import { HomeFeaturesCard, InstagramCarousel } from '../../components';
+import { useMediaQuery } from '../../hooks';
+import tailwindConfig from '../../../tailwind.config';
 
 function Home() {
+  const fullConfig = resolveConfig(tailwindConfig);
+  const smallScreen = fullConfig.theme.screens.sm;
+  const smallMatches = useMediaQuery(`(min-width: ${smallScreen})`);
+
   return (
     <div>
       <div
@@ -49,15 +56,19 @@ function Home() {
           />
         </div>
       </div>
-      <div className="mx-10 mb-12">
-        <div className="grid grid-cols-[3fr_2fr] grid-rows-2 gap-6 items-stretch justify-items-stretch">
+      <div className="px-0 sm:px-10 mb-12">
+        <div
+          className="grid grid-cols-1' sm:grid-cols-[3fr_2fr]
+          grid-rows-2 gap-6 items-stretch justify-items-stretch"
+        >
           <a
             href=""
             className="col-start-1 row-start-1 row-span-2 relative flex items-stretch"
           >
             <p
-              className="font-dm-sans font-bold text-4xl absolute z-50 text-white drop-shadow-md mt-[5%] ml-[3%] w-[70%] 
-              lg:text-5xl xl:text-6xl"
+              className="font-dm-sans font-bold text-2xl xs:text-3xl
+                 sm:text-4xl absolute z-50 text-white drop-shadow-md mt-[10%]
+                  sm:mt-[5%] ml-[3%] xs:w-[70%] lg:text-5xl xl:text-6xl"
             >
               This summer, unwind with our outdoor collection.
             </p>
@@ -68,44 +79,48 @@ function Home() {
               className="object-cover object-center"
             />
           </a>
-          <a
-            href=""
-            className="col-start-2 row-start-1 relative flex items-stretch"
-          >
-            <p
-              className="font-dm-sans font-bold text-4xl
+          {smallMatches && (
+            <a
+              href=""
+              className="col-start-2 row-start-1 relative flex items-stretch"
+            >
+              <p
+                className="font-dm-sans font-bold text-4xl
                absolute z-50 text-white drop-shadow-md mb-[5%] ml-[4%]
               lg:text-5xl xl:text-6xl self-end"
-              aria-hidden="true"
+                aria-hidden="true"
+              >
+                Lighting
+              </p>
+              <img
+                src={lightingImage}
+                alt="browse lighting"
+                srcSet=""
+                className="object-cover object-center aspect-square"
+              />
+            </a>
+          )}
+          {smallMatches && (
+            <a
+              href=""
+              className="col-start-2 row-start-2 relative flex items-stretch"
             >
-              Lighting
-            </p>
-            <img
-              src={lightingImage}
-              alt="browse lighting"
-              srcSet=""
-              className="object-cover object-center aspect-square"
-            />
-          </a>
-          <a
-            href=""
-            className="col-start-2 row-start-2 relative flex items-stretch"
-          >
-            <p
-              className="font-dm-sans font-bold text-4xl
+              <p
+                className="font-dm-sans font-bold text-4xl
                absolute z-50 text-white drop-shadow-md mb-[5%] ml-[4%]
               lg:text-5xl xl:text-6xl self-end"
-              aria-hidden="true"
-            >
-              Bedding
-            </p>
-            <img
-              src={beddingImage}
-              alt="browse bedding"
-              srcSet=""
-              className="object-cover object-center aspect-square"
-            />
-          </a>
+                aria-hidden="true"
+              >
+                Bedding
+              </p>
+              <img
+                src={beddingImage}
+                alt="browse bedding"
+                srcSet=""
+                className="object-cover object-center aspect-square"
+              />
+            </a>
+          )}
         </div>
       </div>
       <section className="mb-16">
