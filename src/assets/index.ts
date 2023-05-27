@@ -21,3 +21,6 @@ export { default as instaImage9 } from './instagram-reel/image_9.jpg';
 export { default as instaImage10 } from './instagram-reel/image_10.jpg';
 export { default as instaImage11 } from './instagram-reel/image_11.jpg';
 export { default as instaImage12 } from './instagram-reel/image_12.jpg';
+export { default as outdoorColImage } from './home-photos/outdoor-collection.jpg';
+export { default as lightingImage } from './home-photos/lighting.jpg';
+export { default as beddingImage } from './home-photos/bedding.jpg';
