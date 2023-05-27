@@ -15,7 +15,7 @@ function Search() {
         type="search"
         name="site-search"
         id="site-search"
-        className="bg-primary-300 rounded-xl py-2 pl-9 pr-4 placeholder:text-primary-800 font-open-sans w-full"
+        className="border-primary-700 border-2 rounded-xl py-2 pl-9 pr-4 placeholder:text-primary-800 font-open-sans w-full"
         placeholder={
           smallMatches ? 'Search for rugs, armoires and more' : 'Search'
         }
