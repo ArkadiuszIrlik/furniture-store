@@ -4,3 +4,4 @@ export { default as RecommendedCarousel } from './RecommendedCarousel';
 export { default as RecommendedCard } from './RecommendedCard';
 export { default as HomeFeaturesCard } from './HomeFeaturesCard';
 export { default as InstagramCarousel } from './InstagramCarousel';
+export { default as SearchFilterSidebar } from './SearchFilterSidebar';
