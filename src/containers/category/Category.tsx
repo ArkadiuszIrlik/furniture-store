@@ -4,15 +4,45 @@ import { SearchFilterSidebar } from '../../components';
 function Category() {
   function handleFacetToggle(facet, value) {
     // find facet in list of facets, then find value and set value to !currentValue
-    
-    setFacets(...facets, {facet.values})
+    // const nextFacet = facets.find( item => item.id === facet.id);
+    // const nextValue = editedFacet?.values.find( item => item.id === value.id);
+    // nextValue?.isActive = !nextValue?.isActive;
+    // nextFacet.values = [...nextFacet?.values, nextValue]
+    setFacets(
+      facets.map((item) => {
+        if (item.id === facet.id) {
+          return {
+            ...item,
+            values: item.values.map((el) => {
+              if (el.id === value.id) {
+                return { ...el, isActive: !el.isActive };
+              }
+              return el;
+            }),
+          };
+        }
+        return item;
+      })
+    );
+    // setFacets(...facets, editedFacet)
+    // setFacets(...facets, {facet.values})
   }
   const [facets, setFacets] = useState([
     {
+      id: crypto.randomUUID(),
       name: 'Color',
       values: [
-        { name: 'Black', isActive: false },
-        { name: 'Beige', isActive: false },
+        { name: 'Black', id: crypto.randomUUID(), isActive: false },
+        { name: 'Beige', id: crypto.randomUUID(), isActive: false },
+      ],
+    },
+    {
+      id: crypto.randomUUID(),
+      name: 'Material',
+      values: [
+        { name: 'ZOak', id: crypto.randomUUID(), isActive: false },
+        { name: 'Sandalwood', id: crypto.randomUUID(), isActive: false },
+        { name: 'Aak', id: crypto.randomUUID(), isActive: false },
       ],
     },
   ]);

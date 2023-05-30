@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 import defaultTheme from 'tailwindcss/defaultTheme';
+import tailwindForms from '@tailwindcss/forms';
+// const defaultTheme = require('tailwindcss/defaultTheme')
 
 export default {
+  // module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     screens: {
@@ -32,5 +35,10 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    tailwindForms
+    // import('@tailwindcss/forms')
+    // require('@tailwindcss/forms')
+
+  ],
 };
