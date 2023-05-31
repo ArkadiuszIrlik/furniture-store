@@ -7,7 +7,7 @@ function SearchFilterSidebar({ facetList, onToggleFacet }) {
       {facetList.map((facet) => {
         return (
           <div key={facet.id}>
-            <div className="flex justify-between items-center border-b-[1px] border-b-primary-700 pr-1 py-1">
+            <div className="flex justify-between items-center border-b-[1px] border-b-primary-700 pr-1 pb-1 gap-5">
               <p className="text-xl font-dm-sans">{facet.name.toUpperCase()}</p>
               {/* <p> */}
               <IconContext.Provider
@@ -21,7 +21,7 @@ function SearchFilterSidebar({ facetList, onToggleFacet }) {
               </IconContext.Provider>
               {/* </p> */}
             </div>
-            <div className="py-2">
+            <div className="py-2 pr-6 mb-1">
               {[...facet.values]
                 .sort((a, b) => {
                   const nameA = a.name.toUpperCase();
