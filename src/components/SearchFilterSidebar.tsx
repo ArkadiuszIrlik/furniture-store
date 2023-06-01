@@ -3,11 +3,15 @@ import { IconContext } from 'react-icons';
 
 function SearchFilterSidebar({ facetList, onToggleFacet }) {
   return (
-    <div className="max-w-xs">
+    <div className="max-w-xs px-2 md:px-0 overflow-y-auto h-full">
       {facetList.map((facet) => {
         return (
           <div key={facet.id}>
-            <div className="flex justify-between items-center border-b-[1px] border-b-primary-700 pr-1 pb-1 gap-5">
+            <div
+              className="flex justify-between items-center border-b-[1px] border-b-primary-700
+            py-1
+             md:pr-1 md:pb-1 gap-5"
+            >
               <p className="text-xl font-dm-sans">{facet.name.toUpperCase()}</p>
               {/* <p> */}
               <IconContext.Provider
@@ -21,7 +25,7 @@ function SearchFilterSidebar({ facetList, onToggleFacet }) {
               </IconContext.Provider>
               {/* </p> */}
             </div>
-            <div className="py-2 pr-6 mb-1">
+            <div className="py-2 md:pr-6 md:mb-1 grid grid-cols-2 gap-2 md:block">
               {[...facet.values]
                 .sort((a, b) => {
                   const nameA = a.name.toUpperCase();
@@ -30,7 +34,10 @@ function SearchFilterSidebar({ facetList, onToggleFacet }) {
                 })
                 .map((value) => {
                   return (
-                    <div key={value.id} className="flex items-center gap-1">
+                    <div
+                      key={value.id}
+                      className="flex items-center gap-1 md:px-0"
+                    >
                       <input
                         type="checkbox"
                         checked={value.isActive}
@@ -38,7 +45,7 @@ function SearchFilterSidebar({ facetList, onToggleFacet }) {
                           onToggleFacet(facet, value);
                         }}
                         name=""
-                        id={`checkbox-filter-${value.name.toLowerCase()}`}
+                        id={`checkbox-filter-${value.id}`}
                         className="
                           cursor-pointer
                           rounded
@@ -53,7 +60,7 @@ function SearchFilterSidebar({ facetList, onToggleFacet }) {
                         "
                       />
                       <label
-                        htmlFor={`checkbox-filter-${value.name.toLowerCase()}`}
+                        htmlFor={`checkbox-filter-${value.id}`}
                         className="cursor-pointer font-open-sans text-base"
                       >
                         {value.name}

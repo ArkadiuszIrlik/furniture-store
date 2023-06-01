@@ -2,7 +2,12 @@ import { useState } from 'react';
 import { IconContext } from 'react-icons';
 import { BiFilter } from 'react-icons/bi';
 import { AiFillCaretDown } from 'react-icons/ai';
-import { SearchFilterSidebar, RecommendedCard } from '../../components';
+import { IoClose } from 'react-icons/io5';
+import {
+  SearchFilterSidebar,
+  RecommendedCard,
+  ModalOverlay,
+} from '../../components';
 
 function Category() {
   const productList: any[] = [...Array(12)];
@@ -46,15 +51,24 @@ function Category() {
       name: 'Color',
       values: [
         { name: 'Black', id: crypto.randomUUID(), isActive: false },
-        { name: 'Beige', id: crypto.randomUUID(), isActive: false },
+        // { name: 'Beige', id: crypto.randomUUID(), isActive: false },
       ],
     },
+    // {
+    //   id: crypto.randomUUID(),
+    //   name: 'Material',
+    //   values: [
+    //     { name: 'ZOak', id: crypto.randomUUID(), isActive: false },
+    //     { name: 'Sandalwood', id: crypto.randomUUID(), isActive: false },
+    //     { name: 'Aak', id: crypto.randomUUID(), isActive: false },
+    //   ],
+    // },
     {
       id: crypto.randomUUID(),
       name: 'Material',
       values: [
-        { name: 'ZOak', id: crypto.randomUUID(), isActive: false },
-        { name: 'Sandalwood', id: crypto.randomUUID(), isActive: false },
+        // { name: 'ZOak', id: crypto.randomUUID(), isActive: false },
+        // { name: 'AA', id: crypto.randomUUID(), isActive: false },
         { name: 'Aak', id: crypto.randomUUID(), isActive: false },
       ],
     },
@@ -76,13 +90,65 @@ function Category() {
       </div>
       <div className="overflow-hidden flex gap-5 pt-2">
         {isFilterShown && (
+          <ModalOverlay onOverlayClick={handleToggleFilterVisibility} />
+        )}
+        {isFilterShown && (
           <div
-            className={animateFilter ? 'animate-[slide-in_0.4s_ease-out]' : ''}
+            className={`fixed z-50 top-0 left-0 bottom-0 flex flex-col bg-white ${
+              animateFilter ? 'animate-[slide-in_0.4s_ease-out]' : ''
+            } min-w-[250px]`}
           >
+            <div
+              className="bg-primary-700 flex justify-between items-center
+               px-2 py-1 top-0 left-0 right-0"
+            >
+              <p className="font-dm-sans font-bold text-2xl text-white">
+                FILTER
+              </p>
+              <button
+                type="button"
+                aria-label="hide filter"
+                onClick={handleToggleFilterVisibility}
+              >
+                <IconContext.Provider
+                  value={{
+                    style: {
+                      strokeWidth: '0.05rem',
+                    },
+                    size: '1.3rem',
+                    className: 'fill-white',
+                  }}
+                >
+                  <IoClose />
+                </IconContext.Provider>
+              </button>
+            </div>
             <SearchFilterSidebar
               facetList={facets}
               onToggleFacet={handleFacetToggle}
             />
+            <div
+              className="flex justify-center gap-2 bottom-0 left-0 right-0
+               bg-white mt-auto px-2 py-4"
+            >
+              <button
+                type="button"
+                className="rounded-lg border-2 border-primary-700
+                 text-primary-700 font-dm-sans font-medium
+                 px-2 py-1 flex-auto"
+              >
+                Reset
+              </button>
+              <button
+                type="button"
+                className="rounded-lg border-2 border-primary-700 bg-primary-700
+                 text-white font-dm-sans font-medium
+                 px-2 py-1 flex-auto"
+                onClick={handleToggleFilterVisibility}
+              >
+                Apply
+              </button>
+            </div>
           </div>
         )}
         <div className="flex flex-col flex-auto">
@@ -98,6 +164,7 @@ function Category() {
                     strokeWidth: '0.05rem',
                   },
                   size: '1.7rem',
+                  className: 'stroke-text',
                 }}
               >
                 <BiFilter />
