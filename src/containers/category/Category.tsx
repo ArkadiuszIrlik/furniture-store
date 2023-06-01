@@ -7,6 +7,14 @@ import { SearchFilterSidebar, RecommendedCard } from '../../components';
 function Category() {
   const productList: any[] = [...Array(12)];
 
+  const [isFilterShown, setIsFilterShown] = useState(true);
+  const [animateFilter, setAnimateFilter] = useState(false);
+
+  function handleToggleFilterVisibility() {
+    setAnimateFilter(true);
+    setIsFilterShown(!isFilterShown);
+  }
+
   function handleFacetToggle(facet, value) {
     // find facet in list of facets, then find value and set value to !currentValue
     // const nextFacet = facets.find( item => item.id === facet.id);
@@ -67,13 +75,23 @@ function Category() {
         <h2 className="text-3xl font-medium">VASES</h2>
       </div>
       <div className="overflow-hidden flex gap-5 pt-2">
-        <SearchFilterSidebar
-          facetList={facets}
-          onToggleFacet={handleFacetToggle}
-        />
+        {isFilterShown && (
+          <div
+            className={animateFilter ? 'animate-[slide-in_0.4s_ease-out]' : ''}
+          >
+            <SearchFilterSidebar
+              facetList={facets}
+              onToggleFacet={handleFacetToggle}
+            />
+          </div>
+        )}
         <div className="flex flex-col flex-auto">
           <div className="flex justify-between items-center pb-3">
-            <div className="flex items-center">
+            <button
+              type="button"
+              className="font-open-sans flex items-center"
+              onClick={handleToggleFilterVisibility}
+            >
               <IconContext.Provider
                 value={{
                   style: {
@@ -84,9 +102,8 @@ function Category() {
               >
                 <BiFilter />
               </IconContext.Provider>
-              <p className="font-open-sans">Hide Filters</p>
-            </div>
-            {/* <div className="flex gap-2 rounded-lg border-primary-700 border-[1px] px-2 py-1"> */}
+              {isFilterShown ? 'Hide Filters' : 'Show Filters'}
+            </button>
             <div className="flex gap-2">
               <p className="font-bold">Sort By:</p>
               <div className="flex items-center gap-1">

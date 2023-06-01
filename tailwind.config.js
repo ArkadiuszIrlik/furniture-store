@@ -33,6 +33,14 @@ export default {
         text: '#212427',
         product: '#F4F4F4'
       },
+      keyframes: {
+        "slide-in": {
+          '0%': {transform: 'translateX(-100%)'
+
+          },
+          '100%': {transform: 'translateX(0)'}
+        }
+      }
     },
   },
   plugins: [
