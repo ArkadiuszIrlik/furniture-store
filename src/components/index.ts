@@ -6,3 +6,4 @@ export { default as HomeFeaturesCard } from './HomeFeaturesCard';
 export { default as InstagramCarousel } from './InstagramCarousel';
 export { default as SearchFilterSidebar } from './SearchFilterSidebar';
 export { default as ModalOverlay } from './ModalOverlay';
+export { default as SearchFilterModal } from './SearchFilterModal';

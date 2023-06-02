@@ -2,14 +2,21 @@ import { useState } from 'react';
 import { IconContext } from 'react-icons';
 import { BiFilter } from 'react-icons/bi';
 import { AiFillCaretDown } from 'react-icons/ai';
-import { IoClose } from 'react-icons/io5';
+import resolveConfig from 'tailwindcss/resolveConfig';
 import {
   SearchFilterSidebar,
   RecommendedCard,
   ModalOverlay,
+  SearchFilterModal,
 } from '../../components';
+import tailwindConfig from '../../../tailwind.config';
+import { useMediaQuery } from '../../hooks';
 
 function Category() {
+  const fullConfig = resolveConfig(tailwindConfig);
+  const mediumScreen = fullConfig.theme.screens.md;
+  const mediumMatches = useMediaQuery(`(min-width: ${mediumScreen})`);
+
   const productList: any[] = [...Array(12)];
 
   const [isFilterShown, setIsFilterShown] = useState(true);
@@ -21,11 +28,6 @@ function Category() {
   }
 
   function handleFacetToggle(facet, value) {
-    // find facet in list of facets, then find value and set value to !currentValue
-    // const nextFacet = facets.find( item => item.id === facet.id);
-    // const nextValue = editedFacet?.values.find( item => item.id === value.id);
-    // nextValue?.isActive = !nextValue?.isActive;
-    // nextFacet.values = [...nextFacet?.values, nextValue]
     setFacets(
       facets.map((item) => {
         if (item.id === facet.id) {
@@ -42,8 +44,6 @@ function Category() {
         return item;
       })
     );
-    // setFacets(...facets, editedFacet)
-    // setFacets(...facets, {facet.values})
   }
   const [facets, setFacets] = useState([
     {
@@ -51,24 +51,28 @@ function Category() {
       name: 'Color',
       values: [
         { name: 'Black', id: crypto.randomUUID(), isActive: false },
-        // { name: 'Beige', id: crypto.randomUUID(), isActive: false },
+        { name: 'Beige', id: crypto.randomUUID(), isActive: false },
       ],
     },
-    // {
-    //   id: crypto.randomUUID(),
-    //   name: 'Material',
-    //   values: [
-    //     { name: 'ZOak', id: crypto.randomUUID(), isActive: false },
-    //     { name: 'Sandalwood', id: crypto.randomUUID(), isActive: false },
-    //     { name: 'Aak', id: crypto.randomUUID(), isActive: false },
-    //   ],
-    // },
     {
       id: crypto.randomUUID(),
       name: 'Material',
       values: [
-        // { name: 'ZOak', id: crypto.randomUUID(), isActive: false },
-        // { name: 'AA', id: crypto.randomUUID(), isActive: false },
+        {
+          name: 'Reallylongnamehere',
+          id: crypto.randomUUID(),
+          isActive: false,
+        },
+        { name: 'Sandalwood', id: crypto.randomUUID(), isActive: false },
+        { name: 'Aak', id: crypto.randomUUID(), isActive: false },
+      ],
+    },
+    {
+      id: crypto.randomUUID(),
+      name: 'Material',
+      values: [
+        { name: 'ZOak', id: crypto.randomUUID(), isActive: false },
+        { name: 'AA', id: crypto.randomUUID(), isActive: false },
         { name: 'Aak', id: crypto.randomUUID(), isActive: false },
       ],
     },
@@ -89,68 +93,34 @@ function Category() {
         <h2 className="text-3xl font-medium">VASES</h2>
       </div>
       <div className="overflow-hidden flex gap-5 pt-2">
-        {isFilterShown && (
-          <ModalOverlay onOverlayClick={handleToggleFilterVisibility} />
-        )}
-        {isFilterShown && (
-          <div
-            className={`fixed z-50 top-0 left-0 bottom-0 flex flex-col bg-white ${
-              animateFilter ? 'animate-[slide-in_0.4s_ease-out]' : ''
-            } min-w-[250px]`}
-          >
-            <div
-              className="bg-primary-700 flex justify-between items-center
-               px-2 py-1 top-0 left-0 right-0"
-            >
-              <p className="font-dm-sans font-bold text-2xl text-white">
-                FILTER
-              </p>
-              <button
-                type="button"
-                aria-label="hide filter"
-                onClick={handleToggleFilterVisibility}
-              >
-                <IconContext.Provider
-                  value={{
-                    style: {
-                      strokeWidth: '0.05rem',
-                    },
-                    size: '1.3rem',
-                    className: 'fill-white',
-                  }}
-                >
-                  <IoClose />
-                </IconContext.Provider>
-              </button>
-            </div>
-            <SearchFilterSidebar
-              facetList={facets}
-              onToggleFacet={handleFacetToggle}
-            />
-            <div
-              className="flex justify-center gap-2 bottom-0 left-0 right-0
-               bg-white mt-auto px-2 py-4"
-            >
-              <button
-                type="button"
-                className="rounded-lg border-2 border-primary-700
-                 text-primary-700 font-dm-sans font-medium
-                 px-2 py-1 flex-auto"
-              >
-                Reset
-              </button>
-              <button
-                type="button"
-                className="rounded-lg border-2 border-primary-700 bg-primary-700
-                 text-white font-dm-sans font-medium
-                 px-2 py-1 flex-auto"
-                onClick={handleToggleFilterVisibility}
-              >
-                Apply
-              </button>
-            </div>
+        {/* {isFilterShown && (
+          <div className="md:hidden">
+            <ModalOverlay onOverlayClick={handleToggleFilterVisibility} />
           </div>
-        )}
+        )} */}
+        {isFilterShown &&
+          (mediumMatches ? (
+            <div
+              className={`${
+                animateFilter ? 'animate-[slide-in_0.4s_ease-out]' : ''
+              }`}
+            >
+              <SearchFilterSidebar
+                facetList={facets}
+                onToggleFilterValue={handleFacetToggle}
+              />
+            </div>
+          ) : (
+            <>
+              <SearchFilterModal
+                isAnimated={animateFilter}
+                facetList={facets}
+                onToggleFilterValue={handleFacetToggle}
+                onClose={handleToggleFilterVisibility}
+              />
+              <ModalOverlay onOverlayClick={handleToggleFilterVisibility} />
+            </>
+          ))}
         <div className="flex flex-col flex-auto">
           <div className="flex justify-between items-center pb-3">
             <button
@@ -164,7 +134,7 @@ function Category() {
                     strokeWidth: '0.05rem',
                   },
                   size: '1.7rem',
-                  className: 'stroke-text',
+                  className: 'fill-text stroke-text',
                 }}
               >
                 <BiFilter />

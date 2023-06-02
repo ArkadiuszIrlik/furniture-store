@@ -1,7 +1,7 @@
 import { BsPlusLg } from 'react-icons/bs';
 import { IconContext } from 'react-icons';
 
-function SearchFilterSidebar({ facetList, onToggleFacet }) {
+function SearchFilterSidebar({ facetList, onToggleFilterValue }) {
   return (
     <div className="max-w-xs px-2 md:px-0 overflow-y-auto h-full">
       {facetList.map((facet) => {
@@ -13,7 +13,6 @@ function SearchFilterSidebar({ facetList, onToggleFacet }) {
              md:pr-1 md:pb-1 gap-5"
             >
               <p className="text-xl font-dm-sans">{facet.name.toUpperCase()}</p>
-              {/* <p> */}
               <IconContext.Provider
                 value={{
                   style: { strokeWidth: '0.05rem' },
@@ -23,7 +22,6 @@ function SearchFilterSidebar({ facetList, onToggleFacet }) {
               >
                 <BsPlusLg />
               </IconContext.Provider>
-              {/* </p> */}
             </div>
             <div className="py-2 md:pr-6 md:mb-1 grid grid-cols-2 gap-2 md:block">
               {[...facet.values]
@@ -42,7 +40,7 @@ function SearchFilterSidebar({ facetList, onToggleFacet }) {
                         type="checkbox"
                         checked={value.isActive}
                         onChange={() => {
-                          onToggleFacet(facet, value);
+                          onToggleFilterValue(facet, value);
                         }}
                         name=""
                         id={`checkbox-filter-${value.id}`}
@@ -61,7 +59,8 @@ function SearchFilterSidebar({ facetList, onToggleFacet }) {
                       />
                       <label
                         htmlFor={`checkbox-filter-${value.id}`}
-                        className="cursor-pointer font-open-sans text-base"
+                        className="cursor-pointer font-open-sans text-base
+                        break-words min-w-0"
                       >
                         {value.name}
                       </label>
