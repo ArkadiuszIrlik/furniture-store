@@ -8,6 +8,7 @@ import {
   RecommendedCard,
   ModalOverlay,
   SearchFilterModal,
+  PathDisplay,
 } from '../../components';
 import tailwindConfig from '../../../tailwind.config';
 import { useMediaQuery } from '../../hooks';
@@ -21,6 +22,8 @@ function Category() {
 
   const [isFilterShown, setIsFilterShown] = useState(!!mediumMatches);
   const [animateFilter, setAnimateFilter] = useState(false);
+
+  const pathToCategory = [{ name: 'Vases' }];
 
   useEffect(() => {
     if (!mediumMatches && isFilterShown) {
@@ -87,15 +90,7 @@ function Category() {
   return (
     <div className="px-3 md:px-12">
       <div className="border-b-[1px] border-b-primary-700 pb-2">
-        <p className="font-dm-sans font-bold text-base text-primary-700">
-          <a href="" className="hover:text-accents-700">
-            Home
-          </a>{' '}
-          /{' '}
-          <a href="" className="hover:text-accents-700">
-            Vases
-          </a>
-        </p>
+        <PathDisplay pathArray={pathToCategory} />
         <h2 className="text-3xl font-medium">VASES</h2>
       </div>
       <div className="overflow-hidden flex gap-5 pt-2">
