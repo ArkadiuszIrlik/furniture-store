@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IconContext } from 'react-icons';
 import { BiFilter } from 'react-icons/bi';
 import { AiFillCaretDown } from 'react-icons/ai';
@@ -19,8 +19,14 @@ function Category() {
 
   const productList: any[] = [...Array(12)];
 
-  const [isFilterShown, setIsFilterShown] = useState(true);
+  const [isFilterShown, setIsFilterShown] = useState(!!mediumMatches);
   const [animateFilter, setAnimateFilter] = useState(false);
+
+  useEffect(() => {
+    if (!mediumMatches && isFilterShown) {
+      setIsFilterShown(false);
+    }
+  }, [mediumMatches]);
 
   function handleToggleFilterVisibility() {
     setAnimateFilter(true);
