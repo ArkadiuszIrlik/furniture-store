@@ -1,6 +1,6 @@
 import { IoClose } from 'react-icons/io5';
 import { IconContext } from 'react-icons';
-import { SearchFilterSidebar } from '.';
+import { SearchFilterSidebar, PrimaryButton } from '.';
 
 function SearchFilterModal({
   isAnimated,
@@ -39,25 +39,10 @@ function SearchFilterModal({
       />
       <div
         className="flex justify-center gap-2 bottom-0 left-0 right-0
-               bg-white mt-auto px-2 py-4"
+               bg-white mt-auto px-2 py-4 text-lg"
       >
-        <button
-          type="button"
-          className="rounded-lg border-2 border-primary-700
-                 text-primary-700 font-dm-sans font-medium
-                 px-2 py-1 flex-auto"
-        >
-          Reset
-        </button>
-        <button
-          type="button"
-          className="rounded-lg border-2 border-primary-700 bg-primary-700
-                 text-white font-dm-sans font-medium
-                 px-2 py-1 flex-auto"
-          onClick={onClose}
-        >
-          Apply
-        </button>
+        <PrimaryButton isFilled="false">Reset</PrimaryButton>
+        <PrimaryButton>Apply</PrimaryButton>
       </div>
     </div>
   );
