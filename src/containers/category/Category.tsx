@@ -85,7 +85,7 @@ function Category() {
   ]);
 
   return (
-    <div className="md:mx-[10%] px-3">
+    <div className="px-3 md:px-12">
       <div className="border-b-[1px] border-b-primary-700 pb-2">
         <p className="font-dm-sans font-bold text-base text-primary-700">
           <a href="" className="hover:text-accents-700">
