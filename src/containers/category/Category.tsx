@@ -93,11 +93,6 @@ function Category() {
         <h2 className="text-3xl font-medium">VASES</h2>
       </div>
       <div className="overflow-hidden flex gap-5 pt-2">
-        {/* {isFilterShown && (
-          <div className="md:hidden">
-            <ModalOverlay onOverlayClick={handleToggleFilterVisibility} />
-          </div>
-        )} */}
         {isFilterShown &&
           (mediumMatches ? (
             <div
