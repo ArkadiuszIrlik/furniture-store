@@ -16,6 +16,10 @@ export default {
       '2xl': '160rem',
     },
     extend: {
+      backgroundImage: (theme) => ( {
+        'review-score': `linear-gradient(90deg, ${theme('colors.accents[700]')} var(--scorePercentage),
+        ${theme('colors.accents[300]')} var(--scorePercentage))`,
+      }),
       fontFamily: {
         'dm-sans': ['DM Sans', ...defaultTheme.fontFamily.sans],
         'open-sans': ['Open Sans', ...defaultTheme.fontFamily.sans],
