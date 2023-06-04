@@ -45,6 +45,7 @@ function ProductColorSelector({
                   className={`${
                     index === selectedColorIndex ? 'p-1' : ''
                   } w-12 aspect-square rounded-lg`}
+                  draggable="false"
                 />
               </label>
             );

@@ -103,6 +103,7 @@ function Product() {
                       className={`${
                         activeImage === index ? '' : 'opacity-[60%]'
                       }`}
+                      draggable="false"
                     />
                   </button>
                 );
@@ -110,7 +111,9 @@ function Product() {
             </div>
           )}
           <div>
-            <img src={product.images[activeImage]} alt="" srcSet="" />
+            <img src={product.images[activeImage]} alt="" srcSet="" 
+            draggable="false"
+            />
           </div>
           <div className="flex flex-col ml-4">
             <h1 className="font-dm-sans font-medium text-3xl mt-20">
