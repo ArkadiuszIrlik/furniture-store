@@ -22,9 +22,9 @@ function ProductSizeSelector({
               <div className="flex">
                 <label
                   className={`rounded-lg border-[1px] font-dm-sans
-                   px-2 py-1 flex-auto ${
+                   px-2 py-1 flex-auto cursor-pointer ${
                      index === selectedSizeIndex
-                       ? 'bg-primary-700 text-white border-primary-700 font-medium'
+                       ? 'bg-primary-700 text-white border-primary-700'
                        : 'text-text border-text'
                    }`}
                   htmlFor={`input-size-${size.name}`}
