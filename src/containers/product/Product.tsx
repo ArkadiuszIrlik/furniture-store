@@ -4,6 +4,8 @@ import {
   PathDisplay,
   ProductColorSelector,
   ProductSizeSelector,
+  PrimaryButton,
+  SpinButton,
 } from '../../components';
 import tailwindConfig from '../../../tailwind.config';
 import { useMediaQuery } from '../../hooks';
@@ -160,6 +162,16 @@ function Product() {
                 selectedSizeIndex={selectedSizeIndex}
                 onChangeSelection={handleSwitchSelectedSizeIndex}
               />
+              <div>
+                <div className="flex items-end gap-1 max-w-xs">
+                  <SpinButton
+                    labelText="Quantity"
+                    inputId="product-quantity-selector"
+                    className="w-20"
+                  />
+                  <PrimaryButton>ADD TO CART</PrimaryButton>
+                </div>
+              </div>
             </div>
           </div>
         </div>
