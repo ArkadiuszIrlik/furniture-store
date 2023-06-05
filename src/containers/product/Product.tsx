@@ -108,6 +108,7 @@ function Product() {
   // Only set this if the color property exists on the product
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
+  const [chosenQuantity, setChosenQuantity] = useState(1);
   const [infoDropdownOpenState, setInfoDropdownOpenState] = useState(
     product.information.map((section) => {
       return { isOpen: false };
@@ -125,6 +126,12 @@ function Product() {
   }
   function handleSwitchSelectedSizeIndex(sizeIndex: number) {
     setSelectedSizeIndex(sizeIndex);
+  }
+  function handleQuantityChange(nextValue: number) {
+    if (nextValue < 1 || nextValue > 99) {
+      return;
+    }
+    setChosenQuantity(nextValue);
   }
   function handleToggleInfoSectionOpen(sectionIndex: number) {
     setInfoDropdownOpenState(
@@ -229,6 +236,8 @@ function Product() {
                   <SpinButton
                     labelText="Quantity"
                     inputId="product-quantity-selector"
+                    inputValue={chosenQuantity}
+                    onValueChange={handleQuantityChange}
                     className="w-20"
                   />
                   <PrimaryButton>ADD TO CART</PrimaryButton>
