@@ -10,3 +10,4 @@ export { default as SearchFilterModal } from './SearchFilterModal';
 export { default as PrimaryButton } from './PrimaryButton';
 export { default as PathDisplay } from './PathDisplay';
 export { default as ProductColorSelector } from './ProductColorSelector';
+export { default as ProductSizeSelector } from './ProductSizeSelector';
