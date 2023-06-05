@@ -1,6 +1,10 @@
 import resolveConfig from 'tailwindcss/resolveConfig';
 import { useState } from 'react';
-import { PathDisplay, ProductColorSelector } from '../../components';
+import {
+  PathDisplay,
+  ProductColorSelector,
+  ProductSizeSelector,
+} from '../../components';
 import tailwindConfig from '../../../tailwind.config';
 import { useMediaQuery } from '../../hooks';
 import {
@@ -51,11 +55,14 @@ function Product() {
       { name: 'Navy Velvet', image: navyVelvet },
       { name: 'Prep School Plaid', image: prepSchoolPlaid },
     ],
+    sizes: [{ name: 'Cal King' }, { name: 'King' }, { name: 'Queen' }],
   };
 
   const [activeImage, setActiveImage] = useState(0);
   // Only set this if the color property exists on the product
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
+  const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
+
   // const reviewPercentage = Math.round(product.score / 0.5) * 0.5;
   const reviewScorePercentage = `${Math.floor(product.reviewScore * 20)}%`;
 
@@ -64,6 +71,9 @@ function Product() {
   }
   function handleSwitchSelectedColorIndex(colorIndex: number) {
     setSelectedColorIndex(colorIndex);
+  }
+  function handleSwitchSelectedSizeIndex(sizeIndex: number) {
+    setSelectedSizeIndex(sizeIndex);
   }
 
   const pathToProduct = [
@@ -111,8 +121,11 @@ function Product() {
             </div>
           )}
           <div>
-            <img src={product.images[activeImage]} alt="" srcSet="" 
-            draggable="false"
+            <img
+              src={product.images[activeImage]}
+              alt=""
+              srcSet=""
+              draggable="false"
             />
           </div>
           <div className="flex flex-col ml-4">
@@ -141,6 +154,11 @@ function Product() {
                 colorList={product.colors}
                 selectedColorIndex={selectedColorIndex}
                 onChangeSelection={handleSwitchSelectedColorIndex}
+              />
+              <ProductSizeSelector
+                sizeList={product.sizes}
+                selectedSizeIndex={selectedSizeIndex}
+                onChangeSelection={handleSwitchSelectedSizeIndex}
               />
             </div>
           </div>
