@@ -19,7 +19,7 @@ function ProductSizeSelector({
           </legend>
           {sizeList.map((size, index) => {
             return (
-              <div className="flex relative">
+              <div className="flex">
                 <label
                   className={`rounded-lg border-[1px] font-dm-sans
                    px-2 py-1 flex-auto ${
