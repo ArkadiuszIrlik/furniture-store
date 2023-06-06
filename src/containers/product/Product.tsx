@@ -1,7 +1,8 @@
 import resolveConfig from 'tailwindcss/resolveConfig';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { BsTruck } from 'react-icons/bs';
 import { BiPlus, BiMinus } from 'react-icons/bi';
+import { IoChevronForward, IoChevronBack } from 'react-icons/io5';
 import { IconContext } from 'react-icons';
 import {
   PathDisplay,
@@ -151,14 +152,33 @@ function Product() {
     { name: 'Adara Bed' },
   ];
 
+  const swiperContainerRef = useRef(null);
+  useEffect(() => {
+    const params = {
+      injectStyles: [
+        `
+      .swiper-wrapper {
+        align-items:center;
+      }
+      .swiper-pagination-bullet-active {
+        background-color: ${colorAccents700} !important;
+      }
+
+      `,
+      ],
+    };
+    Object.assign(swiperContainerRef.current, params);
+    swiperContainerRef.current.initialize();
+  }, [swiperContainerRef]);
+
   return (
     <div className="px-3 md:px-12">
-      <div className="mb-5">
+      <div className="mb-2 sm:mb-5">
         <PathDisplay pathArray={pathToProduct} />
       </div>
       <div className="flex flex-col items-stretch">
         <div
-          className="grid grid-cols-1 gap-5
+          className="grid grid-cols-1 gap-3 sm:gap-5
             sm:grid-cols-[minmax(5rem,7%)_minmax(0px,max-content)_minmax(35%,1fr)]
         "
         >
@@ -189,15 +209,63 @@ function Product() {
             </div>
           )}
           <div>
-            <img
-              src={product.images[activeImage]}
-              alt=""
-              srcSet=""
-              draggable="false"
-            />
+            {smallMatches ? (
+              <img
+                src={product.images[activeImage]}
+                alt=""
+                srcSet=""
+                draggable="false"
+              />
+            ) : (
+              <div>
+                <div className="relative">
+                  <div className="swiper-product-image-button-prev absolute top-1/2 -left-2 -translate-y-1/2 z-10">
+                    <IconContext.Provider
+                      value={{
+                        style: { strokeWidth: '0.05rem' },
+                        size: '2.5rem',
+                      }}
+                    >
+                      <IoChevronBack />
+                    </IconContext.Provider>
+                  </div>
+                  <swiper-container
+                    init="false"
+                    ref={swiperContainerRef}
+                    slides-per-view="1"
+                    space-between="10"
+                    direction="horizontal"
+                    loop="false"
+                    speed="600"
+                    auto-height="false"
+                    pagination="true"
+                    navigation-next-el=".swiper-product-image-button-next"
+                    navigation-prev-el=".swiper-product-image-button-prev"
+                  >
+                    {product.images.map((image, index) => {
+                      return (
+                        <swiper-slide>
+                          <img src={image} alt="" srcSet="" />
+                        </swiper-slide>
+                      );
+                    })}
+                  </swiper-container>
+                  <div className="swiper-product-image-button-next absolute top-1/2 -right-2 -translate-y-1/2 z-10">
+                    <IconContext.Provider
+                      value={{
+                        style: { strokeWidth: '0.05rem' },
+                        size: '2.5rem',
+                      }}
+                    >
+                      <IoChevronForward />
+                    </IconContext.Provider>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-          <div className="flex flex-col ml-4">
-            <h1 className="font-dm-sans font-medium text-3xl mt-20">
+          <div className="flex flex-col sm:ml-4">
+            <h1 className="font-dm-sans font-medium text-3xl sm:mt-20">
               {product.name}
             </h1>
             <div className="flex gap-3 items-end mb-4">
@@ -211,14 +279,14 @@ function Product() {
                 {product.reviews.length} Reviews
               </p>
             </div>
-            <p className="font-dm-sans font-bold text-3xl mb-8">
+            <p className="font-dm-sans font-bold text-3xl mb-2 sm:mb-8">
               $
               {product.priceUsd
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             </p>
             <div
-              className="border-y-[1px] border-primary-300 py-4 flex
+              className="border-y-[1px] border-primary-300 py-2 sm:py-4 flex
               flex-col gap-3"
             >
               <ProductColorSelector
@@ -258,7 +326,7 @@ function Product() {
                 </p>
               </div>
             </div>
-            <div className="py-4">
+            <div className="py-2 sm:py-4">
               <p className="font-open-sans">{product.description}</p>
             </div>
             {product.information.map((info, index) => {
@@ -266,8 +334,9 @@ function Product() {
                 <div key={index}>
                   <div
                     className="border-t-[1px] border-t-primary-300 py-2 flex
-                   justify-between items-center pr-1
+                   justify-between items-center pr-1 cursor-pointer
                    "
+                    onClick={() => handleToggleInfoSectionOpen(index)}
                   >
                     <h4 className="font-dm-sans text-xl">
                       {info.header.toUpperCase()}
@@ -299,7 +368,7 @@ function Product() {
                     </button>
                   </div>
                   {infoDropdownOpenState[index].isOpen && (
-                    <div className="border-t-[1px] border-t-primary-300 py-3">
+                    <div className="border-t-[1px] border-t-primary-300 py-2 sm:py-3">
                       <ul className="flex flex-col gap-[2px]">
                         {info.content.map((bulletpoint) => {
                           return (
