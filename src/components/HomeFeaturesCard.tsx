@@ -6,6 +6,7 @@ function HomeFeaturesCard({ header, para, image, imageAlt }) {
         alt={imageAlt}
         srcSet=""
         className="max-w-[8rem] sm:max-w-[50%] mb-2 sm:mb-4 md:mb-6"
+        draggable="false"
       />
       <h3 className="font-dm-sans text-2xl mb-2 sm:mb-4">{header}</h3>
       <p className="font-open-sans text-xl basis-full sm:basis-auto">{para}</p>
