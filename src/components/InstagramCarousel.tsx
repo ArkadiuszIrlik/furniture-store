@@ -1,4 +1,3 @@
-import { Swiper, Navigation } from 'swiper';
 import {
   instaImage0,
   instaImage1,
@@ -15,10 +14,9 @@ import {
 } from '../assets';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../../tailwind.config';
-import 'swiper/css';
 import { IoChevronForward, IoChevronBack } from 'react-icons/io5';
 import { IconContext } from 'react-icons';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 function InstagramCarousel() {
   const fullConfig = resolveConfig(tailwindConfig);
@@ -43,32 +41,36 @@ function InstagramCarousel() {
     instaImage10,
     instaImage11,
   ];
+  const swiperContainerRef = useRef(null)
 
   useEffect(() => {
-    const swiperInsta = new Swiper('.swiper-insta', {
+    const swiperParams = {
       direction: 'horizontal',
       loop: true,
       speed: 600,
-      autoHeight: true,
-
+      autoHeight: false,
       navigation: {
         nextEl: '.swiper-insta-button-next',
         prevEl: '.swiper-insta-button-prev',
       },
-      slidesPerView: 1,
       spaceBetween: 3,
       breakpoints: {
+        0: {
+          slidesPerView: 1,
+        },
         [parseInt(smallScreen, 10) * currentFontSizePx]: {
           slidesPerView: 4,
-          spaceBetween: 3,
+          slidesPerGroup: 2,
         },
         [parseInt(mediumScreen, 10) * currentFontSizePx]: {
           slidesPerView: 6,
-          spaceBetween: 3,
+          slidesPerGroup: 3,
         },
       },
-      modules: [Navigation],
-    });
+    }
+  
+    Object.assign(swiperContainerRef.current, swiperParams);
+    swiperContainerRef.current.initialize();
   }, []);
 
   return (
@@ -86,22 +88,23 @@ function InstagramCarousel() {
           <IoChevronBack />
         </IconContext.Provider>
       </div>
-      <div className="swiper swiper-insta">
-        <div className="swiper-wrapper">
-          {images.map((image, index) => {
+      <swiper-container 
+      init="false"
+      ref={swiperContainerRef}
+      >
+      {images.map((image, index) => {
             return (
-              <div className="swiper-slide" key={index}>
+              <swiper-slide key={index}>
                 <img
                   src={image}
                   alt=""
                   srcSet=""
                   className="object-cover object-center aspect-square"
-                />
-              </div>
+                  />
+              </swiper-slide>
             );
           })}
-        </div>
-      </div>
+      </swiper-container>
       <div className="swiper-insta-button-next">
         <IconContext.Provider
           value={{
