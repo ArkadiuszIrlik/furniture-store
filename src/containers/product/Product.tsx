@@ -154,6 +154,9 @@ function Product() {
 
   const swiperContainerRef = useRef(null);
   useEffect(() => {
+    if (swiperContainerRef.current === null) {
+      return;
+    }
     const params = {
       injectStyles: [
         `
