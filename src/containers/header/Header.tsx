@@ -19,7 +19,7 @@ function Header() {
       <div
         className="grid grid-cols-[1fr_minmax(max-content,_60%)_1fr]
            grid-rows-[repeat(2,_max-content)] items-center
-            py-4 px-3 md:px-12 gap-y-4"
+            py-4 px-3 md:px-12 gap-y-2 md:gap-y-4"
       >
         <IconContext.Provider
           value={{
