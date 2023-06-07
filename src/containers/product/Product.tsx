@@ -9,6 +9,8 @@ import {
   ProductColorSelector,
   ProductSizeSelector,
   PrimaryButton,
+  ReviewScoreStars,
+  ReviewSection,
   SpinButton,
 } from '../../components';
 import tailwindConfig from '../../../tailwind.config';
@@ -46,16 +48,32 @@ function Product() {
     reviewScore: 3.76,
     reviews: [
       {
-        name: 'Bob',
+        username: 'Bob',
         score: 4,
         header: 'BEST BED EVER',
         content: 'I love this bed so much. Makes me sleep like a baby fr fr.',
+        datePublished: '2023-03-05T14:17:44+0000',
       },
       {
-        name: 'Bed Enjoyer',
+        username: 'Bed Enjoyer',
         score: 2,
         header: 'Meh',
         content: "Meh I' slept on better.",
+        datePublished: '2023-02-20T08:17:44+0000',
+      },
+      {
+        username: 'Bed Enjoyer',
+        score: 2,
+        header: 'Meh',
+        content: "Meh I' slept on better.",
+        datePublished: '2023-02-20T08:17:44+0000',
+      },
+      {
+        username: 'Bed Enjoyer',
+        score: 2,
+        header: 'Meh',
+        content: "Meh I' slept on better.",
+        datePublished: '2023-02-20T08:17:44+0000',
       },
     ],
     colors: [
@@ -115,9 +133,6 @@ function Product() {
       return { isOpen: false };
     })
   );
-
-  // const reviewPercentage = Math.round(product.score / 0.5) * 0.5;
-  const reviewScorePercentage = `${Math.floor(product.reviewScore * 20)}%`;
 
   function handleSwitchActiveImage(imageIndex: number) {
     setActiveImage(imageIndex);
@@ -179,7 +194,7 @@ function Product() {
       <div className="mb-2 sm:mb-5">
         <PathDisplay pathArray={pathToProduct} />
       </div>
-      <div className="flex flex-col items-stretch">
+      <div className="flex flex-col items-stretch sm:gap-10">
         <div
           className="grid grid-cols-1 gap-3 sm:gap-5
             sm:grid-cols-[minmax(5rem,7%)_minmax(0px,max-content)_minmax(35%,1fr)]
@@ -272,12 +287,7 @@ function Product() {
               {product.name}
             </h1>
             <div className="flex gap-3 items-end mb-4">
-              <div
-                className={`bg-review-score leading-none text-xl
-                    before:content-["★★★★★"] before:tracking-tighter
-                    bg-clip-text text-transparent`}
-                style={{ '--scorePercentage': reviewScorePercentage }}
-              />
+              <ReviewScoreStars score={product.reviewScore} />
               <p className="leading-none font-dm-sans font-medium">
                 {product.reviews.length} Reviews
               </p>
@@ -392,6 +402,12 @@ function Product() {
               );
             })}
           </div>
+        </div>
+        <div className="mb-10">
+          <ReviewSection
+            reviewArray={product.reviews}
+            reviewScore={product.reviewScore}
+          />
         </div>
       </div>
     </div>
