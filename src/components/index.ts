@@ -11,6 +11,7 @@ export { default as PrimaryButton } from './PrimaryButton';
 export { default as PathDisplay } from './PathDisplay';
 export { default as ProductColorSelector } from './ProductColorSelector';
 export { default as ProductSizeSelector } from './ProductSizeSelector';
+export { default as ProductCarousel } from './ProductCarousel';
 export { default as SpinButton } from './SpinButton';
 export { default as ReviewScoreStars } from './ReviewScoreStars';
 export { default as ReviewSection } from './ReviewSection';

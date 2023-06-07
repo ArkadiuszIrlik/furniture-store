@@ -1,13 +1,13 @@
 import resolveConfig from 'tailwindcss/resolveConfig';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { BsTruck } from 'react-icons/bs';
 import { BiPlus, BiMinus } from 'react-icons/bi';
-import { IoChevronForward, IoChevronBack } from 'react-icons/io5';
 import { IconContext } from 'react-icons';
 import {
   PathDisplay,
   ProductColorSelector,
   ProductSizeSelector,
+  ProductCarousel,
   PrimaryButton,
   ReviewScoreStars,
   ReviewSection,
@@ -167,28 +167,6 @@ function Product() {
     { name: 'Adara Bed' },
   ];
 
-  const swiperContainerRef = useRef(null);
-  useEffect(() => {
-    if (swiperContainerRef.current === null) {
-      return;
-    }
-    const params = {
-      injectStyles: [
-        `
-      .swiper-wrapper {
-        align-items:center;
-      }
-      .swiper-pagination-bullet-active {
-        background-color: ${colorAccents700} !important;
-      }
-
-      `,
-      ],
-    };
-    Object.assign(swiperContainerRef.current, params);
-    swiperContainerRef.current.initialize();
-  }, [swiperContainerRef]);
-
   return (
     <div className="px-3 md:px-12">
       <div className="mb-2 sm:mb-5">
@@ -235,51 +213,7 @@ function Product() {
                 draggable="false"
               />
             ) : (
-              <div>
-                <div className="relative">
-                  <div className="swiper-product-image-button-prev absolute top-1/2 -left-2 -translate-y-1/2 z-10">
-                    <IconContext.Provider
-                      value={{
-                        style: { strokeWidth: '0.05rem' },
-                        size: '2.5rem',
-                      }}
-                    >
-                      <IoChevronBack />
-                    </IconContext.Provider>
-                  </div>
-                  <swiper-container
-                    init="false"
-                    ref={swiperContainerRef}
-                    slides-per-view="1"
-                    space-between="10"
-                    direction="horizontal"
-                    loop="false"
-                    speed="600"
-                    auto-height="false"
-                    pagination="true"
-                    navigation-next-el=".swiper-product-image-button-next"
-                    navigation-prev-el=".swiper-product-image-button-prev"
-                  >
-                    {product.images.map((image, index) => {
-                      return (
-                        <swiper-slide>
-                          <img src={image} alt="" srcSet="" />
-                        </swiper-slide>
-                      );
-                    })}
-                  </swiper-container>
-                  <div className="swiper-product-image-button-next absolute top-1/2 -right-2 -translate-y-1/2 z-10">
-                    <IconContext.Provider
-                      value={{
-                        style: { strokeWidth: '0.05rem' },
-                        size: '2.5rem',
-                      }}
-                    >
-                      <IoChevronForward />
-                    </IconContext.Provider>
-                  </div>
-                </div>
-              </div>
+              <ProductCarousel images={product.images} />
             )}
           </div>
           <div className="flex flex-col sm:ml-4">
