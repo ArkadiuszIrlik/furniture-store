@@ -54,4 +54,7 @@ export default {
     // require('@tailwindcss/forms')
 
   ],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
 };
