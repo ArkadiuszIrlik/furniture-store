@@ -1,3 +1,8 @@
+import resolveConfig from 'tailwindcss/resolveConfig';
+import { IoChevronForward, IoChevronBack } from 'react-icons/io5';
+import { IconContext } from 'react-icons';
+import { useEffect, useRef } from 'react';
+import tailwindConfig from '../../tailwind.config';
 import {
   instaImage0,
   instaImage1,
@@ -12,11 +17,6 @@ import {
   instaImage10,
   instaImage11,
 } from '../assets';
-import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from '../../tailwind.config';
-import { IoChevronForward, IoChevronBack } from 'react-icons/io5';
-import { IconContext } from 'react-icons';
-import { useEffect, useRef } from 'react';
 
 function InstagramCarousel() {
   const fullConfig = resolveConfig(tailwindConfig);
@@ -41,7 +41,7 @@ function InstagramCarousel() {
     instaImage10,
     instaImage11,
   ];
-  const swiperContainerRef = useRef(null)
+  const swiperContainerRef = useRef(null);
 
   useEffect(() => {
     const swiperParams = {
@@ -67,15 +67,15 @@ function InstagramCarousel() {
           slidesPerGroup: 3,
         },
       },
-    }
-  
+    };
+
     Object.assign(swiperContainerRef.current, swiperParams);
     swiperContainerRef.current.initialize();
   }, []);
 
   return (
     <div className="flex items-center">
-      <div className="swiper-insta-button-prev">
+      <div className="swiper-insta-button-prev -ml-1 sm:ml-0">
         <IconContext.Provider
           value={{
             style: {
@@ -88,24 +88,25 @@ function InstagramCarousel() {
           <IoChevronBack />
         </IconContext.Provider>
       </div>
-      <swiper-container 
-      init="false"
-      ref={swiperContainerRef}
+      <swiper-container
+        init="false"
+        ref={swiperContainerRef}
+        class="-mx-1 md:mx-0"
       >
-      {images.map((image, index) => {
-            return (
-              <swiper-slide key={index}>
-                <img
-                  src={image}
-                  alt=""
-                  srcSet=""
-                  className="object-cover object-center aspect-square"
-                  />
-              </swiper-slide>
-            );
-          })}
+        {images.map((image, index) => {
+          return (
+            <swiper-slide key={index}>
+              <img
+                src={image}
+                alt=""
+                srcSet=""
+                className="object-cover object-center aspect-square"
+              />
+            </swiper-slide>
+          );
+        })}
       </swiper-container>
-      <div className="swiper-insta-button-next">
+      <div className="swiper-insta-button-next -mr-1 sm:mr-0">
         <IconContext.Provider
           value={{
             style: { strokeWidth: '0.05rem' },

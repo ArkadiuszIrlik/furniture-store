@@ -5,7 +5,6 @@ import { IconContext } from 'react-icons';
 import { RecommendedCard } from '.';
 import tailwindConfig from '../../tailwind.config';
 
-
 function RecommendedCarousel() {
   const fullConfig = resolveConfig(tailwindConfig);
   const smallScreen = fullConfig.theme.screens.sm;
@@ -14,7 +13,7 @@ function RecommendedCarousel() {
   const currentFontSizePx = parseFloat(
     getComputedStyle(document.documentElement).fontSize
   );
-  const swiperContainerRef = useRef(null)
+  const swiperContainerRef = useRef(null);
 
   const productList: any[] = [...Array(12)];
 
@@ -43,14 +42,14 @@ function RecommendedCarousel() {
           slidesPerGroup: 2,
         },
       },
-    }
+    };
     Object.assign(swiperContainerRef.current, swiperParams);
     swiperContainerRef.current.initialize();
   }, []);
 
   return (
     <div className="flex justify-center items-center">
-      <div className="swiper-recommended-button-prev">
+      <div className="swiper-recommended-button-prev -ml-1 sm:ml-0">
         <IconContext.Provider
           value={{
             style: {
@@ -62,19 +61,20 @@ function RecommendedCarousel() {
           <IoChevronBack />
         </IconContext.Provider>
       </div>
-        <swiper-container
+      <swiper-container
         ref={swiperContainerRef}
         init="false"
-        >
+        class="-mx-1 md:mx-0"
+      >
         {productList.map((product, index) => {
-              return (
-                <swiper-slide key={index}>
-                  <RecommendedCard />
-                </swiper-slide>
-              );
-            })}
-        </swiper-container>
-      <div className="swiper-recommended-button-next">
+          return (
+            <swiper-slide key={index}>
+              <RecommendedCard />
+            </swiper-slide>
+          );
+        })}
+      </swiper-container>
+      <div className="swiper-recommended-button-next -mr-1 sm:mr-0">
         <IconContext.Provider
           value={{
             style: { strokeWidth: '0.05rem' },
