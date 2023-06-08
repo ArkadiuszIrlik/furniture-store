@@ -20,10 +20,11 @@ function ShoppingCartModal() {
   }, []);
   return (
     <div
-      className="hidden group-hover:block
+      className="flex flex-col overflow-hidden
       absolute top-[100%] right-0
        bg-white border-2 border-primary-700 rounded-lg 
-       px-3 min-w-[23rem] max-w-md max-h-[35rem] z-30 flex flex-col
+       px-3 min-w-[23rem] max-w-md max-h-[35rem] z-30 
+       animate-[slide-up-fade-in_0.4s_ease-out]
        "
     >
       <h3
@@ -47,6 +48,7 @@ function ShoppingCartModal() {
                   alt=""
                   className="rounded-lg flex-auto basis-1/3 min-w-0
                      object-contain object-center h-36 bg-product"
+                  draggable="false"
                 />
                 <div className="flex flex-col flex-auto min-w-0 basis-2/3 text-left">
                   <div className="flex justify-between">

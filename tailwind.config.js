@@ -46,6 +46,12 @@ export default {
 
           },
           '100%': {transform: 'translateX(0)'}
+        },
+        "slide-up-fade-in": {
+          '0%': {opacity: '0', transform: 'translateY(30%)'},
+          // '30%': {opacity: '0', transform: 'translateY(30%)'},
+          '90%': {opacity: '60'},
+          '100%': {opacity: '100', transform: 'translateX(0)'}
         }
       }
     },
