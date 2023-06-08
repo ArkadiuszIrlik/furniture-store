@@ -25,7 +25,8 @@ function ProductSizeSelector({
                    px-2 py-1 flex-auto cursor-pointer ${
                      index === selectedSizeIndex
                        ? 'bg-primary-700 text-white border-primary-700'
-                       : 'text-text border-text'
+                       : `text-text border-text hover:bg-primary-700
+                        hover:text-white hover:border-primary-700`
                    }`}
                   htmlFor={`input-size-${size.name}`}
                   aria-label={size.name}
