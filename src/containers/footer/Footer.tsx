@@ -83,7 +83,9 @@ function Footer() {
                 }
                 return (
                   <li key={i}>
-                    <a href="#">{item}</a>
+                    <a href="#" className="hover:underline underline-offset-2">
+                      {item}
+                    </a>
                   </li>
                 );
               })}
