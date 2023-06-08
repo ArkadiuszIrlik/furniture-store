@@ -22,9 +22,6 @@ function SpinButton({
   }
   return (
     <div className={className}>
-      <label htmlFor={inputId} className="block font-dm-sans mb-1">
-        {labelText}
-      </label>
       <div
         className="rounded-md border-2 border-neutral-200 bg-neutral-200
          grid grid-cols-3"
