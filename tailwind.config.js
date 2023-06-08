@@ -1,7 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 import defaultTheme from 'tailwindcss/defaultTheme';
 import tailwindForms from '@tailwindcss/forms';
+import tailwindScrollbar from 'tailwind-scrollbar';
 // const defaultTheme = require('tailwindcss/defaultTheme')
+const tailwindScrollbarNoComp = tailwindScrollbar({ nocompatible: true });
 
 export default {
   // module.exports = {
@@ -49,10 +51,8 @@ export default {
     },
   },
   plugins: [
-    tailwindForms
-    // import('@tailwindcss/forms')
-    // require('@tailwindcss/forms')
-
+    tailwindForms,
+    tailwindScrollbarNoComp
   ],
   future: {
     hoverOnlyWhenSupported: true,
