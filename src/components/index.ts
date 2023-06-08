@@ -15,3 +15,5 @@ export { default as ProductCarousel } from './ProductCarousel';
 export { default as SpinButton } from './SpinButton';
 export { default as ReviewScoreStars } from './ReviewScoreStars';
 export { default as ReviewSection } from './ReviewSection';
+export { default as ShoppingCartModal } from './ShoppingCartModal';
+export { default as CartQuantityCounter } from './CartQuantityCounter';
