@@ -22,9 +22,12 @@ function ReviewSection({
       </div>
       <div className="px-1 sm:px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
-          {reviewArray.map((review) => {
+          {reviewArray.map((review, index) => {
             return (
-              <div className="border-b-[1px] border-primary-300 py-3 sm:py-4">
+              <div
+                className="border-b-[1px] border-primary-300 py-3 sm:py-4"
+                key={index}
+              >
                 <div className="flex gap-4 mb-2 sm:mb-3">
                   <div
                     className="rounded-full bg-primary-700 shrink-0
@@ -34,7 +37,7 @@ function ReviewSection({
                     <p className="font-open-sans font-semibold text-lg text-white">
                       {review.username
                         .split(' ')
-                        .map((e) => e[0])
+                        .map((el) => el[0])
                         .join('')
                         .slice(0, 2)}
                     </p>
