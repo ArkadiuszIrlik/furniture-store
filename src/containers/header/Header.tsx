@@ -3,9 +3,15 @@ import { FiShoppingCart } from 'react-icons/fi';
 import { IconContext } from 'react-icons';
 import { HiMenu } from 'react-icons/hi';
 import resolveConfig from 'tailwindcss/resolveConfig';
+import { useState } from 'react';
 import { ElevaLogo } from '../../assets';
 import tailwindConfig from '../../../tailwind.config';
-import { Search, HeaderNavbar } from '../../components';
+import {
+  Search,
+  HeaderNavbar,
+  ShoppingCartModal,
+  CartQuantityCounter,
+} from '../../components';
 import { useMediaQuery } from '../../hooks';
 
 function Header() {
@@ -14,12 +20,21 @@ function Header() {
   const mediumScreen = fullConfig.theme.screens.md;
   const mediumMatches = useMediaQuery(`(min-width: ${mediumScreen})`);
 
+  const [isCartModalShown, setIsCartModalShown] = useState(false);
+
+  function showCartModal() {
+    setIsCartModalShown(true);
+  }
+  function hideCartModal() {
+    setIsCartModalShown(false);
+  }
+
   return (
     <header>
       <div
         className="grid grid-cols-[1fr_minmax(max-content,_60%)_1fr]
            grid-rows-[repeat(2,_max-content)] items-center
-            py-4 px-3 md:px-12 gap-y-2 md:gap-y-4"
+            pt-1 pb-2 px-3 md:px-12 gap-y-2 md:gap-y-4"
       >
         <IconContext.Provider
           value={{
@@ -39,22 +54,39 @@ function Header() {
           <Search />
         </div>
         <div className="flex gap-2 justify-end items-center">
-          <IconContext.Provider
-            value={{
-              style: { strokeWidth: '0.05rem', stroke: textColor },
-              size: '1.5rem',
-            }}
+          <button onClick={() => console.log(`clicked user${Math.random()}`)}>
+            <IconContext.Provider
+              value={{
+                style: { strokeWidth: '0.05rem', stroke: textColor },
+                size: '1.5rem',
+              }}
+            >
+              <CiUser />
+            </IconContext.Provider>
+          </button>
+          <div
+            className="relative group flex items-end"
+            onMouseOver={showCartModal}
+            onMouseOut={hideCartModal}
           >
-            <CiUser />
-          </IconContext.Provider>
-          <IconContext.Provider
-            value={{
-              style: { strokeWidth: '0.1rem', stroke: textColor },
-              size: '1.5rem',
-            }}
-          >
-            <FiShoppingCart />
-          </IconContext.Provider>
+            <button
+              type="button"
+              onClick={() => console.log(`clicked${Math.random()}`)}
+            >
+              <IconContext.Provider
+                value={{
+                  style: { strokeWidth: '0.1rem', stroke: textColor },
+                  size: '1.5rem',
+                }}
+              >
+                {/* <div className="peer"> */}
+                <FiShoppingCart />
+                {/* </div> */}
+              </IconContext.Provider>
+            </button>
+            <CartQuantityCounter />
+            {isCartModalShown && <ShoppingCartModal />}
+          </div>
         </div>
         {mediumMatches && (
           <div className="col-span-full row-start-2 ">
