@@ -38,8 +38,8 @@ function SearchFilterModal({
         onToggleFilterValue={onToggleFilterValue}
       />
       <div
-        className="flex justify-center gap-2 bottom-0 left-0 right-0
-               bg-white mt-auto px-2 py-4 text-lg"
+        className="flex justify-center gap-2 bg-white mt-auto px-2 py-4
+          text-lg"
       >
         <PrimaryButton isFilled="false">Reset</PrimaryButton>
         <PrimaryButton>Apply</PrimaryButton>
