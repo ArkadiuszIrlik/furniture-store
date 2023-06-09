@@ -1,5 +1,6 @@
 import { BiPlus, BiMinus } from 'react-icons/bi';
 import { IconContext } from 'react-icons';
+import { useState, useEffect } from 'react';
 
 function SpinButton({
   inputId,
@@ -14,6 +15,17 @@ function SpinButton({
   labelText: string;
   className?: string;
 }) {
+  const [localValue, setLocalValue] = useState(inputValue);
+
+  useEffect(() => {
+    setLocalValue(inputValue);
+  }, [inputValue]);
+
+  function handleValueChange(nextValue) {
+    if (nextValue === '' || (nextValue >= 1 && nextValue <= 99)) {
+      setLocalValue(nextValue);
+    }
+  }
   function decrement() {
     onValueChange(inputValue - 1);
   }
@@ -49,8 +61,15 @@ function SpinButton({
             inputMode="numeric"
             name={inputId}
             id={inputId}
-            value={inputValue}
-            onChange={(e) => onValueChange(Number(e.currentTarget.value))}
+            value={localValue}
+            onChange={(e) => handleValueChange(e.currentTarget.value)}
+            onBlur={(e) => {
+              const fieldValue = e.currentTarget.value;
+              if (fieldValue === '' || !(fieldValue >= 1 && fieldValue <= 99)) {
+                setLocalValue(inputValue);
+              }
+              onValueChange(Number(fieldValue));
+            }}
             min="1"
             max="99"
             className="
