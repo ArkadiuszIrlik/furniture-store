@@ -39,7 +39,7 @@ const ShoppingCartModal = forwardRef(function ShoppingCartModal({}, ref) {
            scrollbar-thumb-rounded-lg pr-2"
         style={{ '--scrollbar-width': '8px' }}
       >
-        {cart ? (
+        {cart && Object.keys(cart).length !== 0 ? (
           Object.values(cart).map((product, index) => {
             return (
               <div className="flex items-center gap-4 font-dm-sans" key={index}>
@@ -88,21 +88,23 @@ const ShoppingCartModal = forwardRef(function ShoppingCartModal({}, ref) {
           </p>
         )}
       </div>
-      <div
-        className="pt-2 pb-4 border-t-[1px]
+      {cart && Object.keys(cart).length !== 0 && (
+        <div
+          className="pt-2 pb-4 border-t-[1px]
            border-t-primary-300"
-      >
-        <div className="flex justify-center gap-36 font-dm-sans font-medium mb-3">
-          <p>SUBTOTAL:</p>
-          <p>$1,249</p>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="flex flex-col gap-2 min-w-[10rem]">
-            <PrimaryButton isFilled="false">VIEW CART</PrimaryButton>
-            <PrimaryButton>PROCEED TO CHECKOUT</PrimaryButton>
+        >
+          <div className="flex justify-center gap-36 font-dm-sans font-medium mb-3">
+            <p>SUBTOTAL:</p>
+            <p>$1,249</p>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="flex flex-col gap-2 min-w-[10rem]">
+              <PrimaryButton isFilled="false">VIEW CART</PrimaryButton>
+              <PrimaryButton>PROCEED TO CHECKOUT</PrimaryButton>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 });
