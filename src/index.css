@@ -9,6 +9,9 @@
     input[type=number] {
         -moz-appearance: textfield;
       }
+      .forwards {
+        animation-fill-mode: forwards !important;
+      }
 }
 
 @tailwind components;
