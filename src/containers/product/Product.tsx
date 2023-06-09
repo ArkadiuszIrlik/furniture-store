@@ -236,7 +236,9 @@ function Product() {
                       src={image}
                       alt=""
                       className={`${
-                        activeImage === index ? '' : 'opacity-[60%]'
+                        activeImage === index
+                          ? ''
+                          : 'opacity-[60%] hover:opacity-100'
                       }`}
                       draggable="false"
                     />
