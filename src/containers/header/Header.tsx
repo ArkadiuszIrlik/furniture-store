@@ -3,7 +3,7 @@ import { FiShoppingCart } from 'react-icons/fi';
 import { IconContext } from 'react-icons';
 import { HiMenu } from 'react-icons/hi';
 import resolveConfig from 'tailwindcss/resolveConfig';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { ElevaLogo } from '../../assets';
 import tailwindConfig from '../../../tailwind.config';
 import {
@@ -21,11 +21,27 @@ function Header() {
   const mediumMatches = useMediaQuery(`(min-width: ${mediumScreen})`);
 
   const [isCartModalShown, setIsCartModalShown] = useState(false);
+  const cartModalRef = useRef(null);
 
   function showCartModal() {
     setIsCartModalShown(true);
   }
-  function hideCartModal() {
+  async function hideCartModal() {
+    if (!cartModalRef.current) {
+      return;
+    }
+    cartModalRef.current.classList.remove(
+      'animate-[slide-up-fade-in_0.4s_ease-out]'
+    );
+    cartModalRef.current.classList.add(
+      'animate-[slide-down-fade-out_0.4s_ease-out]'
+    );
+    async function animationEnd() {
+      return new Promise(
+        (resolve) => (cartModalRef.current.onanimationend = () => resolve())
+      );
+    }
+    await animationEnd();
     setIsCartModalShown(false);
   }
 
@@ -66,8 +82,8 @@ function Header() {
           </button>
           <div
             className="relative group flex items-end"
-            onMouseOver={showCartModal}
-            onMouseOut={hideCartModal}
+            onMouseEnter={showCartModal}
+            onMouseLeave={hideCartModal}
           >
             <button
               type="button"
@@ -85,7 +101,7 @@ function Header() {
               </IconContext.Provider>
             </button>
             <CartQuantityCounter />
-            {isCartModalShown && <ShoppingCartModal />}
+            {isCartModalShown && <ShoppingCartModal ref={cartModalRef} />}
           </div>
         </div>
         {mediumMatches && (

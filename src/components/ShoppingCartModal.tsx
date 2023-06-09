@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 import { BiTrashAlt } from 'react-icons/bi';
 import { IconContext } from 'react-icons';
 import { bed1 } from '../assets';
 import { SpinButton, PrimaryButton } from '.';
 
-function ShoppingCartModal() {
+const ShoppingCartModal = forwardRef(function ShoppingCartModal({}, ref) {
   const [cart, setCart] = useState();
 
   useEffect(() => {
@@ -24,8 +24,8 @@ function ShoppingCartModal() {
       absolute top-[100%] right-0
        bg-white border-2 border-primary-700 rounded-lg 
        px-3 min-w-[23rem] max-w-md max-h-[35rem] z-30 
-       animate-[slide-up-fade-in_0.4s_ease-out]
-       "
+       animate-[slide-up-fade-in_0.4s_ease-out] forwards"
+      ref={ref}
     >
       <h3
         className="font-dm-sans text-2xl border-b-[1px]
@@ -105,6 +105,6 @@ function ShoppingCartModal() {
       </div>
     </div>
   );
-}
+});
 
 export default ShoppingCartModal;
