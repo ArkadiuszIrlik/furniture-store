@@ -17,3 +17,4 @@ export { default as ReviewScoreStars } from './ReviewScoreStars';
 export { default as ReviewSection } from './ReviewSection';
 export { default as ShoppingCartModal } from './ShoppingCartModal';
 export { default as CartQuantityCounter } from './CartQuantityCounter';
+export { default as OrderSummary } from './OrderSummary';
