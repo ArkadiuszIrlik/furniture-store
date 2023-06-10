@@ -50,7 +50,7 @@ function Header() {
       <div
         className="grid grid-cols-[1fr_minmax(max-content,_60%)_1fr]
            grid-rows-[repeat(2,_max-content)] items-center
-            pt-1 pb-2 px-3 md:px-12 gap-y-2 md:gap-y-4"
+            pt-1 md:pt-5 pb-2 px-3 md:px-12 gap-y-2 md:gap-y-4"
       >
         <IconContext.Provider
           value={{
