@@ -175,8 +175,9 @@ function Product({ cartDispatch }: { cartDispatch: Dispatch<any> }) {
       item: {
         id: product.id,
         name: product.name,
-        details: `${product.colors[selectedColorIndex].name} /
-         ${product.sizes[selectedSizeIndex].name}`,
+        details:
+          `${product.colors[selectedColorIndex].name} /` +
+          ` ${product.sizes[selectedSizeIndex].name}`,
         image: product.images[0],
         priceUsd: product.priceUsd,
         quantity: selectedQuantity,
