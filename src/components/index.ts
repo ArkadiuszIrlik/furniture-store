@@ -18,3 +18,5 @@ export { default as ReviewSection } from './ReviewSection';
 export { default as ShoppingCartModal } from './ShoppingCartModal';
 export { default as CartQuantityCounter } from './CartQuantityCounter';
 export { default as OrderSummary } from './OrderSummary';
+export { default as ShoppingCartList } from './ShoppingCartList';
+export { default as ShoppingCartTable } from './ShoppingCartTable';
