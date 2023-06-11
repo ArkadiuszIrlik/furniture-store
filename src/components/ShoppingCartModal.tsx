@@ -1,23 +1,13 @@
-import { useState, useEffect, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { BiTrashAlt } from 'react-icons/bi';
 import { IconContext } from 'react-icons';
 import { bed1 } from '../assets';
 import { SpinButton, PrimaryButton } from '.';
 
-const ShoppingCartModal = forwardRef(function ShoppingCartModal({}, ref) {
-  const [cart, setCart] = useState();
-
-  useEffect(() => {
-    const handleStorage = () => {
-      if (!localStorage.getItem('cart')) {
-        return;
-      }
-      setCart(JSON.parse(localStorage.getItem('cart')));
-    };
-    handleStorage();
-    window.addEventListener('storage', handleStorage);
-    return () => window.removeEventListener('storage', handleStorage);
-  }, []);
+const ShoppingCartModal = forwardRef(function ShoppingCartModal(
+  { cart, cartDispatch },
+  ref
+) {
   return (
     <div
       className="flex flex-col overflow-hidden
@@ -39,8 +29,8 @@ const ShoppingCartModal = forwardRef(function ShoppingCartModal({}, ref) {
            scrollbar-thumb-rounded-lg pr-2"
         style={{ '--scrollbar-width': '8px' }}
       >
-        {cart && Object.keys(cart).length !== 0 ? (
-          Object.values(cart).map((product, index) => {
+        {cart.length !== 0 ? (
+          cart.map((item, index) => {
             return (
               <div className="flex items-center gap-4 font-dm-sans" key={index}>
                 <img
@@ -72,7 +62,7 @@ const ShoppingCartModal = forwardRef(function ShoppingCartModal({}, ref) {
                     <SpinButton
                       labelText="Quantity"
                       inputId="product-quantity-selector-cart-modal"
-                      inputValue={1}
+                      inputValue={item.quantity}
                       onValueChange={() => {}}
                       className="min-w-[7rem] md:min-w-[5rem]"
                     />

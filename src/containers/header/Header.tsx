@@ -3,7 +3,7 @@ import { FiShoppingCart } from 'react-icons/fi';
 import { IconContext } from 'react-icons';
 import { HiMenu } from 'react-icons/hi';
 import resolveConfig from 'tailwindcss/resolveConfig';
-import { useState, useRef } from 'react';
+import { useState, useRef, Dispatch } from 'react';
 import { ElevaLogo } from '../../assets';
 import tailwindConfig from '../../../tailwind.config';
 import {
@@ -14,14 +14,30 @@ import {
 } from '../../components';
 import { useMediaQuery } from '../../hooks';
 
-function Header() {
+interface CartItem {
+  id: string;
+  name: string;
+  details?: string;
+  image: string;
+  priceUsd: number;
+  quantity: number;
+}
+
+function Header({
+  cart,
+  cartDispatch,
+}: {
+  cart: CartItem[];
+  cartDispatch: Dispatch<any>;
+}) {
   const fullConfig = resolveConfig(tailwindConfig);
   const textColor = fullConfig.theme.colors.text;
   const mediumScreen = fullConfig.theme.screens.md;
   const mediumMatches = useMediaQuery(`(min-width: ${mediumScreen})`);
 
   const [isCartModalShown, setIsCartModalShown] = useState(false);
-  const cartModalRef = useRef(null);
+  const cartModalRef = useRef<HTMLInputElement | null>(null);
+  const totalQuantity = cart.reduce((total, next) => total + next.quantity, 0);
 
   function showCartModal() {
     setIsCartModalShown(true);
@@ -36,10 +52,12 @@ function Header() {
     cartModalRef.current.classList.add(
       'animate-[slide-down-fade-out_0.4s_ease-out]'
     );
-    async function animationEnd() {
-      return new Promise(
-        (resolve) => (cartModalRef.current.onanimationend = () => resolve())
-      );
+    async function animationEnd(): Promise<void> {
+      return new Promise<void>((resolve): void => {
+        if (cartModalRef.current) {
+          cartModalRef.current.onanimationend = () => resolve();
+        }
+      });
     }
     await animationEnd();
     setIsCartModalShown(false);
@@ -100,8 +118,14 @@ function Header() {
                 {/* </div> */}
               </IconContext.Provider>
             </button>
-            <CartQuantityCounter />
-            {isCartModalShown && <ShoppingCartModal ref={cartModalRef} />}
+            <CartQuantityCounter quantity={totalQuantity} />
+            {isCartModalShown && (
+              <ShoppingCartModal
+                ref={cartModalRef}
+                cart={cart}
+                cartDispatch={cartDispatch}
+              />
+            )}
           </div>
         </div>
         {mediumMatches && (

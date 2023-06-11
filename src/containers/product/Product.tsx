@@ -1,5 +1,5 @@
 import resolveConfig from 'tailwindcss/resolveConfig';
-import { useState } from 'react';
+import { useState, Dispatch } from 'react';
 import { BsTruck } from 'react-icons/bs';
 import { BiPlus, BiMinus } from 'react-icons/bi';
 import { IconContext } from 'react-icons';
@@ -31,7 +31,7 @@ import {
   prepSchoolPlaid,
 } from '../../assets';
 
-function Product() {
+function Product({ cartDispatch }: { cartDispatch: Dispatch<any> }) {
   const fullConfig = resolveConfig(tailwindConfig);
   const smallScreen = fullConfig.theme.screens.sm;
   const smallMatches = useMediaQuery(`(min-width: ${smallScreen})`);
@@ -129,7 +129,7 @@ function Product() {
   // Only set this if the color property exists on the product
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
-  const [chosenQuantity, setChosenQuantity] = useState(1);
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [infoDropdownOpenState, setInfoDropdownOpenState] = useState(
     product.information.map((section) => {
       return { isOpen: false };
@@ -149,7 +149,7 @@ function Product() {
     if (nextValue < 1 || nextValue > 99) {
       return;
     }
-    setChosenQuantity(nextValue);
+    setSelectedQuantity(nextValue);
   }
   function handleToggleInfoSectionOpen(sectionIndex: number) {
     setInfoDropdownOpenState(
@@ -169,44 +169,45 @@ function Product() {
     { name: 'Adara Bed' },
   ];
 
-  function addToCart(productId: string, quantity: number): void {
-    let cart = {};
-    if (localStorage.getItem('cart')) {
-      cart = JSON.parse(localStorage.getItem('cart'));
-    }
-    if (productId in cart) {
-      cart[productId].quantity += quantity;
-    } else {
-      cart[productId] = { quantity };
-    }
-    localStorage.setItem('cart', JSON.stringify(cart));
-    window.dispatchEvent(new Event('storage'));
-
-    // const product = {
-    //   id: uuidv4,
-    //   name: 'Adara Bed',
-    //   variants: [
-    //     ref{
-    //       id: uuidv4,
-    //       color: ref{
-    //         id: uuidv4,
-    //         name: 'Navy Velvet',
-    //         imageUrl:
-    //       },
-    //       size: ref{
-    //         id: uuidv4,
-    //         name: 'King',
-    //       },
-    //       availableColors: [
-    //         refToColorObj,
-    //       ],
-    //       availableSizes: [
-    //         refToSizeObj
-    //       ]
-    //     }
-    //   ]
-    // }
+  function addToCart() {
+    cartDispatch({
+      type: 'added',
+      item: {
+        id: product.id,
+        name: product.name,
+        details: `${product.colors[selectedColorIndex].name} /
+         ${product.sizes[selectedSizeIndex].name}`,
+        image: product.images[0],
+        priceUsd: product.priceUsd,
+        quantity: selectedQuantity,
+      },
+    });
   }
+
+  // const product = {
+  //   id: uuidv4,
+  //   name: 'Adara Bed',
+  //   variants: [
+  //     ref{
+  //       id: uuidv4,
+  //       color: ref{
+  //         id: uuidv4,
+  //         name: 'Navy Velvet',
+  //         imageUrl:
+  //       },
+  //       size: ref{
+  //         id: uuidv4,
+  //         name: 'King',
+  //       },
+  //       availableColors: [
+  //         refToColorObj,
+  //       ],
+  //       availableSizes: [
+  //         refToSizeObj
+  //       ]
+  //     }
+  //   ]
+  // }
 
   return (
     <div className="px-3 md:px-12">
@@ -301,14 +302,12 @@ function Product() {
                     <SpinButton
                       labelText="Quantity"
                       inputId="product-quantity-selector"
-                      inputValue={chosenQuantity}
+                      inputValue={selectedQuantity}
                       onValueChange={handleQuantityChange}
                       className="min-w-[7rem] md:min-w-[5rem]"
                     />
                   </div>
-                  <PrimaryButton
-                    onClick={() => addToCart(product.id, chosenQuantity)}
-                  >
+                  <PrimaryButton onClick={() => addToCart()}>
                     ADD TO CART
                   </PrimaryButton>
                 </div>
