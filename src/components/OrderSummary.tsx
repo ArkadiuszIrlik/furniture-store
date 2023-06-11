@@ -4,15 +4,28 @@ import { useState } from 'react';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import { useMediaQuery } from '../hooks';
 import tailwindConfig from '../../tailwind.config';
+import { calculateCartTotal } from '../helpers';
 
-function OrderSummary() {
+interface CartItem {
+  id: string;
+  name: string;
+  details?: string;
+  image: string;
+  priceUsd: number;
+  quantity: number;
+}
+
+function OrderSummary({ cart }: { cart: CartItem[] }) {
   const fullConfig = resolveConfig(tailwindConfig);
   const smallScreen = fullConfig.theme.screens.sm;
   const smallMatches = useMediaQuery(`(min-width: ${smallScreen})`);
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="font-dm-sans">
-      <div className="flex justify-between sm:justify-center border-b-[1px] border-b-primary-300 pb-1 px-3">
+      <div
+        className="flex justify-between sm:justify-center border-b-[1px]
+       border-b-primary-300 pb-1 px-3"
+      >
         <h3
           className="text-xl sm:text-2xl 
             sm:text-center"
@@ -58,7 +71,12 @@ function OrderSummary() {
         >
           <div className="flex justify-between">
             <p>SUBTOTAL:</p>
-            <p>$1,348</p>
+            <p>
+              $
+              {calculateCartTotal(cart)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            </p>
           </div>
           <div className="flex justify-between">
             <p>SHIPPING*:</p>
