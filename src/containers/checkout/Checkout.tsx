@@ -1,24 +1,43 @@
-import React from 'react';
+import { BiChevronRight } from 'react-icons/bi';
+import { IconContext } from 'react-icons';
 import { PrimaryButton } from '../../components';
 
 function Checkout() {
   return (
-    <div className="font-dm-sans px-3 md:px-12">
+    <div className="font-dm-sans px-3 md:px-12 py-4">
       <h1 className="text-3xl sm:mb-1">CHECKOUT</h1>
-      <nav className="mb-3 sm:mb-20">
-        <ul className="flex flex-wrap gap-x-7 font-medium text-zinc-500">
-          <li>
-            <a href="#">Cart</a>
-          </li>
-          <li className="font-bold text-text">
-            <a href="#">Information</a>
-          </li>
-          <li>
-            <a href="#">Shipping</a>
-          </li>
-          <li>
-            <a href="#">Payment</a>
-          </li>
+      <nav className="mb-3 sm:mb-[5%]">
+        <ul className="flex items-center flex-wrap gap-x-0 font-medium text-zinc-500">
+          <IconContext.Provider
+            value={{
+              size: '1.9rem',
+              className: 'text-text shrink-0',
+            }}
+          >
+            <li>
+              <a href="#" className="hover:text-text">
+                Cart
+              </a>
+            </li>
+            <BiChevronRight />
+            <li className="font-bold text-text">
+              <a href="#" className="hover:text-text">
+                Information
+              </a>
+            </li>
+            <BiChevronRight />
+            <li>
+              <a href="#" className="hover:text-text">
+                Shipping
+              </a>
+            </li>
+            <BiChevronRight />
+            <li>
+              <a href="#" className="hover:text-text">
+                Payment
+              </a>
+            </li>
+          </IconContext.Provider>
         </ul>
       </nav>
       <div className="flex">
