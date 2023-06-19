@@ -2,6 +2,7 @@ import { BiChevronRight, BiPlus } from 'react-icons/bi';
 import { IconContext } from 'react-icons';
 import { BsFillHouseDoorFill } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
+import { AddressForm } from '../../components';
 
 function CheckoutInformation() {
   const [savedAddressList, setSavedAddressList] = useState<object[]>([]);
@@ -76,7 +77,7 @@ function CheckoutInformation() {
         </ul>
       </nav>
       <h2 className="text-2xl mb-2">SHIPPING ADDRESS</h2>
-      <div className="flex gap-3">
+      <div className="flex gap-3 mb-5">
         <fieldset className="flex flex-wrap gap-3">
           <legend className="sr-only">Choose shipping address</legend>
           {savedAddressList.map((address, index) => (
@@ -151,6 +152,7 @@ function CheckoutInformation() {
           </button>
         </fieldset>
       </div>
+      <AddressForm />
     </div>
   );
 }
