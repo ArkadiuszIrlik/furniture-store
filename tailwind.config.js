@@ -37,6 +37,7 @@ export default {
           300: '#D8DAE6',
           700: '#717799',
         },
+        warning: '#BF4242',
         text: '#212427',
         product: '#F4F4F4'
       },
