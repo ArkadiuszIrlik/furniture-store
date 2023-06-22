@@ -1,12 +1,25 @@
-import { useField } from 'formik';
+import { useField, useFormikContext } from 'formik';
+import { useEffect } from 'react';
 
 function PhoneCountryInput({ label, ...props }) {
+  const { values, setFieldValue, touched, handleChange, setTouched } =
+    useFormikContext();
   const [field, meta] = useField(props);
 
+  useEffect(() => {
+    if (touched.phoneCountry) {
+    } else {
+      setFieldValue('phoneCountry', values.country, true);
+    }
+  }, [values, touched]);
   return (
     <select
       {...field}
       {...props}
+      onChange={(e) => {
+        handleChange(e);
+        setTouched({ ...touched, phoneCountry: true });
+      }}
       //   aria-label="Phone number country prefix"
       aria-label={label}
       className="text-black w-[100%] absolute -z-1 top-0 bottom-0 left-0 peer pointer-events-auto
