@@ -7,6 +7,7 @@ import {
   SelectInput,
   TextInput,
   PrimaryButton,
+  FormObserver,
 } from '.';
 
 interface FormValues {
@@ -25,7 +26,23 @@ interface FormValues {
 }
 
 function AddressForm({
-  initialValues,
+  initialValues = {
+    country: 'US',
+    firstName: '',
+    lastName: '',
+    company: '',
+    addressLine1: '',
+    addressLine2: '',
+    addressLine3: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    phoneNumber: '',
+    phoneCountry: 'US',
+  },
+  initialTouched = {},
+  onFormChange,
+  formRef,
   handleSubmit,
 }: {
   initialValues: FormValues;
@@ -34,20 +51,9 @@ function AddressForm({
   const isNewAddress = !!Object.values(initialValues).find((el) => el !== '');
   return (
     <Formik
-      initialValues={{
-        country: 'US',
-        firstName: '',
-        lastName: '',
-        company: '',
-        addressLine1: '',
-        addressLine2: '',
-        addressLine3: '',
-        city: '',
-        state: '',
-        zipCode: '',
-        phoneNumber: '',
-        phoneCountry: 'US',
-      }}
+      innerRef={formRef}
+      initialValues={initialValues}
+      initialTouched={initialTouched}
       validationSchema={Yup.object({
         country: Yup.string().defined().required('Please select a country'),
         firstName: Yup.string()
@@ -1810,6 +1816,7 @@ function AddressForm({
               UPDATE ADDRESS
             </PrimaryButton>
           </div>
+          {onFormChange && <FormObserver onChange={onFormChange} />}
         </Form>
       )}
     </Formik>

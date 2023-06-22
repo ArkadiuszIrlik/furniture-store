@@ -1,8 +1,18 @@
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { TextInput } from '.';
+import { FormObserver, TextInput } from '.';
 
-function PaymentCardForm() {
+function PaymentCardForm({
+  initialValues = {
+    cardNumber: '',
+    cardholderName: '',
+    expirationDate: '',
+    securityCode: '',
+  },
+  initialTouched = {},
+  onFormChange,
+  formRef,
+}) {
   const acceptedCards = {
     visa: /^4[0-9]{12}(?:[0-9]{3})?$/,
     mastercard:
@@ -15,12 +25,9 @@ function PaymentCardForm() {
   return (
     <div>
       <Formik
-        initialValues={{
-          cardNumber: '',
-          cardholderName: '',
-          expirationDate: '',
-          securityCode: '',
-        }}
+        innerRef={formRef}
+        initialValues={initialValues}
+        initialTouched={initialTouched}
         validationSchema={Yup.object({
           cardNumber: Yup.string()
             .test(
@@ -69,6 +76,7 @@ function PaymentCardForm() {
             .defined()
             .required('Please enter the security code'),
         })}
+        validateOnMount
       >
         <Form className="flex flex-col gap-4 pt-3 pb-7">
           <div className="w-60">
@@ -82,7 +90,7 @@ function PaymentCardForm() {
               maxLength="20"
             />
           </div>
-          <div>
+          <div className="max-w-lg">
             <TextInput
               label="NAME ON CARD"
               name="cardholderName"
@@ -115,6 +123,7 @@ function PaymentCardForm() {
               />
             </div>
           </div>
+          {onFormChange && <FormObserver onChange={onFormChange} />}
         </Form>
       </Formik>
     </div>
