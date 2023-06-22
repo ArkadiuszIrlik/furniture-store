@@ -36,3 +36,7 @@ export { default as bed9 } from './adara-bed-photos/bed-9.jpg';
 export { default as emeraldVelvet } from './color-swatches/emerald-velvet.jpg';
 export { default as navyVelvet } from './color-swatches/navy-velvet.jpg';
 export { default as prepSchoolPlaid } from './color-swatches/prep-school-plaid.jpg';
+export { default as amexIcon } from './card-providers/amex-icon.svg';
+export { default as discoverIcon } from './card-providers/discover-icon.svg';
+export { default as mastercardIcon } from './card-providers/mastercard-icon.svg';
+export { default as visaIcon } from './card-providers/visa-icon.svg';
