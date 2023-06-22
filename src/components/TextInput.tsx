@@ -13,11 +13,11 @@ function TextInput({ label, ...props }) {
       <div
         className={`flex items-center ${
           meta.touched && meta.error
-            ? ' border-2 border-warning'
-            : ' border-[1px] border-primary-700'
+            ? ' border-2 border-warning focus-within:outline-none'
+            : ' border-[1px] border-primary-700 focus-within:outline'
         } bg-gray-200/50 rounded-lg
-      focus-within:border-black focus-within:outline
-      focus-within:outline-2 focus-within:outline-black
+      focus-within:border-black
+      focus-within:outline-2 
       focus-within:outline-offset-0`}
       >
         <input
@@ -28,6 +28,8 @@ function TextInput({ label, ...props }) {
           className="border-none bg-transparent rounded-lg
           px-2 py-1 w-full focus:ring-0
           "
+          aria-invalid={meta.touched && meta.error}
+          aria-describedby={`${props.id || props.name}-error`}
           {...field}
           {...props}
         />
@@ -46,7 +48,12 @@ function TextInput({ label, ...props }) {
         ) : null}
       </div>
       {meta.touched && meta.error ? (
-        <div className="px-1 text-warning">{meta.error}</div>
+        <div
+          className="px-1 text-warning"
+          id={`${props.id || props.name}-error`}
+        >
+          {meta.error}
+        </div>
       ) : null}
     </>
   );
