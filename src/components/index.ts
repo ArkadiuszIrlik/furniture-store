@@ -25,3 +25,5 @@ export { default as PhoneCountryInput } from './PhoneCountryInput';
 export { default as TextInput } from './TextInput';
 export { default as SelectInput } from './SelectInput';
 export { default as AddressForm } from './AddressForm';
+export { default as PaymentCardForm } from './PaymentCardForm';
+export { default as CheckoutRadioNarrow } from './CheckoutRadioNarrow';
