@@ -1,9 +1,37 @@
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import phone from 'phone';
-import { PhoneInput, PhoneCountryInput, SelectInput, TextInput } from '.';
+import {
+  PhoneInput,
+  PhoneCountryInput,
+  SelectInput,
+  TextInput,
+  PrimaryButton,
+} from '.';
 
-function AddressForm() {
+interface FormValues {
+  country?: string;
+  firstName?: string;
+  lastName?: string;
+  company?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  addressLine3?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  phoneNumber?: string;
+  phoneCountry?: string;
+}
+
+function AddressForm({
+  initialValues,
+  handleSubmit,
+}: {
+  initialValues: FormValues;
+  handleSubmit: () => any;
+}) {
+  const isNewAddress = !!Object.values(initialValues).find((el) => el !== '');
   return (
     <Formik
       initialValues={{
@@ -92,8 +120,9 @@ function AddressForm() {
           setSubmitting(false);
         }, 400);
       }}
+      validateOnMount
     >
-      {({ values, submitForm }) => (
+      {({ values, isValid }) => (
         <Form className="flex flex-col gap-4">
           <div className="w-64">
             <SelectInput label="COUNTRY" name="country">
@@ -1776,9 +1805,11 @@ function AddressForm() {
               </PhoneCountryInput>
             </PhoneInput>
           </div>
-          <button type="submit" onClick={submitForm}>
-            SUBMIT
-          </button>
+          <div className="w-56 flex mt-3">
+            <PrimaryButton type="submit" isDisabled={!isValid}>
+              UPDATE ADDRESS
+            </PrimaryButton>
+          </div>
         </Form>
       )}
     </Formik>
