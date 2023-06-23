@@ -55,6 +55,7 @@ function AddressForm({
       initialValues={initialValues}
       initialTouched={initialTouched}
       validationSchema={Yup.object({
+        // generic
         country: Yup.string().defined().required('Please select a country'),
         firstName: Yup.string()
           .max(50, "First name can't be longer than 50 characters")
@@ -68,6 +69,58 @@ function AddressForm({
           .max(50, "Company name can't be longer than 50 characters")
           .defined()
           .optional(),
+        city: Yup.string()
+          .max(40, "City name can't be longer than 40 characters")
+          .defined()
+          .required('Please enter a city name'),
+        phoneNumber: Yup.string()
+          .test(
+            'is-valid-format',
+            'Please provide a valid phone number',
+            function (value) {
+              return phone(value, {
+                country: this.options.parent.phoneCountry,
+
+                validateMobilePrefix: false,
+              }).isValid;
+            }
+          )
+          .defined()
+          .required('Please enter a phone number'),
+
+        // US specific
+        zipCode: Yup.string().when('country', {
+          is: 'US',
+          then: (schema) =>
+            schema
+              .test(
+                'is-valid-format',
+                'Please provide a valid US zip code',
+                (value) => /^\d{5}(?:[-\s]\d{4})?$/.test(value)
+              )
+              .max(10, "Zip code can't be longer than 10 characters")
+              .required('Please enter a zip code'),
+        }),
+        state: Yup.string().when('country', {
+          is: 'US',
+          then: (schema) => schema.defined().required('Please select a state'),
+        }),
+        // international
+        postalCode: Yup.string().max(
+          20,
+          "Postal code can't be loner than 20 characters"
+        ),
+        province: Yup.string().max(
+          100,
+          "Province name can't be longer than 100 characters"
+        ),
+        // PL specific
+        voivodeship: Yup.string().when('country', {
+          is: 'PL',
+          then: (schema) =>
+            schema.defined().required('Please select a voivodeship'),
+        }),
+
         // addressLine1: Yup.string()
         //   .max(100, "Address line can't be longer than 100 characters")
         //   .defined()
@@ -78,46 +131,9 @@ function AddressForm({
         // addressLine3: Yup.string()
         //   .max(100, "Address line can't be longer than 100 characters")
         //   .defined(),
-        city: Yup.string()
-          .max(40, "City name can't be longer than 40 characters")
-          .defined()
-          .required('Please enter a city name'),
-        zipCode: Yup.string()
-          .test(
-            'is-valid-format',
-            'Please provide a valid US zip code',
-            (value) => /^\d{5}(?:[-\s]\d{4})?$/.test(value)
-          )
-          .max(10, "Zip code can't be longer than 10 characters")
-          .defined()
-          .required('Please enter a zip code'),
-        // postalCode: Yup.string()
-        //   .max(20, "Postal code can't be loner than 20 characters")
-        //   .defined(),
+
         // You may want to provide a list of state values on the backend, then again, I don't really see a
         // reason to do it. Rest of the data can be fake as well so w/e.
-        state: Yup.string().defined().required('Please select a state'),
-        // province: Yup.string()
-        //   .max(100, "Province name can't be longer than 100 characters")
-        //   .defined(),
-        phoneNumber: Yup.string()
-          .test(
-            'is-valid-format',
-            'Please provide a valid phone number',
-            function (value) {
-              // console.log(Yup.ref('phoneCountry'));
-              // console.log(this.options);
-              // country: this.options.parent.phoneCountry,
-
-              return phone(value, {
-                country: this.options.parent.phoneCountry,
-
-                validateMobilePrefix: false,
-              }).isValid;
-            }
-          )
-          .defined()
-          .required('Please enter a phone number'),
       })}
       onSubmit={(values, { setSubmitting }) => {
         console.log('runs');
