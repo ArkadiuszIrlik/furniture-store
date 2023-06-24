@@ -108,9 +108,19 @@ function PaymentCardForm({
             .defined()
             .required('Please enter the name on card'),
           expirationDate: Yup.string()
+            .test(
+              'isValidDate',
+              'Please enter the expiration date in format MM/YY',
+              (value) => /^\d{2}\/\d{2}$/.test(value)
+            )
             .defined()
             .required('Please enter the expiration date'),
           securityCode: Yup.string()
+            .test(
+              'isValidSecurityCode',
+              'Please enter a valid 3 or 4 digit code',
+              (value) => /^\d{3,4}$/.test(value)
+            )
             .defined()
             .required('Please enter the security code'),
         })}
@@ -156,6 +166,7 @@ function PaymentCardForm({
                 type="text"
                 inputMode="numeric"
                 placeholder="12/27"
+                maxLength="5"
               />
             </div>
             <div className="w-32">
@@ -166,6 +177,7 @@ function PaymentCardForm({
                 type="text"
                 inputMode="numeric"
                 placeholder="014"
+                maxLength="4"
               />
             </div>
           </div>
