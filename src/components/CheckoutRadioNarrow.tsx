@@ -7,7 +7,7 @@ function CheckoutRadioNarrow({ children, label, ...props }) {
           ? 'border-primary-700'
           : 'border-zinc-400 hover:bg-zinc-100/75 hover:border-primary-700'
       } px-5 py-2 cursor-pointer group
-    rounded-lg border-2 border-primary-700 w-[40rem]
+    rounded-lg border-2 border-primary-700
    focus-within:outline outline-offset-2
     `}
       aria-label={label}
