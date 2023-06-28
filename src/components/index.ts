@@ -27,3 +27,8 @@ export { default as SelectInput } from './SelectInput';
 export { default as AddressForm } from './AddressForm';
 export { default as PaymentCardForm } from './PaymentCardForm';
 export { default as CheckoutRadioNarrow } from './CheckoutRadioNarrow';
+export { default as FormObserver } from './FormObserver';
+export { default as LoginForm } from './LoginForm';
+export { default as PasswordInput } from './PasswordInput';
+export { default as SignupForm } from './SignupForm';
+export { default as PasswordStrengthDisplay } from './PasswordStrengthDisplay';

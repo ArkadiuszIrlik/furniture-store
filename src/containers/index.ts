@@ -6,3 +6,6 @@ export { default as Product } from './product/Product';
 export { default as ShoppingCart } from './shopping-cart/ShoppingCart';
 export { default as Checkout } from './checkout/Checkout';
 export { default as CheckoutInformation } from './checkoutInformation/CheckoutInformation';
+export { default as CheckoutPayment } from './checkoutPayment/CheckoutPayment';
+export { default as CheckoutShipping } from './checkoutShipping/CheckoutShipping';
+export { default as CheckoutLogin } from './checkoutLogin/CheckoutLogin';
