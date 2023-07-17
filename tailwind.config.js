@@ -7,7 +7,8 @@ const tailwindScrollbarNoComp = tailwindScrollbar({ nocompatible: true });
 
 export default {
   // module.exports = {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}',
+],
   theme: {
     screens: {
       xs: '36rem',
