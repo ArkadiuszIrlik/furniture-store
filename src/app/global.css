@@ -1,0 +1,39 @@
+@tailwind base;
+
+@layer base {
+  [type='search']::-webkit-search-cancel-button {
+    display: none;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+  .forwards {
+    animation-fill-mode: forwards !important;
+  }
+  ::-ms-reveal {
+    display: none;
+  }
+}
+
+@tailwind components;
+
+@layer components {
+  .carousel-button-active {
+    color: theme(colors.text);
+  }
+  .carousel-button-inactive {
+    color: theme(colors.text);
+  }
+}
+@tailwind utilities;
+
+.swiper-button-disabled {
+  color: theme(colors.gray.200) !important;
+  cursor: default;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
