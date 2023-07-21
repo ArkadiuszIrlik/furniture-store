@@ -5,10 +5,9 @@ import tailwindScrollbar from 'tailwind-scrollbar';
 // const defaultTheme = require('tailwindcss/defaultTheme')
 const tailwindScrollbarNoComp = tailwindScrollbar({ nocompatible: true });
 
-export default {
+module.exports = {
   // module.exports = {
-  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}',
-],
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     screens: {
       xs: '36rem',
@@ -19,8 +18,10 @@ export default {
       '2xl': '160rem',
     },
     extend: {
-      backgroundImage: (theme) => ( {
-        'review-score': `linear-gradient(90deg, ${theme('colors.accents[700]')} var(--scorePercentage),
+      backgroundImage: (theme) => ({
+        'review-score': `linear-gradient(90deg, ${theme(
+          'colors.accents[700]'
+        )} var(--scorePercentage),
         ${theme('colors.accents[300]')} var(--scorePercentage))`,
       }),
       fontFamily: {
@@ -40,34 +41,29 @@ export default {
         },
         warning: '#BF4242',
         text: '#212427',
-        product: '#F4F4F4'
+        product: '#F4F4F4',
       },
       keyframes: {
-        "slide-in": {
-          '0%': {transform: 'translateX(-100%)'
-
-          },
-          '100%': {transform: 'translateX(0)'}
+        'slide-in': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0)' },
         },
-        "slide-up-fade-in": {
-          '0%': {opacity: '0', transform: 'translateY(30%)'},
+        'slide-up-fade-in': {
+          '0%': { opacity: '0', transform: 'translateY(30%)' },
           // '30%': {opacity: '0', transform: 'translateY(30%)'},
-          '90%': {opacity: '60'},
-          '100%': {opacity: '100', transform: 'translateX(0)'}
+          '90%': { opacity: '60' },
+          '100%': { opacity: '100', transform: 'translateX(0)' },
         },
-        "slide-down-fade-out": {
-          '0%': {opacity: '100', transform: 'translateX(0)'},
-          '10%': {opacity: '60'},
-          '100%': {opacity: '0', transform: 'translateY(30%)'},
+        'slide-down-fade-out': {
+          '0%': { opacity: '100', transform: 'translateX(0)' },
+          '10%': { opacity: '60' },
+          '100%': { opacity: '0', transform: 'translateY(30%)' },
           // '30%': {opacity: '0', transform: 'translateY(30%)'},
-        }
-      }
+        },
+      },
     },
   },
-  plugins: [
-    tailwindForms,
-    tailwindScrollbarNoComp
-  ],
+  plugins: [tailwindForms, tailwindScrollbarNoComp],
   future: {
     hoverOnlyWhenSupported: true,
   },
