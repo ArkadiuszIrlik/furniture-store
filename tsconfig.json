@@ -1,11 +1,8 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src/",
     "target": "ESNext",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
     "skipLibCheck": true,
     /* Bundler mode */
@@ -30,17 +27,11 @@
       }
     ]
   },
-  "include": [
-    ".eslintrc.cjs",
-    "src",
-    ".next/types/**/*.ts"
-  ],
+  "include": [".eslintrc.cjs", "src", ".next/types/**/*.ts"],
   "references": [
     {
       "path": "./tsconfig.node.json"
     }
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
