@@ -25,8 +25,8 @@ module.exports = {
         ${theme('colors.accents[300]')} var(--scorePercentage))`,
       }),
       fontFamily: {
-        'dm-sans': ['DM Sans', ...defaultTheme.fontFamily.sans],
-        'open-sans': ['Open Sans', ...defaultTheme.fontFamily.sans],
+        'dm-sans': ['var(--font-dm-sans)', ...defaultTheme.fontFamily.sans],
+        'open-sans': ['var(--font-open-sans)', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         primary: {
