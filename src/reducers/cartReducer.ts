@@ -1,3 +1,9 @@
+enum CartActionKind {
+  ADDED = 'added',
+  CHANGED_QUANTITY = 'changedQuantity',
+  REMOVED = 'removed',
+}
+
 interface CartItem {
   id: string;
   name: string;
@@ -10,39 +16,49 @@ interface CartItem {
 export default function cartReducer(
   cart: CartItem[],
   action: {
-    type: string;
+    type: CartActionKind;
     item?: CartItem;
     nextQuantity?: number;
     itemId?: string;
   }
-) {
+): CartItem[] {
   switch (action.type) {
-    case 'added': {
-      if (cart.find((item) => item.id === action.item.id)) {
+    case CartActionKind.ADDED: {
+      if (action.item !== undefined) {
+        if (cart.find((item) => item.id === action.item?.id)) {
+          return cart.map((item) => {
+            if (item.id === action.item?.id) {
+              return {
+                ...item,
+                quantity: item.quantity + action.item.quantity,
+              };
+            }
+            return item;
+          });
+        }
+        return [...cart, action.item];
+      } else {
+        throw Error('Invalid payload');
+      }
+    }
+    case CartActionKind.CHANGED_QUANTITY: {
+      if (action.nextQuantity !== undefined) {
+        if (action.nextQuantity < 1 || action.nextQuantity > 99) {
+          return cart;
+        }
         return cart.map((item) => {
-          if (item.id === action.item.id) {
-            return {
-              ...item,
-              quantity: item.quantity + action.item?.quantity,
-            };
+          if (item.id === action.itemId) {
+            if (action.nextQuantity !== undefined) {
+              return { ...item, quantity: action.nextQuantity };
+            }
           }
           return item;
         });
+      } else {
+        throw Error('Invalid payload');
       }
-      return [...cart, action.item];
     }
-    case 'changedQuantity': {
-      if (action.nextQuantity < 1 || action.nextQuantity > 99) {
-        return cart;
-      }
-      return cart.map((item) => {
-        if (item.id === action.itemId) {
-          return { ...item, quantity: action.nextQuantity };
-        }
-        return item;
-      });
-    }
-    case 'removed': {
+    case CartActionKind.REMOVED: {
       return cart.filter((item) => item.id !== action.itemId);
     }
     default:
