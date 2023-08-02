@@ -1,31 +1,37 @@
+'use client';
+
 import { BiSearch } from 'react-icons/bi';
-import resolveConfig from 'tailwindcss/resolveConfig';
-import { IconContext } from 'react-icons';
-import { useMediaQuery } from '../hooks';
-import tailwindConfig from '../../tailwind.config';
+import { IconProvider } from 'context';
 
 function Search() {
-  const fullConfig = resolveConfig(tailwindConfig);
-  const smallScreen = fullConfig.theme.screens.sm;
-  const smallMatches = useMediaQuery(`(min-width: ${smallScreen})`);
-
   return (
-    <div className="relative flex justify-start items-center w-full">
-      <input
-        type="search"
-        name="site-search"
-        id="site-search"
-        className="border-primary-700 border-2 rounded-xl py-2 pl-9 pr-4
-           placeholder:text-primary-800 font-open-sans w-full focus:ring-0
-           focus:border-black"
-        placeholder={
-          smallMatches ? 'Search for rugs, armoires and more' : 'Search'
-        }
-      />
+    <div className="relative flex items-center justify-start">
+      <div className="hidden w-full sm:block">
+        <input
+          type="search"
+          name="site-search"
+          id="site-search"
+          className="w-full rounded-xl border-2 border-primary-700 py-2 pl-9
+             pr-4 font-open-sans placeholder:text-primary-800 focus:border-black
+             focus:ring-0"
+          placeholder={'Search for rugs, armoires and more'}
+        />
+      </div>
+      <div className="block w-full sm:hidden">
+        <input
+          type="search"
+          name="site-search"
+          id="site-search"
+          className="w-full rounded-xl border-2 border-primary-700 py-2 pl-9
+             pr-4 font-open-sans placeholder:text-primary-800 focus:border-black
+             focus:ring-0"
+          placeholder={'Search'}
+        />
+      </div>
       <div className="absolute left-3">
-        <IconContext.Provider value={{ size: '1.2rem' }}>
+        <IconProvider value={{ size: '1.2rem' }}>
           <BiSearch />
-        </IconContext.Provider>
+        </IconProvider>
       </div>
     </div>
   );
