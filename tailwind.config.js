@@ -3,6 +3,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const tailwindForms = require('@tailwindcss/forms');
 const tailwindScrollbar = require('tailwind-scrollbar');
 const tailwindScrollbarNoComp = tailwindScrollbar({ nocompatible: true });
+const styleVars = require('./src/styleVars.js');
 
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
@@ -38,7 +39,7 @@ module.exports = {
           700: '#717799',
         },
         warning: '#BF4242',
-        text: '#212427',
+        text: styleVars.textColor,
         product: '#F4F4F4',
       },
       keyframes: {
