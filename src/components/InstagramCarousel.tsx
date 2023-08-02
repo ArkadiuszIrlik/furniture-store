@@ -1,7 +1,9 @@
+'use client';
+
 import resolveConfig from 'tailwindcss/resolveConfig';
 import { IoChevronForward, IoChevronBack } from 'react-icons/io5';
 import { IconContext } from 'react-icons';
-import { useEffect, useRef } from 'react';
+import { RefAttributes, DOMAttributes, useEffect, useRef } from 'react';
 import tailwindConfig from '../../tailwind.config';
 import {
   instaImage0,
@@ -17,15 +19,35 @@ import {
   instaImage10,
   instaImage11,
 } from '../assets';
+import Image from 'next/image';
+import { SwiperContainer, SwiperSlide } from 'swiper/element';
+
+type CustomElement<T> = Partial<
+  T & DOMAttributes<T> & { children: any } & RefAttributes<Partial<T>>
+>;
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      ['swiper-container']: CustomElement<SwiperContainer>;
+      ['swiper-slide']: CustomElement<SwiperSlide>;
+    }
+  }
+}
 
 function InstagramCarousel() {
   const fullConfig = resolveConfig(tailwindConfig);
   const smallScreen = fullConfig.theme.screens.sm;
   const mediumScreen = fullConfig.theme.screens.md;
 
-  const currentFontSizePx = parseFloat(
-    getComputedStyle(document.documentElement).fontSize
-  );
+  let currentFontSizePx: number;
+  if (typeof window === 'undefined') {
+    currentFontSizePx = 16;
+  } else {
+    currentFontSizePx = parseFloat(
+      getComputedStyle(document.documentElement).fontSize
+    );
+  }
 
   const images = [
     instaImage0,
@@ -41,7 +63,7 @@ function InstagramCarousel() {
     instaImage10,
     instaImage11,
   ];
-  const swiperContainerRef = useRef(null);
+  const swiperContainerRef = useRef<CustomElement<SwiperContainer>>(null);
 
   useEffect(() => {
     const swiperParams = {
@@ -49,10 +71,10 @@ function InstagramCarousel() {
       loop: true,
       speed: 600,
       autoHeight: false,
-      navigation: {
-        nextEl: '.swiper-insta-button-next',
-        prevEl: '.swiper-insta-button-prev',
-      },
+      // navigation: {
+      //   nextEl: '.swiper-insta-button-next',
+      //   prevEl: '.swiper-insta-button-prev',
+      // },
       spaceBetween: 3,
       breakpoints: {
         0: {
@@ -68,9 +90,10 @@ function InstagramCarousel() {
         },
       },
     };
-
-    Object.assign(swiperContainerRef.current, swiperParams);
-    swiperContainerRef.current.initialize();
+    if (swiperContainerRef.current && swiperContainerRef.current.initialize) {
+      Object.assign(swiperContainerRef.current, swiperParams);
+      swiperContainerRef.current.initialize();
+    }
   }, []);
 
   return (
@@ -89,18 +112,19 @@ function InstagramCarousel() {
         </IconContext.Provider>
       </div>
       <swiper-container
-        init="false"
+        init={false}
+        navigation-next-el=".swiper-insta-button-next"
+        navigation-prev-el=".swiper-insta-button-prev"
         ref={swiperContainerRef}
-        class="-mx-1 md:mx-0"
+        className="-mx-1 md:mx-0"
       >
         {images.map((image, index) => {
           return (
             <swiper-slide key={index}>
-              <img
+              <Image
                 src={image}
                 alt=""
-                srcSet=""
-                className="object-cover object-center aspect-square"
+                className="aspect-square object-cover object-center"
               />
             </swiper-slide>
           );
