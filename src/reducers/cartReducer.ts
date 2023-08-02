@@ -4,7 +4,7 @@ enum CartActionKind {
   REMOVED = 'removed',
 }
 
-interface CartItem {
+export interface CartItem {
   id: string;
   name: string;
   details?: string;
@@ -13,14 +13,16 @@ interface CartItem {
   quantity: number;
 }
 
+export interface CartAction {
+  type: CartActionKind;
+  item?: CartItem;
+  nextQuantity?: number;
+  itemId?: string;
+}
+
 export default function cartReducer(
   cart: CartItem[],
-  action: {
-    type: CartActionKind;
-    item?: CartItem;
-    nextQuantity?: number;
-    itemId?: string;
-  }
+  action: CartAction
 ): CartItem[] {
   switch (action.type) {
     case CartActionKind.ADDED: {
