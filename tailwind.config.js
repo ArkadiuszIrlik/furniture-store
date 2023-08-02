@@ -1,12 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-import defaultTheme from 'tailwindcss/defaultTheme';
-import tailwindForms from '@tailwindcss/forms';
-import tailwindScrollbar from 'tailwind-scrollbar';
-// const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme');
+const tailwindForms = require('@tailwindcss/forms');
+const tailwindScrollbar = require('tailwind-scrollbar');
 const tailwindScrollbarNoComp = tailwindScrollbar({ nocompatible: true });
 
 module.exports = {
-  // module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     screens: {
