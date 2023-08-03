@@ -27,6 +27,12 @@
 }
 @tailwind utilities;
 
+@layer utilities {
+  .scrollbar-narrow {
+    --scrollbar-width: 8px;
+  }
+}
+
 .swiper-button-disabled {
   color: theme(colors.gray.200) !important;
   cursor: default;
