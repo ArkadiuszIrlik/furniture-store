@@ -3,7 +3,7 @@
 import resolveConfig from 'tailwindcss/resolveConfig';
 import { IoChevronForward, IoChevronBack } from 'react-icons/io5';
 import { IconContext } from 'react-icons';
-import { RefAttributes, DOMAttributes, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import tailwindConfig from '../../tailwind.config';
 import {
   instaImage0,
@@ -20,20 +20,6 @@ import {
   instaImage11,
 } from '../assets';
 import Image from 'next/image';
-import { SwiperContainer, SwiperSlide } from 'swiper/element';
-
-type CustomElement<T> = Partial<
-  T & DOMAttributes<T> & { children: any } & RefAttributes<Partial<T>>
->;
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      ['swiper-container']: CustomElement<SwiperContainer>;
-      ['swiper-slide']: CustomElement<SwiperSlide>;
-    }
-  }
-}
 
 function InstagramCarousel() {
   const fullConfig = resolveConfig(tailwindConfig);
@@ -63,7 +49,9 @@ function InstagramCarousel() {
     instaImage10,
     instaImage11,
   ];
-  const swiperContainerRef = useRef<CustomElement<SwiperContainer>>(null);
+
+  const swiperContainerRef =
+    useRef<React.JSX.IntrinsicElements['swiper-container']>(null);
 
   useEffect(() => {
     const swiperParams = {
