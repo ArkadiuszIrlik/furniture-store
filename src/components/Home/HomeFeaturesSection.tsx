@@ -4,7 +4,7 @@ import { HomeFeaturesCard } from 'components';
 function HomeFeaturesSection() {
   return (
     <div
-      className="mb-12 flex justify-center bg-accents-700 px-4 py-9 
+      className="flex justify-center bg-accents-700 px-4 py-9 
           sm:px-10 sm:py-14 md:py-20"
     >
       <div
