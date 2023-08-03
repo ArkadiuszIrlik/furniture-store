@@ -55,10 +55,8 @@ function InstagramCarousel() {
 
   useEffect(() => {
     const swiperParams = {
-      direction: 'horizontal',
       loop: true,
       speed: 600,
-      autoHeight: false,
       // navigation: {
       //   nextEl: '.swiper-insta-button-next',
       //   prevEl: '.swiper-insta-button-prev',
