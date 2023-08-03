@@ -1,3 +1,5 @@
+'use client';
+
 import { BiPlus, BiMinus } from 'react-icons/bi';
 import { IconContext } from 'react-icons';
 import { useState, useEffect } from 'react';
@@ -35,13 +37,13 @@ function SpinButton({
   return (
     <div className={className}>
       <div
-        className="rounded-md border-2 border-neutral-200 bg-neutral-200
-         grid grid-cols-3"
+        className="grid grid-cols-3 rounded-md border-2
+         border-neutral-200 bg-neutral-200"
       >
         <button
           type="button"
           className=" flex
-          justify-center items-center"
+          items-center justify-center"
           tabIndex={-1}
           aria-hidden="true"
           onClick={decrement}
@@ -73,16 +75,16 @@ function SpinButton({
             min="1"
             max="99"
             className="
-            border-none font-dm-sans px-0 py-1
-            bg-transparent w-full text-center
-              focus:ring-0 focus:border-white
-              focus:outline-black focus:-outline-offset-2"
+            w-full border-none bg-transparent px-0
+            py-1 text-center font-dm-sans
+              focus:border-white focus:-outline-offset-2
+              focus:outline-black focus:ring-0"
           />
         </div>
         <button
           type="button"
           className="flex 
-          justify-center items-center"
+          items-center justify-center"
           tabIndex={-1}
           aria-hidden="true"
           onClick={increment}
