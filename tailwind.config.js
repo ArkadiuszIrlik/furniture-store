@@ -27,21 +27,22 @@ module.exports = {
         'dm-sans': ['var(--font-dm-sans)', ...defaultTheme.fontFamily.sans],
         'open-sans': ['var(--font-open-sans)', ...defaultTheme.fontFamily.sans],
       },
-      colors: {
-        primary: {
-          300: '#E5E2D8',
-          400: '#d0ccc1',
-          700: '#999381',
-          800: '#6B6257',
-        },
-        accents: {
-          300: '#D8DAE6',
-          700: '#717799',
-        },
-        warning: '#BF4242',
-        text: styleVars.textColor,
-        product: '#F4F4F4',
-      },
+      // colors: {
+      //   primary: {
+      //     300: '#E5E2D8',
+      //     400: '#d0ccc1',
+      //     700: '#999381',
+      //     800: '#6B6257',
+      //   },
+      //   accents: {
+      //     300: '#D8DAE6',
+      //     700: '#717799',
+      //   },
+      //   warning: '#BF4242',
+      //   text: styleVars.textColor,
+      //   product: '#F4F4F4',
+      // },
+      colors: styleVars.colors,
       keyframes: {
         'slide-in': {
           '0%': { transform: 'translateX(-100%)' },

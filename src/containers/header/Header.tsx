@@ -2,7 +2,7 @@
 // import { HiMenu } from 'react-icons/hi';
 import { ElevaLogo } from 'assets';
 import { Search, HeaderNavbar, HeaderCartIcon } from 'components';
-import { textColor } from 'styleVars.js';
+import styleVars from 'styleVars.js';
 import { IconProvider } from 'context';
 import Image from 'next/image';
 import IconWrapper from 'components/IconWrapper';
@@ -25,7 +25,7 @@ function Header() {
         <div className="block md:hidden">
           <IconProvider
             value={{
-              style: { strokeWidth: '0.05rem', stroke: textColor },
+              style: { strokeWidth: '0.05rem', stroke: styleVars.colors.text },
               size: '1.5rem',
             }}
           >
@@ -44,7 +44,10 @@ function Header() {
           <button>
             <IconProvider
               value={{
-                style: { strokeWidth: '0.05rem', stroke: textColor },
+                style: {
+                  strokeWidth: '0.05rem',
+                  stroke: styleVars.colors.text,
+                },
                 size: '1.5rem',
               }}
             >
