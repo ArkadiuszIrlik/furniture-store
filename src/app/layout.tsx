@@ -14,6 +14,14 @@ const openSans = Open_Sans({
   display: 'swap',
 });
 
+// import { register } from 'swiper/element/bundle';
+
+// register();
+
+import { Header } from 'containers';
+import CartProvider from 'context/CartProvider';
+import { SwiperProvider } from 'components';
+
 export default function RootLayout({
   children,
 }: {
@@ -26,7 +34,12 @@ export default function RootLayout({
      font-dm-sans text-text lg:mx-[8%] xl:mx-[14%]
      2xl:mx-auto 2xl:max-w-[1800px]`}
       >
-        {children}
+        <SwiperProvider>
+          <CartProvider>
+            <Header />
+            {children}
+          </CartProvider>
+        </SwiperProvider>
       </body>
     </html>
   );
