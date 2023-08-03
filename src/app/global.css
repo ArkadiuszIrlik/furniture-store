@@ -7,39 +7,37 @@
   input[type='number'] {
     -moz-appearance: textfield;
   }
-  .forwards {
-    animation-fill-mode: forwards !important;
-  }
   ::-ms-reveal {
     display: none;
+  }
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }
 
 @tailwind components;
 
-@layer components {
-  .carousel-button-active {
-    color: theme(colors.text);
-  }
-  .carousel-button-inactive {
-    color: theme(colors.text);
-  }
-}
 @tailwind utilities;
 
 @layer utilities {
   .scrollbar-narrow {
     --scrollbar-width: 8px;
   }
+  .forwards {
+    animation-fill-mode: forwards !important;
+  }
+}
+
+.swiper-insta-button-prev,
+.swiper-insta-button-next,
+.swiper-product-image-button-next,
+.swiper-product-image-button-prev {
+  color: theme('colors.text');
 }
 
 .swiper-button-disabled {
-  color: theme(colors.gray.200) !important;
+  color: theme('colors.gray.200');
   cursor: default;
-}
-
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }
