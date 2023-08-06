@@ -1,16 +1,10 @@
-import { IconContext } from 'react-icons';
 import { BiTrashAlt } from 'react-icons/bi';
 import { Dispatch } from 'react';
-import { SpinButton } from '..';
-
-interface CartItem {
-  id: string;
-  name: string;
-  details?: string;
-  image: string;
-  priceUsd: number;
-  quantity: number;
-}
+import { SpinButton } from 'components';
+import { IconProvider } from 'context';
+import Image from 'next/image';
+import { formatPriceDollars } from 'helpers';
+import { CartItem, CartActionKind } from 'reducers/cartReducer';
 
 function ShoppingCartList({
   cart,
@@ -24,7 +18,7 @@ function ShoppingCartList({
       {cart.map((item) => {
         return (
           <div className="flex items-center gap-4 font-dm-sans" key={item.id}>
-            <img
+            <Image
               src={item.image}
               alt=""
               className="h-36 min-w-0 flex-auto basis-1/3
@@ -41,14 +35,14 @@ function ShoppingCartList({
                     cartDispatch({ type: 'removed', itemId: item.id })
                   }
                 >
-                  <IconContext.Provider
+                  <IconProvider
                     value={{
                       size: '1.3rem',
                       className: 'text-text shrink-0',
                     }}
                   >
                     <BiTrashAlt />
-                  </IconContext.Provider>
+                  </IconProvider>
                 </button>
               </div>
               {item.details && <p className="mb-2">{item.details}</p>}
@@ -62,7 +56,7 @@ function ShoppingCartList({
                   inputValue={item.quantity}
                   onValueChange={(nextValue) =>
                     cartDispatch({
-                      type: 'changedQuantity',
+                      type: CartActionKind.CHANGED_QUANTITY,
                       itemId: item.id,
                       nextQuantity: nextValue,
                     })
@@ -70,10 +64,7 @@ function ShoppingCartList({
                   className="min-w-[7rem] md:min-w-[5rem]"
                 />
               </div>
-              <p className="font-medium">
-                $
-                {item.priceUsd.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-              </p>
+              <p className="font-medium">{formatPriceDollars(item.priceUsd)}</p>
             </div>
           </div>
         );

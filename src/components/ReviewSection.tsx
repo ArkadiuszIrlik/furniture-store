@@ -1,40 +1,40 @@
-import { ReviewScoreStars } from '.';
+import { ReviewScoreStars } from 'components';
 
 function ReviewSection({
   reviewArray,
   reviewScore,
 }: {
-  reviewArray: any[];
+  // reviewArray: any[];
   reviewScore: number;
 }) {
   // const userInitials = review.username.split(' ').map(e => e[0]).join().slice(0,2)
 
   return (
     <div>
-      <div className="flex flex-col sm:items-center py-2 sm:py-4 border-y-[1px] border-y-primary-300">
+      <div className="flex flex-col border-y-[1px] border-y-primary-300 py-2 sm:items-center sm:py-4">
         <h4 className="font-dm-sans text-xl sm:text-4xl">REVIEWS</h4>
-        <div className="flex gap-3 items-end">
+        <div className="flex items-end gap-3">
           <ReviewScoreStars score={reviewScore} />
-          <p className="leading-none font-dm-sans font-medium">
+          <p className="font-dm-sans font-medium leading-none">
             {reviewArray.length} Reviews
           </p>
         </div>
       </div>
       <div className="px-1 sm:px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
+        <div className="grid grid-cols-1 gap-x-6 sm:grid-cols-2">
           {reviewArray.map((review, index) => {
             return (
               <div
                 className="border-b-[1px] border-primary-300 py-3 sm:py-4"
                 key={index}
               >
-                <div className="flex gap-4 mb-2 sm:mb-3">
+                <div className="mb-2 flex gap-4 sm:mb-3">
                   <div
-                    className="rounded-full bg-primary-700 shrink-0
-                    aspect-square flex justify-center items-center
-                    min-w-[3rem] p-2"
+                    className="flex aspect-square min-w-[3rem]
+                    shrink-0 items-center justify-center rounded-full
+                    bg-primary-700 p-2"
                   >
-                    <p className="font-open-sans font-semibold text-lg text-white">
+                    <p className="font-open-sans text-lg font-semibold text-white">
                       {review.username
                         .split(' ')
                         .map((el) => el[0])
@@ -48,7 +48,7 @@ function ReviewSection({
                     </p>
                     <ReviewScoreStars score={review.score} />
                   </div>
-                  <p className="font-open-sans self-start ml-auto">
+                  <p className="ml-auto self-start font-open-sans">
                     {new Date(review.datePublished).toLocaleString('en-US', {
                       month: 'numeric',
                       day: 'numeric',
@@ -57,7 +57,7 @@ function ReviewSection({
                   </p>
                 </div>
                 <div>
-                  <p className="font-open-sans font-bold text-xl">
+                  <p className="font-open-sans text-xl font-bold">
                     {review.header}
                   </p>
                   <p className="font-open-sans">{review.content}</p>

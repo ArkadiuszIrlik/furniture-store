@@ -3,15 +3,15 @@ function ProductSizeSelector({
   selectedSizeIndex,
   onChangeSelection,
 }: {
-  sizeList: any[];
+  // sizeList: any[];
   selectedSizeIndex: number;
-  onChangeSelection: () => any;
+  onChangeSelection: (sizeIndex: number) => void;
 }) {
   return (
     <div>
       <div className="flex flex-wrap gap-1">
         <fieldset className="flex flex-wrap gap-1">
-          <legend className="font-dm-sans mb-1">
+          <legend className="mb-1 font-dm-sans">
             Select Size -{' '}
             <span className="font-medium" aria-hidden="true">
               {sizeList[selectedSizeIndex].name}
@@ -21,12 +21,12 @@ function ProductSizeSelector({
             return (
               <div className="flex">
                 <label
-                  className={`rounded-lg border-[1px] font-dm-sans
-                   px-2 py-1 flex-auto cursor-pointer ${
+                  className={`flex-auto cursor-pointer rounded-lg
+                   border-[1px] px-2 py-1 font-dm-sans ${
                      index === selectedSizeIndex
-                       ? 'bg-primary-700 text-white border-primary-700'
-                       : `text-text border-text hover:bg-primary-700
-                        hover:text-white hover:border-primary-700`
+                       ? 'border-primary-700 bg-primary-700 text-white'
+                       : `border-text text-text hover:border-primary-700
+                        hover:bg-primary-700 hover:text-white`
                    }`}
                   htmlFor={`input-size-${size.name}`}
                   aria-label={size.name}

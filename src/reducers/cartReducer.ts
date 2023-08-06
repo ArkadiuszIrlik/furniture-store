@@ -1,4 +1,4 @@
-enum CartActionKind {
+export enum CartActionKind {
   ADDED = 'added',
   CHANGED_QUANTITY = 'changedQuantity',
   REMOVED = 'removed',

@@ -14,4 +14,12 @@ module.exports = {
     text: '#212427',
     product: '#F4F4F4',
   },
+  screens: {
+    xs: '36rem',
+    sm: '48rem',
+    md: '64rem',
+    lg: '85.375rem',
+    xl: '120rem',
+    '2xl': '160rem',
+  },
 };

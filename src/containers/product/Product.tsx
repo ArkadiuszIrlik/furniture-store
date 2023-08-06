@@ -1,5 +1,5 @@
-import resolveConfig from 'tailwindcss/resolveConfig';
-import { useState, Dispatch } from 'react';
+'use client';
+import { useState, Dispatch, useContext } from 'react';
 import { BsTruck } from 'react-icons/bs';
 import { BiPlus, BiMinus } from 'react-icons/bi';
 import { IconContext } from 'react-icons';
@@ -13,9 +13,8 @@ import {
   ReviewScoreStars,
   ReviewSection,
   SpinButton,
-} from '../../components';
-import tailwindConfig from '../../../tailwind.config';
-import { useMediaQuery } from '../../hooks';
+} from 'components';
+import { useClientCheck, useMediaQuery } from 'hooks';
 import {
   bed1,
   bed2,
@@ -29,16 +28,19 @@ import {
   navyVelvet,
   emeraldVelvet,
   prepSchoolPlaid,
-} from '../../assets';
+} from 'assets';
+import Image from 'next/image';
+import { CartContext } from 'context/CartProvider';
+import { CartActionKind } from 'reducers/cartReducer';
+import { formatPriceDollars } from 'helpers';
+import styleVars from 'styleVars';
 
-function Product({ cartDispatch }: { cartDispatch: Dispatch<any> }) {
-  const fullConfig = resolveConfig(tailwindConfig);
-  const smallScreen = fullConfig.theme.screens.sm;
+function Product({ reviewSection }: { reviewSection: React.JSX.Element }) {
+  // { cartDispatch }: { cartDispatch: Dispatch<any> }
+  const { cart, cartDispatch } = useContext(CartContext);
+  const smallScreen = styleVars.screens.sm;
   const smallMatches = useMediaQuery(`(min-width: ${smallScreen})`);
-  const mediumScreen = fullConfig.theme.screens.md;
-  const mediumMatches = useMediaQuery(`(min-width: ${mediumScreen})`);
-  const colorAccents700 = fullConfig.theme.colors.accents['700'];
-  const colorAccents300 = fullConfig.theme.colors.accents['300'];
+  const isClient = useClientCheck();
 
   const [product, setProduct] = useState({
     id: uuidv4(),
@@ -131,7 +133,7 @@ function Product({ cartDispatch }: { cartDispatch: Dispatch<any> }) {
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [infoDropdownOpenState, setInfoDropdownOpenState] = useState(
-    product.information.map((section) => {
+    product.information.map(() => {
       return { isOpen: false };
     })
   );
@@ -171,7 +173,7 @@ function Product({ cartDispatch }: { cartDispatch: Dispatch<any> }) {
 
   function addToCart() {
     cartDispatch({
-      type: 'added',
+      type: CartActionKind.ADDED,
       item: {
         id: product.id,
         name: product.name,
@@ -217,69 +219,70 @@ function Product({ cartDispatch }: { cartDispatch: Dispatch<any> }) {
       </div>
       <div className="flex flex-col items-stretch sm:gap-10">
         <div
-          className="grid grid-cols-1 gap-3 sm:gap-5
-            sm:grid-cols-[minmax(5rem,7%)_minmax(0px,max-content)_minmax(35%,1fr)]
+          className="grid grid-cols-1 gap-3 sm:grid-cols-[minmax(5rem,7%)_minmax(0px,max-content)_minmax(35%,1fr)]
+            sm:gap-5
         "
         >
-          {smallMatches && (
-            <div className="flex flex-col gap-2">
-              {product.images.map((image, index) => {
-                return (
-                  <button
-                    type="button"
-                    onClick={() => handleSwitchActiveImage(index)}
-                    className={`border-2 rounded-md overflow-hidden ${
-                      activeImage === index
-                        ? 'border-primary-700'
-                        : 'border-white'
-                    }`}
-                  >
-                    <img
-                      src={image}
-                      alt=""
-                      className={`${
-                        activeImage === index
-                          ? ''
-                          : 'opacity-[60%] hover:opacity-100'
-                      }`}
-                      draggable="false"
-                    />
-                  </button>
-                );
-              })}
-            </div>
-          )}
+          {isClient
+            ? smallMatches && (
+                <div className="flex flex-col gap-2">
+                  {product.images.map((image, index) => {
+                    return (
+                      <button
+                        type="button"
+                        onClick={() => handleSwitchActiveImage(index)}
+                        className={`overflow-hidden rounded-md border-2 ${
+                          activeImage === index
+                            ? 'border-primary-700'
+                            : 'border-white'
+                        }`}
+                      >
+                        <Image
+                          src={image}
+                          alt=""
+                          className={`${
+                            activeImage === index
+                              ? ''
+                              : 'opacity-[60%] hover:opacity-100'
+                          }`}
+                          draggable="false"
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              )
+            : null}
           <div>
-            {smallMatches ? (
-              <img
-                src={product.images[activeImage]}
-                alt=""
-                srcSet=""
-                draggable="false"
-              />
-            ) : (
-              <ProductCarousel images={product.images} />
-            )}
+            {isClient ? (
+              smallMatches ? (
+                <Image
+                  src={product.images[activeImage]}
+                  alt=""
+                  draggable="false"
+                  priority
+                />
+              ) : (
+                <ProductCarousel images={product.images} />
+              )
+            ) : null}
           </div>
           <div className="flex flex-col sm:ml-4">
-            <h1 className="font-dm-sans font-medium text-3xl sm:mt-20">
+            <h1 className="font-dm-sans text-3xl font-medium sm:mt-20">
               {product.name}
             </h1>
-            <div className="flex gap-3 items-end mb-4">
+            <div className="mb-4 flex items-end gap-3">
               <ReviewScoreStars score={product.reviewScore} />
-              <p className="leading-none font-dm-sans font-medium">
+              <p className="font-dm-sans font-medium leading-none">
                 {product.reviews.length} Reviews
               </p>
             </div>
-            <p className="font-dm-sans font-bold text-3xl mb-2 sm:mb-8">
-              $
-              {product.priceUsd
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            <p className="mb-2 font-dm-sans text-3xl font-bold sm:mb-8">
+              {formatPriceDollars(product.priceUsd)}
             </p>
             <div
-              className="border-y-[1px] border-primary-300 py-2 sm:py-4 flex
-              flex-col gap-3"
+              className="flex flex-col gap-3 border-y-[1px] border-primary-300
+              py-2 sm:py-4"
             >
               <ProductColorSelector
                 colorList={product.colors}
@@ -292,11 +295,11 @@ function Product({ cartDispatch }: { cartDispatch: Dispatch<any> }) {
                 onChangeSelection={handleSwitchSelectedSizeIndex}
               />
               <div>
-                <div className="flex items-end gap-1 max-w-xs">
+                <div className="flex max-w-xs items-end gap-1">
                   <div className="flex flex-col items-start ">
                     <label
                       htmlFor="product-quantity-selector"
-                      className="block font-dm-sans mb-1"
+                      className="mb-1 block font-dm-sans"
                     >
                       Quantity
                     </label>
@@ -308,7 +311,7 @@ function Product({ cartDispatch }: { cartDispatch: Dispatch<any> }) {
                       className="min-w-[7rem] md:min-w-[5rem]"
                     />
                   </div>
-                  <PrimaryButton onClick={() => addToCart()}>
+                  <PrimaryButton type="button" onClick={() => addToCart()}>
                     ADD TO CART
                   </PrimaryButton>
                 </div>
@@ -335,8 +338,8 @@ function Product({ cartDispatch }: { cartDispatch: Dispatch<any> }) {
               return (
                 <div key={index}>
                   <div
-                    className="border-t-[1px] border-t-primary-300 py-2 flex
-                   justify-between items-center pr-1 cursor-pointer
+                    className="flex cursor-pointer items-center justify-between
+                   border-t-[1px] border-t-primary-300 py-2 pr-1
                    "
                     onClick={() => handleToggleInfoSectionOpen(index)}
                   >
@@ -375,9 +378,9 @@ function Product({ cartDispatch }: { cartDispatch: Dispatch<any> }) {
                         {info.content.map((bulletpoint) => {
                           return (
                             <li
-                              className='relative font-open-sans before:content-["·"]
-                          before:align-middle before:text-3xl before:leading-6 before:font-open-sans
-                          before:absolute before:left-[-0.5em] ml-4'
+                              className='relative ml-4 font-open-sans
+                          before:absolute before:left-[-0.5em] before:align-middle before:font-open-sans
+                          before:text-3xl before:leading-6 before:content-["·"]'
                             >
                               {bulletpoint[0].toUpperCase() +
                                 bulletpoint.slice(1)}
@@ -393,10 +396,11 @@ function Product({ cartDispatch }: { cartDispatch: Dispatch<any> }) {
           </div>
         </div>
         <div className="mb-10">
-          <ReviewSection
+          {/* <ReviewSection
             reviewArray={product.reviews}
             reviewScore={product.reviewScore}
-          />
+          /> */}
+          {reviewSection}
         </div>
       </div>
     </div>

@@ -1,17 +1,19 @@
+import Image from 'next/image';
+
 function ProductColorSelector({
   colorList,
   selectedColorIndex,
   onChangeSelection,
 }: {
-  colorList: any[];
+  // colorList: any[];
   selectedColorIndex: number;
-  onChangeSelection: () => any;
+  onChangeSelection: (colorIndex: number) => void;
 }) {
   return (
     <div>
       <div className="flex flex-wrap gap-1">
         <fieldset className="flex flex-wrap gap-1">
-          <legend className="font-dm-sans mb-1">
+          <legend className="mb-1 font-dm-sans">
             Select Color -{' '}
             <span className="font-medium" aria-hidden="true">
               {colorList[selectedColorIndex].name}
@@ -19,10 +21,10 @@ function ProductColorSelector({
           </legend>
           {colorList.map((color, index) => {
             return (
-              <div className="flex relative">
+              <div className="relative flex">
                 <label
-                  className={`rounded-lg border-2 overflow-hidden 
-                  cursor-pointer hover:border-primary-700
+                  className={`cursor-pointer overflow-hidden rounded-lg 
+                  border-2 hover:border-primary-700
                       ${
                         index === selectedColorIndex
                           ? 'border-primary-700'
@@ -40,18 +42,17 @@ function ProductColorSelector({
                     className="sr-only"
                     onChange={() => onChangeSelection(index)}
                   />
-                  <img
+                  <Image
                     src={color.image}
                     alt=""
-                    srcSet=""
                     className={`peer ${
                       index === selectedColorIndex ? 'p-1' : ''
-                    } hover:p-1 w-12 aspect-square rounded-lg`}
+                    } aspect-square w-12 rounded-lg hover:p-1`}
                     draggable="false"
                   />
                   <p
-                    className="hidden peer-hover:block absolute top-[110%] left-1/2
-                    bg-primary-300 text-sm w-max px-1 -translate-x-1/2 font-dm-sans"
+                    className="absolute left-1/2 top-[110%] hidden w-max
+                    -translate-x-1/2 bg-primary-300 px-1 font-dm-sans text-sm peer-hover:block"
                     aria-hidden="true"
                   >
                     {color.name}

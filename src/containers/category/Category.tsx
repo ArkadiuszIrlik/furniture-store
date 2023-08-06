@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { IconContext } from 'react-icons';
 import { BiFilter } from 'react-icons/bi';
@@ -9,9 +11,11 @@ import {
   ModalOverlay,
   SearchFilterModal,
   PathDisplay,
-} from '../../components';
+} from 'components';
 import tailwindConfig from '../../../tailwind.config';
 import { useMediaQuery } from '../../hooks';
+import { v4 as uuidv4 } from 'uuid';
+import { Path } from 'components/PathDisplay';
 
 function Category() {
   const fullConfig = resolveConfig(tailwindConfig);
@@ -23,7 +27,7 @@ function Category() {
   const [isFilterShown, setIsFilterShown] = useState(!!mediumMatches);
   const [animateFilter, setAnimateFilter] = useState(false);
 
-  const pathToCategory = [{ name: 'Vases' }];
+  const pathToCategory: Path = [{ name: 'Vases' }];
 
   useEffect(() => {
     if (!mediumMatches && isFilterShown) {
@@ -56,33 +60,33 @@ function Category() {
   }
   const [facets, setFacets] = useState([
     {
-      id: crypto.randomUUID(),
+      id: uuidv4(),
       name: 'Color',
       values: [
-        { name: 'Black', id: crypto.randomUUID(), isActive: false },
-        { name: 'Beige', id: crypto.randomUUID(), isActive: false },
+        { name: 'Black', id: uuidv4(), isActive: false },
+        { name: 'Beige', id: uuidv4(), isActive: false },
       ],
     },
     {
-      id: crypto.randomUUID(),
+      id: uuidv4(),
       name: 'Material',
       values: [
         {
           name: 'Reallylongnamehere',
-          id: crypto.randomUUID(),
+          id: uuidv4(),
           isActive: false,
         },
-        { name: 'Sandalwood', id: crypto.randomUUID(), isActive: false },
-        { name: 'Aak', id: crypto.randomUUID(), isActive: false },
+        { name: 'Sandalwood', id: uuidv4(), isActive: false },
+        { name: 'Aak', id: uuidv4(), isActive: false },
       ],
     },
     {
-      id: crypto.randomUUID(),
+      id: uuidv4(),
       name: 'Material',
       values: [
-        { name: 'ZOak', id: crypto.randomUUID(), isActive: false },
-        { name: 'AA', id: crypto.randomUUID(), isActive: false },
-        { name: 'Aak', id: crypto.randomUUID(), isActive: false },
+        { name: 'ZOak', id: uuidv4(), isActive: false },
+        { name: 'AA', id: uuidv4(), isActive: false },
+        { name: 'Aak', id: uuidv4(), isActive: false },
       ],
     },
   ]);
@@ -93,7 +97,7 @@ function Category() {
         <PathDisplay pathArray={pathToCategory} />
         <h2 className="text-3xl font-medium">VASES</h2>
       </div>
-      <div className="overflow-hidden flex gap-5 pt-2">
+      <div className="flex gap-5 overflow-hidden pt-2">
         {isFilterShown &&
           (mediumMatches ? (
             <div
@@ -117,11 +121,11 @@ function Category() {
               <ModalOverlay onOverlayClick={handleToggleFilterVisibility} />
             </>
           ))}
-        <div className="flex flex-col flex-auto">
-          <div className="flex justify-between items-center pb-3">
+        <div className="flex flex-auto flex-col">
+          <div className="flex items-center justify-between pb-3">
             <button
               type="button"
-              className="font-open-sans flex items-center"
+              className="flex items-center font-open-sans"
               onClick={handleToggleFilterVisibility}
             >
               <IconContext.Provider
@@ -145,7 +149,7 @@ function Category() {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-[repeat(auto-fit,_minmax(13rem,_1fr))] lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-[repeat(auto-fit,_minmax(13rem,_1fr))] gap-3 lg:grid-cols-4">
             {productList.map((product) => {
               return <RecommendedCard />;
             })}

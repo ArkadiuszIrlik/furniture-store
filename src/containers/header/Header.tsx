@@ -33,11 +33,14 @@ function Header() {
             <HiMenu />
           </IconProvider>
         </div>
-        <Link href={'/'}>
+        <Link
+          href={'/'}
+          className="w-28 justify-self-center md:justify-self-start"
+        >
           <Image
             src={ElevaLogo}
             alt="Eleva Design Logo"
-            className="w-28 justify-self-center md:justify-self-start"
+            // className="w-28 justify-self-center md:justify-self-start"
             draggable={false}
           />
         </Link>
