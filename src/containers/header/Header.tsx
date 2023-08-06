@@ -8,6 +8,7 @@ import Image from 'next/image';
 import IconWrapper from 'components/IconWrapper';
 import { CiUser } from 'assets/react-icons';
 import { HiMenu } from 'assets/react-icons';
+import Link from 'next/link';
 
 // async function exportServerWrapper(component) {
 //   'use server';
@@ -20,7 +21,7 @@ function Header() {
       <div
         className="grid grid-cols-[1fr_minmax(max-content,_60%)_1fr]
            grid-rows-[repeat(2,_max-content)] items-center
-            gap-y-2 px-3 pb-2 pt-1 md:gap-y-4 md:px-12 md:pt-5"
+            gap-y-2 px-3 pb-2 pt-1 md:gap-y-2 md:px-12 md:pt-5"
       >
         <div className="block md:hidden">
           <IconProvider
@@ -32,11 +33,14 @@ function Header() {
             <HiMenu />
           </IconProvider>
         </div>
-        <Image
-          src={ElevaLogo}
-          alt="Eleva Design Logo"
-          className="w-28 justify-self-center md:justify-self-start"
-        />
+        <Link href={'/'}>
+          <Image
+            src={ElevaLogo}
+            alt="Eleva Design Logo"
+            className="w-28 justify-self-center md:justify-self-start"
+            draggable={false}
+          />
+        </Link>
         <div className="col-span-full row-start-2 md:col-span-1 md:col-start-2 md:row-start-1">
           <Search />
         </div>
@@ -56,7 +60,7 @@ function Header() {
           </button>
           <HeaderCartIcon />
         </div>
-        <div className="col-span-full row-start-2 hidden md:block">
+        <div className="col-span-full row-start-2 hidden border-t-[1px] border-t-primary-700 md:block md:py-2">
           <HeaderNavbar />
         </div>
       </div>

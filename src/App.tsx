@@ -1,5 +1,7 @@
 import { useState, useEffect, useReducer } from 'react';
 import {
+  Checkout,
+  CheckoutInformation,
   Header,
   Home,
   Category,
@@ -25,7 +27,9 @@ function App() {
     <div className="mx-auto lg:mx-[8%] xl:mx-[14%] 2xl:mx-auto 2xl:max-w-[1800px] min-h-screen text-text flex flex-col">
       <Header cart={cart} cartDispatch={cartDispatch} />
       {/* <Category /> */}
-      <Product cartDispatch={cartDispatch} />
+      {/* <Product cartDispatch={cartDispatch} /> */}
+      {/* <Checkout /> */}
+      <CheckoutInformation />
       {/* <ShoppingCart /> */}
       {/* <Home /> */}
       {/* <RecommendedCarousel /> */}

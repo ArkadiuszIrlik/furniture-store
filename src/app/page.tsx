@@ -1,11 +1,14 @@
 import {
   HomeFeaturesSection,
+  HomeHeroCarousel,
   HomePhotosSection,
   InstagramCarousel,
 } from 'components';
 import ProductCarousel from 'components/ProductCarousel';
 import { Footer } from 'containers';
 import { AdaraBed } from 'assets';
+import HomeHero from 'components/Home/HomeHero';
+import HomeHeroMobile from 'components/Home/HomeHeroMobile';
 
 const recommendedProducts = [
   {
@@ -80,11 +83,23 @@ const recommendedProducts = [
     priceUsd: 879,
     url: 'products/125714671',
   },
+  {
+    image: AdaraBed,
+    name: 'Hannah Sideboard',
+    priceUsd: 879,
+    url: 'products/125714671',
+  },
 ];
 
 export default function Page() {
   return (
     <div>
+      <div className="mb-14 mt-3 sm:-mt-1">
+        {/* <HomeHeroCarousel /> */}
+        <HomeHero>
+          <HomeHeroMobile />
+        </HomeHero>
+      </div>
       <div className="mb-8">
         <HomeFeaturesSection />
       </div>

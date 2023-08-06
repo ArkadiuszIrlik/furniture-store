@@ -34,6 +34,7 @@ export { default as ShoppingCartList } from './ShoppingCart/ShoppingCartList';
 export { default as HeaderCartIcon } from './HeaderCartIcon';
 export { default as HomeFeaturesSection } from './Home/HomeFeaturesSection';
 export { default as HomePhotosSection } from './Home/HomePhotosSection';
+export { default as HomeHeroCarousel } from './Home/HomeHeroCarousel';
 export { default as SwiperProvider } from './SwiperProvider';
 export { default as FooterDesktop } from './Footer/FooterDesktop';
 export { default as FooterMobile } from './Footer/FooterMobile';

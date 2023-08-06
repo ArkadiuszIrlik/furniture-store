@@ -9,6 +9,7 @@ import { formatPriceDollars } from 'helpers';
 import tailwindConfig from '../../tailwind.config';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import Link from 'next/link';
+import { Swiper } from 'swiper/types';
 
 function ProductCarousel({
   productList,
@@ -35,7 +36,6 @@ function ProductCarousel({
     const params = {
       spaceBetween: 10,
       speed: 600,
-      // pagination={true}
       breakpoints: {
         0: {
           slidesPerView: 1,
@@ -55,10 +55,6 @@ function ProductCarousel({
         .swiper-wrapper {
           align-items:center;
         }
-        .swiper-pagination-bullet-active {
-          background-color: ${colorAccents700} !important;
-        }
-  
         `,
       ],
     };
