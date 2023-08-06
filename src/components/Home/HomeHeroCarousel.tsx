@@ -117,7 +117,7 @@ function HomeHeroCarousel() {
   }, []);
 
   return (
-    <div className="relative flex items-center">
+    <div className="relative flex items-center overflow-hidden">
       <div className="swiper-custom-pagination-container absolute bottom-[5%] left-[5%] z-20 hidden h-10 sm:block"></div>
       {/* <div className="swiper-product-image-button-prev absolute -left-2 top-1/2 z-10 -translate-y-1/2 md:static md:translate-y-0">
         <IconContext.Provider
@@ -140,8 +140,8 @@ function HomeHeroCarousel() {
             <div className="absolute z-10 ml-[3%] mt-[1%] flex flex-col">
               <p
                 className="
-                       font-dm-sans text-2xl font-bold text-white drop-shadow-md xs:w-[70%]
-                        xs:text-3xl sm:mt-[5%] sm:text-4xl lg:text-5xl xl:text-6xl"
+                       select-none font-dm-sans text-2xl font-bold text-white drop-shadow-md
+                        xs:w-[70%] xs:text-3xl sm:mt-[5%] sm:text-4xl lg:text-5xl xl:text-6xl"
               >
                 Award-winning sofas and sectionals, customizable by you
               </p>
@@ -166,8 +166,8 @@ function HomeHeroCarousel() {
             <div className="absolute z-10 ml-[3%] mt-[1%] flex flex-col">
               <p
                 className="
-                       font-dm-sans text-2xl font-bold text-white drop-shadow-md xs:w-[70%]
-                        xs:text-3xl sm:mt-[5%] sm:text-4xl lg:text-5xl xl:text-6xl"
+                       select-none font-dm-sans text-2xl font-bold text-white drop-shadow-md
+                        xs:w-[70%] xs:text-3xl sm:mt-[5%] sm:text-4xl lg:text-5xl xl:text-6xl"
               >
                 A better suite of bedroom furniture, starting with a solid frame
               </p>

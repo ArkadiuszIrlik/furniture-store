@@ -16,13 +16,23 @@ import tailwindConfig from '../../../tailwind.config';
 import { useMediaQuery } from '../../hooks';
 import { v4 as uuidv4 } from 'uuid';
 import { Path } from 'components/PathDisplay';
+import { AdaraBed } from 'assets';
 
 function Category() {
   const fullConfig = resolveConfig(tailwindConfig);
   const mediumScreen = fullConfig.theme.screens.md;
   const mediumMatches = useMediaQuery(`(min-width: ${mediumScreen})`);
 
-  const productList: any[] = [...Array(12)];
+  const productList = [
+    { name: 'Adara Bed', priceUsd: 1249, image: AdaraBed },
+    { name: 'Adara Bed', priceUsd: 1249, image: AdaraBed },
+    { name: 'Adara Bed', priceUsd: 1249, image: AdaraBed },
+    { name: 'Adara Bed', priceUsd: 1249, image: AdaraBed },
+    { name: 'Adara Bed', priceUsd: 1249, image: AdaraBed },
+    { name: 'Adara Bed', priceUsd: 1249, image: AdaraBed },
+    { name: 'Adara Bed', priceUsd: 1249, image: AdaraBed },
+    { name: 'Adara Bed', priceUsd: 1249, image: AdaraBed },
+  ];
 
   const [isFilterShown, setIsFilterShown] = useState(!!mediumMatches);
   const [animateFilter, setAnimateFilter] = useState(false);
@@ -151,7 +161,13 @@ function Category() {
           </div>
           <div className="grid grid-cols-[repeat(auto-fit,_minmax(13rem,_1fr))] gap-3 lg:grid-cols-4">
             {productList.map((product) => {
-              return <RecommendedCard />;
+              return (
+                <RecommendedCard
+                  name={product.name}
+                  priceUsd={product.priceUsd}
+                  image={product.image}
+                />
+              );
             })}
           </div>
         </div>
