@@ -106,7 +106,7 @@ export default function Page() {
       </div>
       <p className="mb-5 text-center text-3xl">RECOMMENDED FOR YOU</p>
       <div className="mb-8 md:px-10">
-        <RecommendedCarousel productList={recommendedProducts} />
+        {/* <RecommendedCarousel productList={recommendedProducts} /> */}
       </div>
       <div className="mb-8 px-0 sm:px-10">
         <HomePhotosSection />

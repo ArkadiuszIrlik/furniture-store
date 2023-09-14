@@ -36,7 +36,9 @@ export default function RootLayout({
       >
         <SwiperProvider>
           <CartProvider>
+            {/* <div className="mb-64"> */}
             <Header />
+            {/* </div> */}
             {children}
           </CartProvider>
         </SwiperProvider>

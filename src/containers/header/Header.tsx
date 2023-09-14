@@ -63,7 +63,7 @@ function Header() {
           </button>
           <HeaderCartIcon />
         </div>
-        <div className="col-span-full row-start-2 hidden border-t-[1px] border-t-primary-700 md:block md:py-2">
+        <div className="col-span-full row-start-2 hidden border-t-[1px] border-t-primary-700  md:block">
           <HeaderNavbar />
         </div>
       </div>

@@ -2,6 +2,11 @@ import { BsPlusLg } from 'assets/react-icons';
 // import { IconContext } from 'react-icons';
 import { IconProvider } from 'context';
 
+export interface SearchFacet {
+  name: string;
+  values: Array<{ name: string; isActive: boolean }>;
+}
+
 function SearchFilterSidebar({ facetList, onToggleFilterValue }) {
   return (
     <div className="h-full max-w-xs overflow-y-auto px-2 md:px-0">
