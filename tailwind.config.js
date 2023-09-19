@@ -8,14 +8,7 @@ const styleVars = require('./src/styleVars.js');
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
-    screens: {
-      xs: '36rem',
-      sm: '48rem',
-      md: '64rem',
-      lg: '85.375rem',
-      xl: '120rem',
-      '2xl': '160rem',
-    },
+    screens: styleVars.screens,
     extend: {
       backgroundImage: (theme) => ({
         'review-score': `linear-gradient(90deg, ${theme(
