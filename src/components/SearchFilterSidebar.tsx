@@ -1,18 +1,32 @@
 import { BsPlusLg } from 'assets/react-icons';
-// import { IconContext } from 'react-icons';
 import { IconProvider } from 'context';
+import { capitalizeEachWord } from 'helpers';
+import { v4 as uuidv4 } from 'uuid';
 
 export interface SearchFacet {
   name: string;
-  values: Array<{ name: string; isActive: boolean }>;
+  values: Array<{ name: string; count?: number }>;
 }
 
-function SearchFilterSidebar({ facetList, onToggleFilterValue }) {
+export interface SearchFacetActive extends SearchFacet {
+  values: SearchFacet['values'] &
+    Array<{
+      isActive: boolean;
+    }>;
+}
+
+function SearchFilterSidebar({
+  facetList,
+  onToggleFilterValue,
+}: {
+  facetList: SearchFacetActive[];
+  onToggleFilterValue: (facet: SearchFacet, valueName: string) => void;
+}) {
   return (
     <div className="h-full max-w-xs overflow-y-auto px-2 md:px-0">
       {facetList.map((facet) => {
         return (
-          <div key={facet.id}>
+          <div key={facet.name}>
             <div
               className="flex items-center justify-between gap-5 border-b-[1px]
             border-b-primary-700
@@ -37,19 +51,20 @@ function SearchFilterSidebar({ facetList, onToggleFilterValue }) {
                   return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
                 })
                 .map((value) => {
+                  const tempId = uuidv4();
                   return (
                     <div
-                      key={value.id}
-                      className="flex items-center gap-1 md:px-0"
+                      key={value.name}
+                      className="flex items-center gap-1 md:mb-2 md:px-0"
                     >
                       <input
                         type="checkbox"
                         checked={value.isActive}
                         onChange={() => {
-                          onToggleFilterValue(facet, value);
+                          onToggleFilterValue(facet, value.name);
                         }}
                         name=""
-                        id={`checkbox-filter-${value.id}`}
+                        id={`checkbox-filter-${tempId}`}
                         className="
                           cursor-pointer
                           rounded
@@ -64,11 +79,11 @@ function SearchFilterSidebar({ facetList, onToggleFilterValue }) {
                         "
                       />
                       <label
-                        htmlFor={`checkbox-filter-${value.id}`}
-                        className="min-w-0 cursor-pointer break-words
-                        font-open-sans text-base"
+                        htmlFor={`checkbox-filter-${tempId}`}
+                        className="min-w-0 cursor-pointer select-none
+                        break-words font-open-sans text-base leading-5"
                       >
-                        {value.name}
+                        {capitalizeEachWord(value.name)}
                       </label>
                     </div>
                   );

@@ -9,9 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/uuid": "^9.0.4",
     "@uidotdev/usehooks": "^2.0.1",
     "formik": "^2.4.2",
-    "mongoose": "^7.5.1",
+    "mongoose": "^7.5.2",
     "next": "^13.4.9",
     "phone": "^3.1.37",
     "react": "^18.2.0",

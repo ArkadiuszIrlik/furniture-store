@@ -13,6 +13,7 @@ import { BiFilter } from 'react-icons/bi';
 import { Products } from 'models/Products';
 import { SearchFacet } from 'components/SearchFilterSidebar';
 import { AiFillCaretDown } from 'react-icons/ai';
+import { SearchFacetActive } from 'components/SearchFilterSidebar';
 
 function BrowseItems({
   productList,
@@ -26,7 +27,7 @@ function BrowseItems({
 
   const [isFilterShown, setIsFilterShown] = useState(!!mediumMatches);
   const [animateFilter, setAnimateFilter] = useState(false);
-  const [facets, setFacets] = useState<SearchFacet[]>([]);
+  const [facets, setFacets] = useState<SearchFacetActive[]>([]);
 
   useEffect(() => {
     if (!mediumMatches && isFilterShown) {
@@ -35,7 +36,19 @@ function BrowseItems({
   }, [mediumMatches]);
 
   useEffect(() => {
-    setFacets(facetList);
+    const nextFacets = facetList.map((facet) => {
+      return {
+        name: facet.name,
+        values: facet.values.map((value) => {
+          return {
+            name: value.name,
+            count: value.count,
+            isActive: false,
+          };
+        }),
+      };
+    });
+    setFacets(nextFacets);
   }, [facetList]);
 
   function handleToggleFilterVisibility() {
@@ -43,17 +56,14 @@ function BrowseItems({
     setIsFilterShown(!isFilterShown);
   }
 
-  function handleFacetToggle(
-    facet: SearchFacet,
-    value: { name: string; isActive: boolean }
-  ) {
+  function handleFacetToggle(facet: SearchFacet, valueName: string) {
     setFacets(
       facets.map((item) => {
         if (item.name === facet.name) {
           return {
             ...item,
             values: item.values.map((el) => {
-              if (el.name === value.name) {
+              if (el.name === valueName) {
                 return { ...el, isActive: !el.isActive };
               }
               return el;

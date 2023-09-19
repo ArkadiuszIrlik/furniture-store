@@ -2,8 +2,8 @@ import { connectToDb } from 'helpers';
 import { Product } from 'models';
 import { RecommendedCard } from 'components';
 import { Products } from 'models/Products';
-import { SearchFacet } from 'components/SearchFilterSidebar';
 import BrowseItems from 'containers/browseItems/BrowseItems';
+import { SearchFacet } from 'components/SearchFilterSidebar';
 
 export interface SearchPageParams {
   q: string;
@@ -63,15 +63,25 @@ async function searchQuery(query: string) {
               $unset: 'details._id',
             },
           ],
-          facets: [
-            { $limit: 1 },
-            { $project: { meta: '$$SEARCH_META', _id: 0 } },
-          ],
+          meta: [{ $limit: 1 }, { $replaceWith: '$$SEARCH_META' }],
         },
       },
+      { $unwind: '$meta' },
     ]);
-    console.log(results[0]);
-    return results[0];
+    console.log(results);
+    if (results.length === 0) {
+      return {
+        results: [],
+        meta: {
+          count: {
+            lowerBound: 0,
+          },
+          facet: [],
+        },
+      };
+    } else {
+      return results[0];
+    }
   } catch (error) {
     throw error;
   }
@@ -80,31 +90,35 @@ async function searchQuery(query: string) {
 async function Page({ searchParams }: { searchParams: SearchPageParams }) {
   let hasResults = false;
   let foundItems: Products[] = [];
-  let searchFacetList: SearchFacet[] = [];
+  let foundFacets: SearchFacet[] = [];
   if (searchParams.q) {
     const searchResults = await searchQuery(searchParams.q);
+
     foundItems = searchResults.results;
+    console.log(searchResults.meta.facet.colors.buckets);
     // foundItems.forEach((item) => (item._id = item._id.toString()));
     // console.log(searchResults.facets[0].results[0].images);
     // console.log(searchResults.facets[0].meta);
     // console.log(searchResults.facets[0].meta.facet.colors.buckets);
     // console.log(foundItems[3].images);
-    console.log(foundItems[0].details);
-    searchFacetList = Object.entries(searchResults.facets[0].meta.facet).map(
-      ([facetName, { buckets }]) => {
-        const facetValues = buckets.map(({ _id: name, count }) => {
-          return { name, count };
-        });
-        return {
-          name: facetName,
-          values: facetValues,
-        };
-      }
-    );
+    // console.log(foundItems[0].details);
+    foundFacets = Object.entries<{
+      buckets: { _id: string; count: number }[];
+    }>(searchResults.meta.facet).map(([facetName, { buckets }]) => {
+      const facetValues = buckets.map(({ _id: name, count }) => {
+        return { name, count };
+      });
+      return {
+        name: facetName,
+        values: facetValues,
+      };
+    });
     hasResults = true;
   }
   return (
-    <BrowseItems productList={foundItems} facetList={searchFacetList} />
+    <div className="px-0 sm:px-10">
+      <BrowseItems productList={foundItems} facetList={foundFacets} />
+    </div>
     // <>
     //   <div>Search results:</div>
     //   <div className="grid grid-cols-3">
