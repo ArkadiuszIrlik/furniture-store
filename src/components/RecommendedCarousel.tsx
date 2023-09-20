@@ -1,4 +1,5 @@
-import resolveConfig from 'tailwindcss/resolveConfig';
+'use client';
+
 import { useEffect, useRef } from 'react';
 import { IoChevronForward, IoChevronBack } from 'react-icons/io5';
 import { IconContext } from 'react-icons';
@@ -13,10 +14,14 @@ function RecommendedCarousel({
   const smallScreen = styleVars.screens.sm;
   const mediumScreen = styleVars.screens.md;
 
-  const currentFontSizePx = parseFloat(
+  let currentFontSizePx: number;
+  if (typeof window === 'undefined') {
+    currentFontSizePx = 16;
+  } else {
+    currentFontSizePx = parseFloat(
     getComputedStyle(document.documentElement).fontSize
   );
-  const swiperContainerRef = useRef(null);
+  }
 
   const swiperContainerRef =
     useRef<React.JSX.IntrinsicElements['swiper-container']>(null);
