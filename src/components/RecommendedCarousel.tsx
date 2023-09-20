@@ -19,10 +19,6 @@ import styleVars from 'styleVars';
     const params = {
       spaceBetween: 10,
       speed: 600,
-      navigation: {
-        nextEl: '.swiper-recommended-button-next',
-        prevEl: '.swiper-recommended-button-prev',
-      },
       breakpoints: {
         0: {
           slidesPerView: 1,
@@ -63,7 +59,8 @@ import styleVars from 'styleVars';
       <swiper-container
         ref={swiperContainerRef}
         init="false"
-        class="-mx-1 md:mx-0"
+        navigation-next-el=".swiper-recommended-button-next"
+        navigation-prev-el=".swiper-recommended-button-prev"
       >
         {productList.map((product, index) => {
           return (
