@@ -1,5 +1,5 @@
-import resolveConfig from 'tailwindcss/resolveConfig';
-import { useState, Dispatch } from 'react';
+'use client';
+import { useState, Dispatch, useContext } from 'react';
 import { BsTruck } from 'react-icons/bs';
 import { BiPlus, BiMinus } from 'react-icons/bi';
 import { IconContext } from 'react-icons';
@@ -14,6 +14,7 @@ import {
   ReviewSection,
   SpinButton,
 } from 'components';
+import { useClientCheck, useMediaQuery } from 'hooks';
 import {
   bed1,
   bed2,
@@ -28,11 +29,17 @@ import {
   emeraldVelvet,
   prepSchoolPlaid,
 } from 'assets';
+import Image from 'next/image';
+import { CartContext } from 'context/CartProvider';
 import { CartActionKind } from 'reducers/cartReducer';
 import { formatPriceDollars } from 'helpers';
 import styleVars from 'styleVars';
+
+function Product({ reviewSection }: { reviewSection: React.JSX.Element }) {
+  const { cartDispatch } = useContext(CartContext);
   const smallScreen = styleVars.screens.sm;
   const smallMatches = useMediaQuery(`(min-width: ${smallScreen})`);
+  const isClient = useClientCheck();
 
   const [product] = useState({
     id: uuidv4(),
@@ -215,45 +222,49 @@ import styleVars from 'styleVars';
             sm:gap-5
         "
         >
-          {smallMatches && (
-            <div className="flex flex-col gap-2">
-              {product.images.map((image, index) => {
-                return (
-                  <button
-                    type="button"
-                    onClick={() => handleSwitchActiveImage(index)}
-                    className={`border-2 rounded-md overflow-hidden ${
-                      activeImage === index
-                        ? 'border-primary-700'
-                        : 'border-white'
-                    }`}
-                  >
-                    <img
-                      src={image}
-                      alt=""
-                      className={`${
-                        activeImage === index
-                          ? ''
-                          : 'opacity-[60%] hover:opacity-100'
-                      }`}
-                      draggable="false"
-                    />
-                  </button>
-                );
-              })}
-            </div>
-          )}
+          {isClient
+            ? smallMatches && (
+                <div className="flex flex-col gap-2">
+                  {product.images.map((image, index) => {
+                    return (
+                      <button
+                        type="button"
+                        onClick={() => handleSwitchActiveImage(index)}
+                        className={`overflow-hidden rounded-md border-2 ${
+                          activeImage === index
+                            ? 'border-primary-700'
+                            : 'border-white'
+                        }`}
+                      >
+                        <Image
+                          src={image}
+                          alt=""
+                          className={`${
+                            activeImage === index
+                              ? ''
+                              : 'opacity-[60%] hover:opacity-100'
+                          }`}
+                          draggable="false"
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              )
+            : null}
           <div>
-            {smallMatches ? (
-              <img
-                src={product.images[activeImage]}
-                alt=""
-                srcSet=""
-                draggable="false"
-              />
-            ) : (
-              <ProductCarousel images={product.images} />
-            )}
+            {isClient ? (
+              smallMatches ? (
+                <Image
+                  src={product.images[activeImage]}
+                  alt=""
+                  draggable="false"
+                  priority
+                />
+              ) : (
+                <ProductCarousel images={product.images} />
+              )
+            ) : null}
           </div>
           <div className="flex flex-col sm:ml-4">
             <h1 className="font-dm-sans text-3xl font-medium sm:mt-20">
@@ -384,10 +395,7 @@ import styleVars from 'styleVars';
           </div>
         </div>
         <div className="mb-10">
-          <ReviewSection
-            reviewArray={product.reviews}
-            reviewScore={product.reviewScore}
-          />
+          {reviewSection}
         </div>
       </div>
     </div>
