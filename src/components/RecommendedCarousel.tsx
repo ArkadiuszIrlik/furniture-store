@@ -5,6 +5,11 @@ import { IconContext } from 'react-icons';
 import RecommendedCard from './RecommendedCard';
 import styleVars from 'styleVars';
 
+function RecommendedCarousel({
+  productList,
+}: {
+  productList: { image: string; name: string; priceUsd: number; url: string }[];
+}) {
   const smallScreen = styleVars.screens.sm;
   const mediumScreen = styleVars.screens.md;
 
@@ -13,8 +18,8 @@ import styleVars from 'styleVars';
   );
   const swiperContainerRef = useRef(null);
 
-  const productList: any[] = [...Array(12)];
-
+  const swiperContainerRef =
+    useRef<React.JSX.IntrinsicElements['swiper-container']>(null);
   useEffect(() => {
     const params = {
       spaceBetween: 10,
@@ -41,7 +46,11 @@ import styleVars from 'styleVars';
         `,
       ],
     };
+
+    if (swiperContainerRef.current && swiperContainerRef.current.initialize) {
+      Object.assign(swiperContainerRef.current, params);
     swiperContainerRef.current.initialize();
+    }
   }, []);
 
   return (
@@ -57,8 +66,8 @@ import styleVars from 'styleVars';
         </IconContext.Provider>
       </div>
       <swiper-container
+        init={false}
         ref={swiperContainerRef}
-        init="false"
         navigation-next-el=".swiper-recommended-button-next"
         navigation-prev-el=".swiper-recommended-button-prev"
       >
