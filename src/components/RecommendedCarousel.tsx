@@ -2,13 +2,11 @@ import resolveConfig from 'tailwindcss/resolveConfig';
 import { useEffect, useRef } from 'react';
 import { IoChevronForward, IoChevronBack } from 'react-icons/io5';
 import { IconContext } from 'react-icons';
-import { RecommendedCard } from '.';
-import tailwindConfig from '../../tailwind.config';
+import RecommendedCard from './RecommendedCard';
+import styleVars from 'styleVars';
 
-function RecommendedCarousel() {
-  const fullConfig = resolveConfig(tailwindConfig);
-  const smallScreen = fullConfig.theme.screens.sm;
-  const mediumScreen = fullConfig.theme.screens.md;
+  const smallScreen = styleVars.screens.sm;
+  const mediumScreen = styleVars.screens.md;
 
   const currentFontSizePx = parseFloat(
     getComputedStyle(document.documentElement).fontSize
@@ -18,11 +16,9 @@ function RecommendedCarousel() {
   const productList: any[] = [...Array(12)];
 
   useEffect(() => {
-    const swiperParams = {
-      direction: 'horizontal',
-      loop: false,
+    const params = {
+      spaceBetween: 10,
       speed: 600,
-      autoHeight: true,
       navigation: {
         nextEl: '.swiper-recommended-button-next',
         prevEl: '.swiper-recommended-button-prev',
@@ -30,31 +26,34 @@ function RecommendedCarousel() {
       breakpoints: {
         0: {
           slidesPerView: 1,
-          spaceBetween: 10,
+          slidesPerGroup: 1,
         },
         [parseInt(smallScreen, 10) * currentFontSizePx]: {
           slidesPerView: 2,
-          spaceBetween: 20,
+          slidesPerGroup: 2,
         },
         [parseInt(mediumScreen, 10) * currentFontSizePx]: {
           slidesPerView: 4,
-          spaceBetween: 20,
-          slidesPerGroup: 2,
+          slidesPerGroup: 4,
         },
       },
+      injectStyles: [
+        `
+        .swiper-wrapper {
+          align-items:center;
+        }
+        `,
+      ],
     };
-    Object.assign(swiperContainerRef.current, swiperParams);
     swiperContainerRef.current.initialize();
   }, []);
 
   return (
-    <div className="flex justify-center items-center">
-      <div className="swiper-recommended-button-prev -ml-1 sm:ml-0">
+    <div className="relative flex items-center">
+      <div className="swiper-recommended-button-prev absolute -left-2 top-1/2 z-10 -translate-y-1/2 md:static md:translate-y-0">
         <IconContext.Provider
           value={{
-            style: {
-              strokeWidth: '0.05rem',
-            },
+            style: { strokeWidth: '0.05rem' },
             size: '2.5rem',
           }}
         >
@@ -74,7 +73,7 @@ function RecommendedCarousel() {
           );
         })}
       </swiper-container>
-      <div className="swiper-recommended-button-next -mr-1 sm:mr-0">
+      <div className="swiper-recommended-button-next absolute -right-2 top-1/2 z-10 -translate-y-1/2 md:static md:translate-y-0">
         <IconContext.Provider
           value={{
             style: { strokeWidth: '0.05rem' },
