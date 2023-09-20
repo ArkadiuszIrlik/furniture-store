@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { IoChevronForward, IoChevronBack } from 'react-icons/io5';
 import { IconContext } from 'react-icons';
+import Link from 'next/link';
 import RecommendedCard from './RecommendedCard';
 import styleVars from 'styleVars';
 
@@ -19,8 +20,8 @@ function RecommendedCarousel({
     currentFontSizePx = 16;
   } else {
     currentFontSizePx = parseFloat(
-    getComputedStyle(document.documentElement).fontSize
-  );
+      getComputedStyle(document.documentElement).fontSize
+    );
   }
 
   const swiperContainerRef =
@@ -54,7 +55,7 @@ function RecommendedCarousel({
 
     if (swiperContainerRef.current && swiperContainerRef.current.initialize) {
       Object.assign(swiperContainerRef.current, params);
-    swiperContainerRef.current.initialize();
+      swiperContainerRef.current.initialize();
     }
   }, []);
 
@@ -79,7 +80,13 @@ function RecommendedCarousel({
         {productList.map((product, index) => {
           return (
             <swiper-slide key={index}>
-              <RecommendedCard />
+              <Link href={product.url}>
+                <RecommendedCard
+                  name={product.name}
+                  image={product.image}
+                  priceUsd={product.priceUsd}
+                />
+              </Link>
             </swiper-slide>
           );
         })}
