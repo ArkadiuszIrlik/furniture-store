@@ -1,5 +1,5 @@
 'use client';
-import { useState, Dispatch, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { BsTruck } from 'react-icons/bs';
 import { BiPlus, BiMinus } from 'react-icons/bi';
 import { IconContext } from 'react-icons';
@@ -11,7 +11,6 @@ import {
   ProductCarousel,
   PrimaryButton,
   ReviewScoreStars,
-  ReviewSection,
   SpinButton,
 } from 'components';
 import { useClientCheck, useMediaQuery } from 'hooks';
@@ -394,9 +393,7 @@ function Product({ reviewSection }: { reviewSection: React.JSX.Element }) {
             })}
           </div>
         </div>
-        <div className="mb-10">
-          {reviewSection}
-        </div>
+        <div className="mb-10">{reviewSection}</div>
       </div>
     </div>
   );
