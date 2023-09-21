@@ -1,11 +1,12 @@
+import { InstagramCarousel, RecommendedCarousel } from 'components';
+import { Footer } from 'containers';
+import { AdaraBed } from 'assets';
 import {
   HomeFeaturesSection,
   HomePhotosSection,
-  InstagramCarousel,
-} from 'components';
-import ProductCarousel from 'components/ProductCarousel';
-import { Footer } from 'containers';
-import { AdaraBed } from 'assets';
+  HomeHero,
+  HomeHeroMobile,
+} from 'components/Home';
 
 const recommendedProducts = [
   {
@@ -85,6 +86,11 @@ const recommendedProducts = [
 export default function Page() {
   return (
     <div>
+      <div className="mb-14 mt-3 sm:-mt-1">
+        <HomeHero>
+          <HomeHeroMobile />
+        </HomeHero>
+      </div>
       <div className="mb-8">
         <HomeFeaturesSection />
       </div>
