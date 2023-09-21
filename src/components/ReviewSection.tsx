@@ -1,10 +1,22 @@
-import { ReviewScoreStars } from '.';
+export interface Review {
+  _id: string;
+  header: string;
+  body: string;
+  score: number;
+  datePublished: Date;
+  userId: string;
+  productId: string;
+  user: {
+    name: string;
+    email: string;
+  };
+}
 
 function ReviewSection({
   reviewArray,
   reviewScore,
 }: {
-  reviewArray: any[];
+  reviewArray: Review[];
   reviewScore: number;
 }) {
   return (
@@ -33,7 +45,7 @@ function ReviewSection({
                     bg-primary-700 p-2"
                   >
                     <p className="font-open-sans text-lg font-semibold text-white">
-                      {review.username
+                      {review.user.name
                         .split(' ')
                         .map((el) => el[0])
                         .join('')
@@ -42,7 +54,7 @@ function ReviewSection({
                   </div>
                   <div>
                     <p className="font-open-sans font-semibold">
-                      {review.username}
+                      {review.user.name}
                     </p>
                     <ReviewScoreStars score={review.score} />
                   </div>
@@ -58,7 +70,7 @@ function ReviewSection({
                   <p className="font-open-sans text-xl font-bold">
                     {review.header}
                   </p>
-                  <p className="font-open-sans">{review.content}</p>
+                  <p className="font-open-sans">{review.body}</p>
                 </div>
               </div>
             );
