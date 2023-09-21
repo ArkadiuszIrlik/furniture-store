@@ -4,6 +4,7 @@ import styleVars from 'styleVars.js';
 import { IconProvider } from 'context';
 import Image from 'next/image';
 import { CiUser, HiMenu } from 'assets/react-icons';
+import Link from 'next/link';
 
 function Header() {
   return (
@@ -23,11 +24,12 @@ function Header() {
             <HiMenu />
           </IconProvider>
         </div>
-        <Image
-          src={ElevaLogo}
-          alt="Eleva Design Logo"
+        <Link
+          href={'/'}
           className="w-28 justify-self-center md:justify-self-start"
-        />
+        >
+          <Image src={ElevaLogo} alt="Eleva Design Logo" draggable={false} />
+        </Link>
         <div className="col-span-full row-start-2 md:col-span-1 md:col-start-2 md:row-start-1">
           <Search />
         </div>
