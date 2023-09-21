@@ -1,4 +1,10 @@
-function PathDisplay({ pathArray }: { pathArray: any[] }) {
+export interface Path {
+  name: string;
+  id: string;
+  isActive: boolean;
+}
+
+function PathDisplay({ pathArray }: { pathArray: Path[] }) {
   return (
     <p className="font-dm-sans font-bold text-base text-primary-700">
       <a href="#" className="hover:text-accents-700">
