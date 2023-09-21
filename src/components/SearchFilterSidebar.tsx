@@ -1,18 +1,36 @@
-import { BsPlusLg } from 'react-icons/bs';
-import { IconContext } from 'react-icons';
+import { capitalizeEachWord } from 'helpers';
+import { v4 as uuidv4 } from 'uuid';
 
-function SearchFilterSidebar({ facetList, onToggleFilterValue }) {
+export interface SearchFacet {
+  name: string;
+  values: Array<{ name: string; count?: number }>;
+}
+
+export interface SearchFacetActive extends SearchFacet {
+  values: SearchFacet['values'] &
+    Array<{
+      isActive: boolean;
+    }>;
+}
+
+function SearchFilterSidebar({
+  facetList,
+  onToggleFilterValue,
+}: {
+  facetList: SearchFacetActive[];
+  onToggleFilterValue: (facet: SearchFacetActive, valueName: string) => void;
+}) {
   return (
-    <div className="max-w-xs px-2 md:px-0 overflow-y-auto h-full">
+    <div className="h-full max-w-xs overflow-y-auto px-2 md:px-0">
       {facetList.map((facet) => {
         return (
-          <div key={facet.id}>
+          <div key={facet.name}>
             <div
-              className="flex justify-between items-center border-b-[1px] border-b-primary-700
-            py-1
-             md:pr-1 md:pb-1 gap-5"
+              className="flex items-center justify-between gap-5 border-b-[1px]
+            border-b-primary-700
+             py-1 md:pb-1 md:pr-1"
             >
-              <p className="text-xl font-dm-sans">{facet.name.toUpperCase()}</p>
+              <p className="font-dm-sans text-xl">{facet.name.toUpperCase()}</p>
               <IconContext.Provider
                 value={{
                   style: { strokeWidth: '0.05rem' },
@@ -23,7 +41,7 @@ function SearchFilterSidebar({ facetList, onToggleFilterValue }) {
                 <BsPlusLg />
               </IconContext.Provider>
             </div>
-            <div className="py-2 md:pr-6 md:mb-1 grid grid-cols-2 gap-2 md:block">
+            <div className="grid grid-cols-2 gap-2 py-2 md:mb-1 md:block md:pr-6">
               {[...facet.values]
                 .sort((a, b) => {
                   const nameA = a.name.toUpperCase();
@@ -31,19 +49,20 @@ function SearchFilterSidebar({ facetList, onToggleFilterValue }) {
                   return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
                 })
                 .map((value) => {
+                  const tempId = uuidv4();
                   return (
                     <div
-                      key={value.id}
-                      className="flex items-center gap-1 md:px-0"
+                      key={value.name}
+                      className="flex items-center gap-1 md:mb-2 md:px-0"
                     >
                       <input
                         type="checkbox"
                         checked={value.isActive}
                         onChange={() => {
-                          onToggleFilterValue(facet, value);
+                          onToggleFilterValue(facet, value.name);
                         }}
                         name=""
-                        id={`checkbox-filter-${value.id}`}
+                        id={`checkbox-filter-${tempId}`}
                         className="
                           cursor-pointer
                           rounded
@@ -52,17 +71,17 @@ function SearchFilterSidebar({ facetList, onToggleFilterValue }) {
                           shadow-sm
                           focus:border-primary-700
                           focus:ring
-                          focus:ring-offset-0
                           focus:ring-primary-300
                           focus:ring-opacity-50
+                          focus:ring-offset-0
                         "
                       />
                       <label
-                        htmlFor={`checkbox-filter-${value.id}`}
-                        className="cursor-pointer font-open-sans text-base
-                        break-words min-w-0"
+                        htmlFor={`checkbox-filter-${tempId}`}
+                        className="min-w-0 cursor-pointer select-none
+                        break-words font-open-sans text-base leading-5"
                       >
-                        {value.name}
+                        {capitalizeEachWord(value.name)}
                       </label>
                     </div>
                   );
