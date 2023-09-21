@@ -1,3 +1,5 @@
+import { ReviewScoreStars } from 'components';
+
 export interface Review {
   _id: string;
   header: string;
