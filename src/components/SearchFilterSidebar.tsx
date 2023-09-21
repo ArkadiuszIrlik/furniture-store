@@ -1,3 +1,5 @@
+import { BsPlusLg } from 'assets/react-icons';
+import { IconProvider } from 'context';
 import { capitalizeEachWord } from 'helpers';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -31,7 +33,7 @@ function SearchFilterSidebar({
              py-1 md:pb-1 md:pr-1"
             >
               <p className="font-dm-sans text-xl">{facet.name.toUpperCase()}</p>
-              <IconContext.Provider
+              <IconProvider
                 value={{
                   style: { strokeWidth: '0.05rem' },
                   className: 'text-primary-700',
@@ -39,7 +41,7 @@ function SearchFilterSidebar({
                 }}
               >
                 <BsPlusLg />
-              </IconContext.Provider>
+              </IconProvider>
             </div>
             <div className="grid grid-cols-2 gap-2 py-2 md:mb-1 md:block md:pr-6">
               {[...facet.values]
