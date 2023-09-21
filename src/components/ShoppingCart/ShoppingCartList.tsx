@@ -1,16 +1,9 @@
 import { IconContext } from 'react-icons';
 import { BiTrashAlt } from 'react-icons/bi';
 import { Dispatch } from 'react';
-import { SpinButton } from '..';
-
-interface CartItem {
-  id: string;
-  name: string;
-  details?: string;
-  image: string;
-  priceUsd: number;
-  quantity: number;
-}
+import { SpinButton } from 'components';
+import { formatPriceDollars } from 'helpers';
+import { CartItem, CartActionKind } from 'reducers/cartReducer';
 
 function ShoppingCartList({
   cart,
@@ -62,7 +55,7 @@ function ShoppingCartList({
                   inputValue={item.quantity}
                   onValueChange={(nextValue) =>
                     cartDispatch({
-                      type: 'changedQuantity',
+                      type: CartActionKind.CHANGED_QUANTITY,
                       itemId: item.id,
                       nextQuantity: nextValue,
                     })
@@ -70,10 +63,7 @@ function ShoppingCartList({
                   className="min-w-[7rem] md:min-w-[5rem]"
                 />
               </div>
-              <p className="font-medium">
-                $
-                {item.priceUsd.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-              </p>
+              <p className="font-medium">{formatPriceDollars(item.priceUsd)}</p>
             </div>
           </div>
         );
