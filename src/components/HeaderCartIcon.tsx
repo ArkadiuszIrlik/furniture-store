@@ -5,7 +5,7 @@ import React, { useState, useRef, useContext } from 'react';
 import { CartContext } from 'context/CartProvider';
 import { IconContext } from 'react-icons';
 import { ShoppingCartModal } from 'components';
-import { textColor } from 'styleVars';
+import styleVars from 'styleVars';
 import { useClientCheck } from 'hooks';
 
 function HeaderCartIcon() {
@@ -51,7 +51,7 @@ function HeaderCartIcon() {
       >
         <IconContext.Provider
           value={{
-            style: { strokeWidth: '0.1rem', stroke: textColor },
+            style: { strokeWidth: '0.1rem', stroke: styleVars.colors.text },
             size: '1.5rem',
           }}
         >
