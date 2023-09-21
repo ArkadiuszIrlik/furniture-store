@@ -1,18 +1,9 @@
-// import { CiUser } from 'react-icons/ci';
-// import { HiMenu } from 'react-icons/hi';
 import { ElevaLogo } from 'assets';
 import { Search, HeaderNavbar, HeaderCartIcon } from 'components';
 import styleVars from 'styleVars.js';
 import { IconProvider } from 'context';
 import Image from 'next/image';
-import IconWrapper from 'components/IconWrapper';
-import { CiUser } from 'assets/react-icons';
-import { HiMenu } from 'assets/react-icons';
-
-// async function exportServerWrapper(component) {
-//   'use server';
-//   return component;
-// }
+import { CiUser, HiMenu } from 'assets/react-icons';
 
 function Header() {
   return (
@@ -20,7 +11,7 @@ function Header() {
       <div
         className="grid grid-cols-[1fr_minmax(max-content,_60%)_1fr]
            grid-rows-[repeat(2,_max-content)] items-center
-            gap-y-2 px-3 pb-2 pt-1 md:gap-y-4 md:px-12 md:pt-5"
+            gap-y-2 px-3 pb-2 pt-1 md:gap-y-2 md:px-12 md:pt-5"
       >
         <div className="block md:hidden">
           <IconProvider
@@ -56,7 +47,7 @@ function Header() {
           </button>
           <HeaderCartIcon />
         </div>
-        <div className="col-span-full row-start-2 hidden md:block">
+        <div className="col-span-full row-start-2 hidden border-t-[1px] border-t-primary-700  md:block">
           <HeaderNavbar />
         </div>
       </div>
