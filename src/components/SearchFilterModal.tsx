@@ -1,4 +1,6 @@
+import { IoClose } from 'assets/react-icons';
 import { SearchFilterSidebar, PrimaryButton } from 'components';
+import { IconProvider } from 'context';
 import { SearchFacetActive } from './SearchFilterSidebar';
 
 function SearchFilterModal({
@@ -24,7 +26,7 @@ function SearchFilterModal({
       >
         <p className="font-dm-sans text-2xl font-bold text-white">FILTER</p>
         <button type="button" aria-label="hide filter" onClick={onClose}>
-          <IconContext.Provider
+          <IconProvider
             value={{
               style: {
                 strokeWidth: '0.05rem',
@@ -35,7 +37,7 @@ function SearchFilterModal({
             }}
           >
             <IoClose />
-          </IconContext.Provider>
+          </IconProvider>
         </button>
       </div>
       <SearchFilterSidebar
