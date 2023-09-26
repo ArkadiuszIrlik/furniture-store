@@ -9,3 +9,4 @@ export { default as Product } from './product/Product';
 // export { default as CheckoutPayment } from './checkoutPayment/CheckoutPayment';
 // export { default as CheckoutShipping } from './checkoutShipping/CheckoutShipping';
 // export { default as CheckoutLogin } from './checkoutLogin/CheckoutLogin';
+export { default as BrowseItems } from './browseItems/BrowseItems';
