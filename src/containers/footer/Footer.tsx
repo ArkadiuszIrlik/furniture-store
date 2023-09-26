@@ -5,7 +5,7 @@ import { useState } from 'react';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../../../tailwind.config';
 import { useMediaQuery } from 'hooks';
-import { FooterDesktop, FooterMobile } from 'components';
+import { FooterDesktop, FooterMobile } from 'components/Footer';
 
 export interface FooterCategory {
   header: string;

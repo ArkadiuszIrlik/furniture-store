@@ -10,9 +10,9 @@ import {
   ProductSizeSelector,
   ProductCarousel,
   PrimaryButton,
-  ReviewScoreStars,
   SpinButton,
 } from 'components';
+import { ReviewScoreStars } from 'components/Review';
 import { useClientCheck, useMediaQuery } from 'hooks';
 import {
   bed1,
