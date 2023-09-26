@@ -40,3 +40,7 @@ export { default as amexIcon } from './card-providers/amex-icon.svg';
 export { default as discoverIcon } from './card-providers/discover-icon.svg';
 export { default as mastercardIcon } from './card-providers/mastercard-icon.svg';
 export { default as visaIcon } from './card-providers/visa-icon.svg';
+export { default as homeHeroImage1 } from './home-hero-slider-images/slide-1.jpg';
+export { default as homeHeroImage2 } from './home-hero-slider-images/slide-2.jpg';
+export { default as homeHeroImage3 } from './home-hero-slider-images/slide-3.jpg';
+export { default as homeHeroImageMobile1 } from './home-hero-slider-images/slide-1-mobile.jpg';
