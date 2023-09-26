@@ -4,9 +4,9 @@ import tailwindConfig from '../../../tailwind.config';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import { useClientCheck, useMediaQuery } from 'hooks';
 import HomeHeroCarousel from './HomeHeroCarousel';
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 
-function HomeHero({ children }: { children: ReactNode }) {
+function HomeHero({ children }: { children: ReactElement }) {
   const fullConfig = resolveConfig(tailwindConfig);
   const smallScreen = fullConfig.theme.screens.sm;
   const smallMatches = useMediaQuery(`(min-width: ${smallScreen})`);
