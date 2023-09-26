@@ -1,7 +1,8 @@
 import { forwardRef, Dispatch } from 'react';
-import { PrimaryButton, ShoppingCartList } from 'components';
+import { PrimaryButton } from 'components';
 import { calculateCartTotal } from 'helpers';
 import { CartItem } from 'reducers/cartReducer';
+import { ShoppingCartList } from '.';
 
 const ShoppingCartModal = forwardRef<
   HTMLInputElement,

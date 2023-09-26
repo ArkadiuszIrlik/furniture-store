@@ -1,4 +1,4 @@
-import { ReviewScoreStars } from 'components';
+import { ReviewScoreStars } from '.';
 
 export interface Review {
   _id: string;

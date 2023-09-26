@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import { IconContext } from 'react-icons';
 import { BiTrashAlt } from 'react-icons/bi';
-import { SpinButton } from '.';
+import { SpinButton } from 'components';
 
 interface CartItem {
   id: string;
@@ -28,32 +28,32 @@ function ShoppingCartTable({
       </colgroup>
       <thead>
         <tr className="border-b-[1px] border-b-primary-300 text-left">
-          <th className="font-normal pb-1 pl-2">ITEM</th>
-          <th className="font-normal pb-1">PRICE</th>
-          <th className="font-normal pb-1 pr-2">QUANTITY</th>
+          <th className="pb-1 pl-2 font-normal">ITEM</th>
+          <th className="pb-1 font-normal">PRICE</th>
+          <th className="pb-1 pr-2 font-normal">QUANTITY</th>
         </tr>
       </thead>
       <tbody>
         {cart.map((item) => {
           return (
             <tr
-              className="border-b-[1px] last:border-none border-b-primary-300"
+              className="border-b-[1px] border-b-primary-300 last:border-none"
               key={item.id}
             >
-              <td className="pl-2 py-4">
+              <td className="py-4 pl-2">
                 <div
-                  className="flex items-center gap-4 font-dm-sans min-w-max
-                pr-4"
+                  className="flex min-w-max items-center gap-4 pr-4
+                font-dm-sans"
                 >
                   <img
                     src={item.image}
                     alt=""
-                    className="rounded-lg min-w-0
-                       object-contain object-center h-36 bg-product"
+                    className="h-36 min-w-0
+                       rounded-lg bg-product object-contain object-center"
                     draggable="false"
                   />
-                  <div className="flex flex-col flex-auto min-w-0 text-left">
-                    <p className="font-medium break-words min-w-0">
+                  <div className="flex min-w-0 flex-auto flex-col text-left">
+                    <p className="min-w-0 break-words font-medium">
                       {item.name}
                     </p>
                     {item.details && <p className="mb-2">{item.details}</p>}
@@ -88,7 +88,7 @@ function ShoppingCartTable({
                   onClick={() =>
                     cartDispatch({ type: 'removed', itemId: item.id })
                   }
-                  className="ml-auto absolute top-4 right-2"
+                  className="absolute right-2 top-4 ml-auto"
                 >
                   <IconContext.Provider
                     value={{
