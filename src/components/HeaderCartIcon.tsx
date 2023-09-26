@@ -4,7 +4,7 @@ import { FiShoppingCart } from 'react-icons/fi';
 import React, { useState, useRef, useContext } from 'react';
 import { CartContext } from 'context/CartProvider';
 import { IconContext } from 'react-icons';
-import { ShoppingCartModal } from 'components';
+import { ShoppingCartModal } from 'components/ShoppingCart';
 import styleVars from 'styleVars';
 import { useClientCheck } from 'hooks';
 
