@@ -1,4 +1,5 @@
 'use client';
+
 import { useState, useContext } from 'react';
 import { BsTruck } from 'react-icons/bs';
 import { BiPlus, BiMinus } from 'react-icons/bi';
@@ -336,9 +337,11 @@ function Product({ reviewSection }: { reviewSection: React.JSX.Element }) {
               return (
                 <div key={index}>
                   <div
-                    className="flex cursor-pointer items-center justify-between
-                   border-t-[1px] border-t-primary-300 py-2 pr-1
-                   "
+                    className={`flex cursor-pointer items-center justify-between
+                   border-b-[1px] border-b-primary-300 py-2 pr-1 ${
+                     index === 0 ? ' border-t-[1px] border-t-primary-300' : ''
+                   }
+                   `}
                     onClick={() => handleToggleInfoSectionOpen(index)}
                   >
                     <h4 className="font-dm-sans text-xl">
@@ -371,7 +374,7 @@ function Product({ reviewSection }: { reviewSection: React.JSX.Element }) {
                     </button>
                   </div>
                   {infoDropdownOpenState[index].isOpen && (
-                    <div className="border-t-[1px] border-t-primary-300 py-2 sm:py-3">
+                    <div className="border-b-[1px] border-b-primary-300 py-2 sm:py-3">
                       <ul className="flex flex-col gap-[2px]">
                         {info.content.map((bulletpoint) => {
                           return (
