@@ -3,6 +3,7 @@ import { SearchFilterModal, ModalOverlay, RecommendedCard } from 'components';
 import { BiFilter } from 'assets/react-icons';
 import { SearchFacetActive } from 'components/SearchFilterSidebar';
 import { Products } from 'models';
+import SortSelector from './SortSelector';
 
 function BrowserItemsMobile({
   isSkeleton,
@@ -58,6 +59,7 @@ function BrowserItemsMobile({
             </IconProvider>
             Filter
           </button>
+          <SortSelector />
         </div>
         {productList?.length === 0 ? (
           <p className="text-md mx-auto mt-[10vh] font-open-sans">

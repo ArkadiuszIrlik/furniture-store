@@ -3,6 +3,7 @@ import { SearchFilterSidebar, RecommendedCard } from 'components';
 import { BiFilter } from 'assets/react-icons';
 import { Products } from 'models';
 import { SearchFacetActive } from 'components/SearchFilterSidebar';
+import SortSelector from './SortSelector';
 
 function BrowseItemsLarge({
   isSkeleton,
@@ -60,6 +61,7 @@ function BrowseItemsLarge({
             </IconProvider>
             {isFilterShown ? 'Hide Filters' : 'Show Filters'}
           </button>
+          <SortSelector />
         </div>
         {productList?.length === 0 ? (
           <p className="mx-auto mt-[10vh] font-open-sans text-lg">
