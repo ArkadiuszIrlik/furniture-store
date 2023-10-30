@@ -6,9 +6,18 @@ import { SearchFacet } from 'components/SearchFilterSidebar';
 
 export interface SearchPageParams {
   q: string;
+  p: string;
+  sort: 'recommended' | 'price_asc' | 'price_desc' | 'review';
 }
 
-async function searchQuery(query: string) {
+type SortDocument = { priceUsd: 1 | -1 } | { avgReviewScore: -1 } | undefined;
+
+async function searchQuery(
+  query: string,
+  offset = 0,
+  limit = 20,
+  sortDoc?: SortDocument
+) {
   try {
     await connectToDb();
     const results = await Product.aggregate([
@@ -22,13 +31,13 @@ async function searchQuery(query: string) {
                   {
                     text: {
                       path: 'name',
-                      query: query,
+                      query,
                     },
                   },
                   {
                     text: {
                       path: 'color',
-                      query: query,
+                      query,
                     },
                   },
                   // {
@@ -47,12 +56,14 @@ async function searchQuery(query: string) {
               },
             },
           },
+          sort: sortDoc,
         },
       },
       {
         $facet: {
           results: [
-            { $limit: 10 },
+            { $skip: offset },
+            { $limit: limit },
             {
               $addFields: {
                 _id: { $toString: '$_id' },
@@ -77,9 +88,8 @@ async function searchQuery(query: string) {
           facet: [],
         },
       };
-    } else {
-      return results[0];
     }
+    return results[0];
   } catch (error) {
     throw error;
   }
@@ -88,8 +98,36 @@ async function searchQuery(query: string) {
 async function Page({ searchParams }: { searchParams: SearchPageParams }) {
   let foundItems: Products[] = [];
   let foundFacets: SearchFacet[] = [];
+  const resultsPerPage = 1;
+  let resultsCount = 0;
+  let sortDoc: SortDocument;
+  switch (searchParams.sort) {
+    case 'recommended':
+      sortDoc = undefined;
+      break;
+    case 'price_asc':
+      sortDoc = { priceUsd: 1 };
+      break;
+    case 'price_desc':
+      sortDoc = { priceUsd: -1 };
+      break;
+    case 'review':
+      sortDoc = { avgReviewScore: -1 };
+      break;
+    default:
+      sortDoc = undefined;
+  }
   if (searchParams.q) {
-    const searchResults = await searchQuery(searchParams.q);
+    let resultOffset;
+    if (searchParams.p) {
+      resultOffset = (Number(searchParams.p) - 1) * resultsPerPage;
+    }
+    const searchResults = await searchQuery(
+      searchParams.q,
+      resultOffset,
+      resultsPerPage,
+      sortDoc
+    );
     foundItems = searchResults.results;
     foundFacets = Object.entries<{
       buckets: { _id: string; count: number }[];
@@ -102,10 +140,16 @@ async function Page({ searchParams }: { searchParams: SearchPageParams }) {
         values: facetValues,
       };
     });
+    resultsCount = searchResults.meta.count.lowerBound;
   }
   return (
-    <div className="px-0 sm:px-10">
-      <BrowseItems productList={foundItems} facetList={foundFacets} />
+    <div className="px-3 md:px-12">
+      <BrowseItems
+        productList={foundItems}
+        facetList={foundFacets}
+        resultsPerPage={resultsPerPage}
+        totalResults={resultsCount}
+      />
     </div>
   );
 }
