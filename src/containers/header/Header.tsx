@@ -5,6 +5,8 @@ import { IconProvider } from 'context';
 import Image from 'next/image';
 import { CiUser, HiMenu } from 'assets/react-icons';
 import Link from 'next/link';
+import { Suspense } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 function Header() {
   return (
@@ -31,7 +33,11 @@ function Header() {
           <Image src={ElevaLogo} alt="Eleva Design Logo" draggable={false} />
         </Link>
         <div className="col-span-full row-start-2 md:col-span-1 md:col-start-2 md:row-start-1">
-          <Search />
+          <Suspense
+            fallback={<Skeleton className="!h-11 !w-full !rounded-xl" />}
+          >
+            <Search />
+          </Suspense>
         </div>
         <div className="flex items-center justify-end gap-2">
           <button>
@@ -49,7 +55,7 @@ function Header() {
           </button>
           <HeaderCartIcon />
         </div>
-        <div className="col-span-full row-start-2 hidden border-t-[1px] border-t-primary-700  md:block">
+        <div className="col-span-full row-start-2 hidden border-t-[1px] border-t-primary-700 md:block">
           <HeaderNavbar />
         </div>
       </div>

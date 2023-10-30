@@ -6,7 +6,7 @@ import { Products } from 'models';
 import SortSelector from './SortSelector';
 
 function BrowserItemsMobile({
-  isSkeleton,
+  isSkeleton = false,
   productList,
   filterFacetList,
   resultsPerPage,

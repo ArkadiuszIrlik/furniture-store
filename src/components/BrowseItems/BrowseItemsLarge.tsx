@@ -6,7 +6,7 @@ import { SearchFacetActive } from 'components/SearchFilterSidebar';
 import SortSelector from './SortSelector';
 
 function BrowseItemsLarge({
-  isSkeleton,
+  isSkeleton = false,
   productList,
   filterFacetList,
   resultsPerPage,
@@ -34,11 +34,23 @@ function BrowseItemsLarge({
             isFilterAnimated ? 'animate-[slide-in_0.4s_ease-out]' : ''
           }`}
         >
-          <SearchFilterSidebar
+          {/* <SearchFilterSidebar
             isSkeleton={isSkeleton}
             facetList={filterFacetList}
             onToggleFilterValue={onToggleFilterValue}
-          />
+          /> */}
+          {isSkeleton ? (
+            <SearchFilterSidebar isSkeleton />
+          ) : (
+            filterFacetList &&
+            onToggleFilterValue && (
+              <SearchFilterSidebar
+                isSkeleton={false}
+                facetList={filterFacetList}
+                onToggleFilterValue={onToggleFilterValue}
+              />
+            )
+          )}
         </div>
       )}
       <div className="flex flex-auto flex-col">

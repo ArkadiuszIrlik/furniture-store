@@ -1,21 +1,13 @@
 'use client';
+
 import { useEffect, useState } from 'react';
-import { useMediaQuery } from 'hooks';
+import { useClientCheck, useMediaQuery } from 'hooks';
 import styleVars from 'styleVars';
-import {
-  SearchFilterSidebar,
-  SearchFilterModal,
-  ModalOverlay,
-  RecommendedCard,
-} from 'components';
-import { IconContext } from 'react-icons';
-import { BiFilter } from 'react-icons/bi';
 import { Products } from 'models/Products';
-import { SearchFacet } from 'components/SearchFilterSidebar';
-import { AiFillCaretDown } from 'react-icons/ai';
-import { SearchFacetActive } from 'components/SearchFilterSidebar';
+import { BrowseItemsLarge, BrowseItemsMobile } from 'components/BrowseItems';
 
 function BrowseItems({
+  isSkeleton = false,
   productList,
   facetList,
 }: {
@@ -25,7 +17,7 @@ function BrowseItems({
   const mediumScreen = styleVars.screens.md;
   const mediumMatches = useMediaQuery(`(min-width: ${mediumScreen})`);
 
-  const [isFilterShown, setIsFilterShown] = useState(!!mediumMatches);
+  const [isFilterShown, setIsFilterShown] = useState(mediumMatches);
   const [animateFilter, setAnimateFilter] = useState(false);
   const [facets, setFacets] = useState<SearchFacetActive[]>([]);
 
@@ -36,6 +28,9 @@ function BrowseItems({
   }, [mediumMatches]);
 
   useEffect(() => {
+    if (facetList === undefined) {
+      return;
+    }
     const nextFacets: SearchFacetActive[] = facetList.map((facet) => {
       return {
         name: facet.name,
@@ -74,79 +69,67 @@ function BrowseItems({
       })
     );
   }
+
+  const isClient = useClientCheck();
   return (
-    <div className="flex gap-5 overflow-hidden pt-2">
-      {isFilterShown &&
-        (mediumMatches ? (
-          <div
-            className={`${
-              animateFilter ? 'animate-[slide-in_0.4s_ease-out]' : ''
-            }`}
-          >
-            <SearchFilterSidebar
-              facetList={facets}
-              onToggleFilterValue={handleFacetToggle}
-            />
-          </div>
-        ) : (
-          <>
-            <SearchFilterModal
-              isAnimated={animateFilter}
-              facetList={facets}
-              onToggleFilterValue={handleFacetToggle}
-              onClose={handleToggleFilterVisibility}
-            />
-            <ModalOverlay onOverlayClick={handleToggleFilterVisibility} />
-          </>
-        ))}
-      <div className="flex flex-auto flex-col">
-        <div className="flex items-center justify-between pb-3">
-          <button
-            type="button"
-            className="flex items-center font-open-sans"
-            onClick={handleToggleFilterVisibility}
-          >
-            <IconContext.Provider
-              value={{
-                style: {
-                  strokeWidth: '0.05rem',
-                },
-                size: '1.7rem',
-                className: 'fill-text stroke-text',
-              }}
-            >
-              <BiFilter />
-            </IconContext.Provider>
-            {isFilterShown ? 'Hide Filters' : 'Show Filters'}
-          </button>
-          <div className="flex gap-2">
-            <p className="font-bold">Sort By:</p>
-            <div className="flex items-center gap-1">
-              <p>Recommended</p>
-              <AiFillCaretDown />
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-[repeat(auto-fit,_minmax(13rem,_1fr))] gap-3 lg:grid-cols-4">
-          {productList.length !== 0 ? (
-            productList.map((product) => {
-              return (
-                <RecommendedCard
-                  name={product.name}
-                  priceUsd={1234}
-                  image={product.images[0]}
-                  key={product._id}
+    <>
+      {(() => {
+        if (isSkeleton) {
+          return (
+            <>
+              <div className="hidden md:block">
+                <BrowseItemsLarge
+                  isSkeleton
+                  productList={productList}
+                  filterFacetList={facets}
+                  isFilterShown={isFilterShown}
+                  isFilterAnimated={animateFilter}
+                  onToggleFilterVisibility={handleToggleFilterVisibility}
+                  onToggleFilterValue={handleFacetToggle}
                 />
-              );
-            })
+              </div>
+              <div className="block md:hidden">
+                <BrowseItemsMobile
+                  isSkeleton
+                  productList={productList}
+                  filterFacetList={facets}
+                  isFilterShown={isFilterShown}
+                  isFilterAnimated={animateFilter}
+                  onToggleFilterVisibility={handleToggleFilterVisibility}
+                  onToggleFilterValue={handleFacetToggle}
+                />
+              </div>
+            </>
+          );
+        }
+        if (isClient) {
+          return mediumMatches ? (
+            <BrowseItemsLarge
+              productList={productList}
+              filterFacetList={facets}
+              resultsPerPage={resultsPerPage}
+              totalResults={totalResults}
+              isFilterShown={isFilterShown}
+              isFilterAnimated={animateFilter}
+              onToggleFilterVisibility={handleToggleFilterVisibility}
+              onToggleFilterValue={handleFacetToggle}
+            />
           ) : (
-            <p className="mx-auto mt-[10vh] font-open-sans text-lg">
-              Sorry, we couldn't find any results.
-            </p>
-          )}
-        </div>
-      </div>
-    </div>
+            <BrowseItemsMobile
+              productList={productList}
+              filterFacetList={facets}
+              resultsPerPage={resultsPerPage}
+              totalResults={totalResults}
+              isFilterShown={isFilterShown}
+              isFilterAnimated={animateFilter}
+              onToggleFilterVisibility={handleToggleFilterVisibility}
+              onToggleFilterValue={handleFacetToggle}
+            />
+          );
+        }
+        return null;
+      })()}
+    </>
   );
 }
 export default BrowseItems;
